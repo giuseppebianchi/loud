@@ -9,7 +9,7 @@ SC.initialize({
 $('#connect').click(function(){
 	SC.connect(function() {
 	  SC.get('/me/activities', function(me) { 
-	    alert(me); 
+	    alert(JSON.stringify(me, null, 4)); 
 	  });
 	});
 });
