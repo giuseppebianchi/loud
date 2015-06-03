@@ -24,7 +24,7 @@ SC.get("/tracks/139415519", function(track){
 		$('.waveform').attr('src', track.waveform_url);
 		$('.blur').css('background-image', 'url(' + track.artwork_url.replace('large', 't500x500') + ')');
 });
-SC.stream("/tracks/139415519", {
+SC.stream("/tracks/6360030", {
 	  autoPlay: true,
 	  whileloading: null,   
 	  whileplaying: null,
