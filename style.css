@@ -190,7 +190,7 @@ a {
  	border: none;
  	height: 60px;
   box-shadow: 0 -1px 1px rgba(0,0, 0, 0.1);
-  bottom: -60px;
+  /*bottom: -60px;*/
   transition: 1s;
 
  }
@@ -231,3 +231,15 @@ a {
   letter-spacing: 10px;
 
  }
+ .stream_list > ul{
+
+  list-style: none;
+
+ }
+ .activity {
+  background-color: red;
+  width: 100%;
+  height: 400px;
+  background: url('https://i1.sndcdn.com/artworks-000119057073-qjj7ui-t500x500.jpg') no-repeat center center;
+  background-size: cover;
+}
