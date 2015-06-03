@@ -6,10 +6,12 @@ SC.initialize({
 /*SC.get("/groups/55517/tracks", {limit: 1}, function(tracks){
   alert("Latest track: " + tracks[0].title);
 });*/
-SC.connect(function() {
-  SC.get('/me', function(me) { 
-    alert('Hello, ' + me.username); 
-  });
+$('#connect').click(function(){
+	SC.connect(function() {
+	  SC.get('/me', function(me) { 
+	    alert('Hello, ' + me.username); 
+	  });
+	});
 });
 
 var playingTrack;
