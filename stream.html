@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loud</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="style.css">
+    <script src="jquery-1.11.3.min.js"></script>
+  </head>
+ 
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+    	<a class="navbar-brand" href="#">Loud</a>
+    	<!-- <button type="button" class="btn btn-danger pull-right" id="start"><i class="fa fa-pause"></i></button> -->
+    	
+      </div>
+     
+  </div><!-- /.container-fluid -->
+</nav>
+	</header>
+<section id="main">
+	<div class="container-fluid">
+		<div class="col-sm-12 stream_list">
+			<ul>
+				<li>
+					<div class="activity"></div>
+				</li>
+				<li>
+					<div class="activity"></div>
+				</li>
+				<li>
+					<div class="activity"></div>
+				</li>
+			</ul>
+
+		</div>
+		<div class="col-sm-12 tracklist-container">
+	     <h1>Tracklist</h1>
+	     <div class="tracklist col-sm-6"></div>
+	     <div class="result col-sm-6"></div>
+	 	 </div>
+	 	 <div class="col-sm-12">
+			<!-- 16:9 aspect ratio -->
+			<div class="embed-responsive embed-responsive-16by9">
+			  <iframe class="embed-responsive-item" src="https://www.youtube.com/watch?v=7uJW1A6eL0E"></iframe>
+			</div>
+			<div class="embed-responsive embed-responsive-16by9">
+			  <iframe class="embed-responsive-item" src="https://www.youtube.com/watch?v=7uJW1A6eL0E"></iframe>
+			</div>
+			<div class="embed-responsive embed-responsive-16by9">
+			  <iframe class="embed-responsive-item" src="https://www.youtube.com/watch?v=7uJW1A6eL0E"></iframe>
+			</div>
+		</div>
+	</div>
+	<div id="player" class="container-fluid playerOff">
+		<div class="blur"></div>
+		<div class="container-fluid">
+		<div class="col-sm-4"><img class="artwork" src=""></div>
+		<div class="col-sm-8">
+		<h3>Title: <span class="title"></span></h3>
+		<h3>Artist: <span class="artist"></span></h3>
+		<a class="closePlayer" href="#">Hide <i class="fa fa-chevron-down"></i><i class="fa fa-"></i></a>
+		</div>
+	</div>
+		
+	</div>
+</section>
+	 <div class="navbar-default navbar-fixed-bottom">
+	 	<div class="waveform-title"><div class="overlay-black"></div><a class="openPlayer" href="#"><h5><span class="title"></span> - <span class="artist"></span></h5></a></div>
+	 	<div class="container-fluid waveform-block">
+			
+			<div class="waveform-back"></div>
+			<div class="waveform-bar"></div>
+			<img class="waveform" src="">
+			<div class="waveform-loading"></div>
+			
+			<div id="progress-bar-end"></div>
+			
+		</div>
+	 </div>
+
+	 <div class="navbar-default navbar-fixed-bottom">
+	 	<img class="waveform-cover artwork" src="https://i1.sndcdn.com/artworks-000073480193-bbiik3-t500x500.jpg">
+	 	<div class="waveform-title">
+	 		<div class="overlay-black"></div><a class="openPlayer" href="#"><h5><span class="title"></span> - <span class="artist"></span><span class="pull-right"> <i class="fa fa-chevron-up"></i> </span></h5></a>
+	 	</div>
+	 	<div class="waveform-block">
+			
+			<div class="waveform-space">
+			<div class="waveform-back"></div>
+			<div class="waveform-bar"></div>
+			<img class="waveform" src="">
+			<div class="waveform-loading"></div>
+			
+			<div id="progress-bar-end"></div>
+			</div>
+		</div>
+	 </div>
+
+
+
+<script src="http://connect.soundcloud.com/sdk-2.0.0.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
+
