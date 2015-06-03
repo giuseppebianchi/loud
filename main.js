@@ -1,6 +1,6 @@
 SC.initialize({
   client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-  redirect_uri: 'htpp://bianchii.com'
+  redirect_uri: 'http://giuseppebianchi.github.io/loud/'
 });
 
 /*SC.get("/groups/55517/tracks", {limit: 1}, function(tracks){
