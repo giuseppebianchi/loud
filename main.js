@@ -18,32 +18,33 @@ var playingTrack;
 var progressBar = $(".waveform-bar");
 var progressBarEnd = $("#progress-bar-end");
 var progressLoading = $(".waveform-loading");
-// SC.get("/tracks/6360030", function(track){
-// 		//alert(track.title);
-// 		$('.title').html(track.title);
-// 		$('.artist').html(track.user.username);
-// 		$('.artwork').attr('src', track.artwork_url.replace('large', 't500x500'));
-// 		$('.waveform').attr('src', track.waveform_url);
-// 		$('.blur').css('background-image', 'url(' + track.artwork_url.replace('large', 't500x500') + ')');
-// });
-// SC.stream("/tracks/6360030", {
-// 	  autoPlay: true,
-// 	  whileloading: null,   
-// 	  whileplaying: null,
-// 	  pan: 0, 
-// 	  stream: true,
-// 	  whileplaying: function(){
-// 	  		progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
-// 	  		progressBarEnd.css("left", ((this.position/this.durationEstimate)*100) + '%');
-// 			},
-// 	  whileloading: function(){
-// 	  		progressLoading.css('width', ((this.bytesLoaded/this.bytesTotal) * 100) + '%');
-// 	  		//progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
-// 	  		}
-// 	}, function(sound){
-// 	playingTrack = sound;
 
-// });
+/*SC.get("/tracks/6360030", function(track){
+		//alert(track.title);
+		$('.title').html(track.title);
+		$('.artist').html(track.user.username);
+		$('.artwork').attr('src', track.artwork_url.replace('large', 't500x500'));
+		$('.waveform').attr('src', track.waveform_url);
+		$('.blur').css('background-image', 'url(' + track.artwork_url.replace('large', 't500x500') + ')');
+});
+SC.stream("/tracks/6360030", {
+	  autoPlay: true,
+	  whileloading: null,   
+	  whileplaying: null,
+	  pan: 0, 
+	  stream: true,
+	  whileplaying: function(){
+	  		progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
+	  		progressBarEnd.css("left", ((this.position/this.durationEstimate)*100) + '%');
+			},
+	  whileloading: function(){
+	  		progressLoading.css('width', ((this.bytesLoaded/this.bytesTotal) * 100) + '%');
+	  		//progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
+	  		}
+	}, function(sound){
+	playingTrack = sound;
+
+});*/
 
 
 
@@ -104,7 +105,7 @@ $('body').on("click", '.track', function(){
 	});
 
 	if(playingTrack){
-		playingTrack.destruct();
+		soundManager.destroySound('playingTrack');
 	}
 
 	SC.stream("/tracks/" + $(this).attr("id_track"), {
