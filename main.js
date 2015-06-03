@@ -8,8 +8,13 @@ SC.initialize({
 });*/
 $('#connect').click(function(){
 	SC.connect(function() {
-	  SC.get('/me/activities', function(me) { 
-	    console.log(JSON.stringify(me, null, 4)); 
+	  SC.get('/me', function(me) { 
+	  	console.log(JSON.stringify(me, null, 4)); 
+	    alert("Hello " + me.username); 
+	    $('#main .homepage').prepend('<h2>Welcome ' + me.username + '</h2>');
+	  });
+	  SC.get('/me/activities', function(activities) { 
+	    console.log(JSON.stringify(activities, null, 4)); 
 	  });
 	});
 });
