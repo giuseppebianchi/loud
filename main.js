@@ -105,7 +105,7 @@ $('body').on("click", '.track', function(){
 	});
 
 	if(playingTrack){
-		playingTrack.destruct();
+		playingTrack.destroySound();
 	}
 
 	SC.stream("/tracks/" + $(this).attr("id_track"), {
