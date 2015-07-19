@@ -32,8 +32,8 @@ define(function(require) {
 	      // create the view
 	      this.loginPage = new LoginView();
 	      // show the view
-	     document.body.appendChild(loginPage.render().el);
-		 loginPage.trigger("inTheDOM");
+	     document.body.appendChild(this.loginPage.render().el);
+		 this.loginPage.trigger("inTheDOM");
       }else{
 	      this.navigate("start", {trigger: true});
       }
