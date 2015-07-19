@@ -86,7 +86,7 @@ require(['backbone', 'utils', 'snap'], function(Backbone, Utils, Snap) {
 				    alert('Hello, ' + me.username);
 				  });
 				});
-			}
+			});
           
         }
         
