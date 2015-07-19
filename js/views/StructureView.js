@@ -9,7 +9,9 @@ define(function(require) {
     constructorName: "StructureView",
 
     id: "main",
-
+    
+	className: "fadeEffect",
+	
     events: {
       "tap #nav1": "MyHome",
       "tap #nav2": "map"
