@@ -10,6 +10,9 @@ define(function(require) {
 
     id: "LoginView",
     className: "full-page",
+    events: {
+	    "tap #login-button": "SCconnect"
+    },
 
     initialize: function(options) {
       // load the precompiled template
@@ -26,7 +29,18 @@ define(function(require) {
       this.contentElement = this.$el.find('#content')[0];
       return this;
     },
-	
+    
+    SCconnect: function(){
+	    // initiate auth popup
+		SC.connect(function() {
+		  SC.get('/me', function(me) {
+		    localStorage.setItem("account", me);
+		    Backbone.history.navigate("start", {trigger: true});
+		  });
+		  
+		});
+		
+    }
     // rendered: function(e) {
     // },
 

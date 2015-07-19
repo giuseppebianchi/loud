@@ -79,17 +79,8 @@ require(['backbone', 'utils', 'snap'], function(Backbone, Utils, Snap) {
 			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
 			});
 			
-			// initiate auth popup
-			document.querySelector('#login-button').addEventListener('click', function() {
-				SC.connect(function() {
-				  SC.get('/me', function(me) {
-				    alert('Hello, ' + me.username);
-				  });
-				});
-			});
-          
+			
         }
-        
         
       });
     } //End Run()

@@ -62,11 +62,11 @@ define(function(require) {
       if (!this.structureView) {
         this.structureView = new StructureView();
         // put the el element of the structure view into the DOM
-        document.body.appendChild(this.structureView.render().el);
+        document.body.innerHTML(this.structureView.render().el);
         this.structureView.trigger("inTheDOM");
       }
       // go to first view
-      this.navigate(this.firstView, {trigger: true});
+      //this.navigate(this.firstView, {trigger: true});
     },
 
   });
