@@ -297,6 +297,10 @@ float: right;
 	margin-top: 0;
 	margin-bottom: 30px;
 }
+.title-logo-menu{
+	font-size: 40px;
+	color: #FF003C;
+}
 .login-form {
   text-align: center;
   width: 80%;

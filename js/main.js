@@ -26,7 +26,7 @@ require.config({
 });
 
 // We launch the App
-require(['backbone', 'utils', 'snap'], function(Backbone, Utils, Snap) {
+require(['backbone', 'utils'], function(Backbone, Utils) {
   require(['preloader', 'router'], function(PreLoader, AppRouter) {
 	 
 	 

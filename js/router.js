@@ -34,7 +34,8 @@ define(function(require) {
 	      // show the view
 	     document.body.appendChild(loginPage.render().el);
 		 loginPage.trigger("inTheDOM");
-		 $("#LoginView").css("opacity", 1);
+		 setTimeout(function(){$("#LoginView").css("opacity", 1)}, 300);
+		 
       }else{
 	      this.navigate("start", {trigger: true});
       }
@@ -61,28 +62,43 @@ define(function(require) {
     // load the structure view
     showStructure: function() {
       	
-        this.structureView = new StructureView();
-        var html = this.structureView.render().el;
+        
+        init()
+        
+        function init(){
+	        this.structureView = new StructureView();
+	         
+	         $("#LoginView").css("opacity", 0);
+	         
+	         nextStep();
+	         
+        }
+        
+        function nextStep(){
+	        setTimeout(function(){
+				        document.body.appendChild(this.structureView.render().el);
+				        
+				        $("#LoginView").remove();
+						
+						finish();
+			}, 700);
+        }
+        
+        function finish(){
+        	
+        	this.structureView.trigger("inTheDOM");
+	        setTimeout(function(){$("#main").css("opacity", 1)}, 200);
+	        this.structureView.initializeMenu(); 
+			
+        }
         // put the el element of the structure view into the DOM
         
-        $("#LoginView").css("opacity", 0);
-        setTimeout(function(){
-	        document.body.appendChild(html);
-	        $("#LoginView").remove();
-			setTimeout(function(){$("#main").css("opacity", 1)}, 300);
-	    }, 900);
+        
+        
         
         
 		
-        
-		
-	        
-
-        
-        
-        this.structureView.trigger("inTheDOM");
-      
-      console.log(localStorage.getItem("account").toJSON());
+		 
       // go to first view
       //this.navigate(this.firstView, {trigger: true});
     },
