@@ -1,14 +1,14 @@
 define(function(require) {
 
   var Backbone = require("backbone");
-  var MyModel = require("models/MyModel");
+  var TrackModel = require("models/TrackModel");
   var Utils = require("utils");
 
   var HomeView = Utils.Page.extend({
 
     constructorName: "HomeView",
 
-    model: MyModel,
+    model: TrackModel,
 
     initialize: function() {
       // load the precompiled template

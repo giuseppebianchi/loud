@@ -9,7 +9,9 @@ define(function(require) {
     constructorName: "LoginView",
 
     id: "LoginView",
+    
     className: "full-page fadeEffect",
+    
     events: {
 	    "tap #login-button": "SCconnect"
     },
@@ -34,7 +36,8 @@ define(function(require) {
 	    // initiate auth popup
 		SC.connect(function() {
 		  SC.get('/me', function(me) {
-		    localStorage.setItem("account", me);
+		    localStorage.setItem("account", JSON.stringify(me));
+		    alert(JSON.stringify(me));
 		    Backbone.history.navigate("start", {trigger: true});
 		  });
 		  
