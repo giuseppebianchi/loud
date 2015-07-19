@@ -30,7 +30,7 @@ define(function(require) {
 	LoginFunction: function() {
       if(!localStorage.getItem("account")){
 	      // create the view
-	      var loginPage = new LoginView();
+	      this.loginPage = new LoginView();
 	      // show the view
 	     document.body.appendChild(loginPage.render().el);
 		 loginPage.trigger("inTheDOM");
@@ -61,10 +61,20 @@ define(function(require) {
     showStructure: function() {
       if (!this.structureView) {
         this.structureView = new StructureView();
+        
         // put the el element of the structure view into the DOM
-        document.body.innerHTML(this.structureView.render().el);
+        $("#LoginView").css("opacity", 0);
+        setTimeout(function(){
+	        $("LoginView").remove();
+	        this.loginPage.remove();
+	        document.body.appendChild(this.structureView.render().el);
+	        $("#main").css("opacity", 1)
+        }, 500);
+        
         this.structureView.trigger("inTheDOM");
       }
+      var bongo = localStorage.getItem("account");
+      alert(bongo.username);
       // go to first view
       //this.navigate(this.firstView, {trigger: true});
     },

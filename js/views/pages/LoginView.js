@@ -9,7 +9,7 @@ define(function(require) {
     constructorName: "LoginView",
 
     id: "LoginView",
-    className: "full-page",
+    className: "full-page fadeEffect",
     events: {
 	    "tap #login-button": "SCconnect"
     },

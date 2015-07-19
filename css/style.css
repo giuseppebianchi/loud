@@ -55,6 +55,10 @@ body{
 	height: 100%;
 	width: 100%;
 }
+.fadeEffect{
+	opacity: 0;
+	transition: 0.5s;
+}
 #main{
 	height: 100%;
 	width: 100%;
