@@ -28,7 +28,7 @@ define(function(require) {
     },
 
 	LoginFunction: function() {
-      if(!localStorage.getItem("account")){
+      if(localStorage.getItem("account")){
 	      // create the view
 	      this.loginPage = new LoginView();
 	      // show the view
