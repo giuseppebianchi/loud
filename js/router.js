@@ -34,6 +34,7 @@ define(function(require) {
 	      // show the view
 	     document.body.appendChild(loginPage.render().el);
 		 loginPage.trigger("inTheDOM");
+		 $("#LoginView").css("opacity", 1);
       }else{
 	      this.navigate("start", {trigger: true});
       }
@@ -67,8 +68,8 @@ define(function(require) {
         $("#LoginView").css("opacity", 0);
         setTimeout(function(){
 	        document.body.appendChild(html);
-	        $("LoginView").remove();
-			setTimeout(function(){$("#main").css("opacity", 1)}, 200);
+	        $("#LoginView").remove();
+			setTimeout(function(){$("#main").css("opacity", 1)}, 300);
 	    }, 900);
         
         
