@@ -30,10 +30,10 @@ define(function(require) {
 	LoginFunction: function() {
       if(localStorage.getItem("account")){
 	      // create the view
-	      this.loginPage = new LoginView();
+	      var loginPage = new LoginView();
 	      // show the view
-	     document.body.appendChild(this.loginPage.render().el);
-		 this.loginPage.trigger("inTheDOM");
+	     document.body.appendChild(loginPage.render().el);
+		 loginPage.trigger("inTheDOM");
       }else{
 	      this.navigate("start", {trigger: true});
       }
@@ -59,22 +59,29 @@ define(function(require) {
 
     // load the structure view
     showStructure: function() {
-      if (!this.structureView) {
+      	
         this.structureView = new StructureView();
-        
+        var html = this.structureView.render().el;
         // put the el element of the structure view into the DOM
+        
         $("#LoginView").css("opacity", 0);
         setTimeout(function(){
+	        document.body.appendChild(html);
 	        $("LoginView").remove();
-	        this.loginPage.remove();
-	        document.body.appendChild(this.structureView.render().el);
-	        $("#main").css("opacity", 1)
-        }, 500);
+			setTimeout(function(){$("#main").css("opacity", 1)}, 200);
+	    }, 900);
+        
+        
+		
+        
+		
+	        
+
+        
         
         this.structureView.trigger("inTheDOM");
-      }
-      var bongo = localStorage.getItem("account");
-      alert(bongo.username);
+      
+      console.log(localStorage.getItem("account").toJSON());
       // go to first view
       //this.navigate(this.firstView, {trigger: true});
     },

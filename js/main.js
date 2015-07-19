@@ -28,7 +28,9 @@ require.config({
 // We launch the App
 require(['backbone', 'utils', 'snap'], function(Backbone, Utils, Snap) {
   require(['preloader', 'router'], function(PreLoader, AppRouter) {
-
+	 
+	 
+		
     //document.addEventListener("deviceready", run, false);
     run();
     
