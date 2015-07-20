@@ -16,7 +16,6 @@ define(function(require) {
     events: {
       "click #menu-button": "openMenu"
     },
-
     initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.structure;
@@ -30,7 +29,7 @@ define(function(require) {
     render: function() {
       // load the template
       this.el.innerHTML = this.template({});
-      // cache a reference to the content element
+      // cache a reference to the content Element
       this.contentElement = this.$el.find('#content')[0];
       return this;
     },
@@ -54,7 +53,7 @@ define(function(require) {
 					minDragDistance: 40 
 			});
     },
-
+    
     // rendered: function(e) {
     // },
 

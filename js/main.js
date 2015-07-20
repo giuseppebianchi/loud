@@ -42,7 +42,7 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
       // see utils.js
       Utils.loadTemplates().once("templatesLoaded", function() {
 
-      var images = ['img/login.jpg']; // here the developer can add the paths to the images that he would like to be preloaded
+      var images = ['img/login.jpg', 'img/avatar.jpg']; // here the developer can add the paths to the images that he would like to be preloaded
 
       if (images.length) {
           new PreLoader(images, {

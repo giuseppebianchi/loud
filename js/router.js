@@ -3,7 +3,10 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   /* MODELLI */
-  var MyModel = require("models/MyModel");
+  var TrackModel = require("models/TrackModel");
+  
+  /* COLLECTION */
+  var TrackList = require("collections/TrackList");
   
   /* VIEW */
   var StructureView = require("views/StructureView");
@@ -30,44 +33,43 @@ define(function(require) {
     // load the structure view
     showStructure: function() {
       	
-        // put the el element of the structure view into the DOM
-        
-        init()
-        
-        function init(){
-	        this.structureView = new StructureView();
-	         
-	         $("#LoginView").css("opacity", 0);
-	         
-	         nextStep();
-	         
-        }
-        
-        function nextStep(){
-	        setTimeout(function(){
-				        document.body.appendChild(this.structureView.render().el);
+				        // put the el element of the structure view into the DOM
+				        var self = this;
 				        
-				        $("#LoginView").remove();
-						
-						finish();
-			}, 700);
-        }
-        
-        function finish(){
-        	
-        	this.structureView.trigger("inTheDOM");
-	        setTimeout(function(){$("#main").css("opacity", 1)}, 200);
-	        this.structureView.initializeMenu(); 
-			nextView();
-        }
-        
-        
-        
-        
-        function nextView(){
-	        Backbone.history.navigate("home", {trigger: true});
-        }
-        // go to last view - "home" is default
+				        init();
+				        
+				        function init(){
+					        self.structureView = new StructureView();
+					        $("#LoginView").css("opacity", 0);
+					        nextStep();
+					         
+				        }
+				        
+				        function nextStep(){
+					        setTimeout(function(){
+								        document.body.appendChild(self.structureView.render().el);
+								        
+								        $("#LoginView").remove();
+										
+										finish();
+							}, 700);
+				        }
+				        
+				        function finish(){
+				        	
+				        	self.structureView.trigger("inTheDOM");
+					        setTimeout(function(){$("#main").css("opacity", 1)}, 200);
+					        self.structureView.initializeMenu(); 
+							nextView();
+				        }
+				        
+				        
+				        
+				        
+				        function nextView(){
+					        Backbone.history.navigate("home", {trigger: true});
+				        }
+				        // go to last view - "home" is default
       
       
     }, //END STRUCTURE
@@ -83,11 +85,11 @@ define(function(require) {
 						  // create the view
 					      var loginPage = new LoginView();
 					      document.body.appendChild(loginPage.render().el);
-						  loginPage.trigger("inTheDOM");
 						  showAll()
 					     } 
 					     
 					     function showAll(){
+					     loginPage.trigger("inTheDOM");
 						 $("#LoginView").css("opacity", 1)
 						 }
 						 
@@ -112,6 +114,7 @@ define(function(require) {
 				      });
 				      // show the view
 				      this.changePage(page);
+				      page.elasticImage = $("#cover-view");
     },
     
 
