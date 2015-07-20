@@ -78,22 +78,19 @@ define(function(require) {
 				      
 				      if(!localStorage.getItem("account")){
 					      
-					      // show the view
-					     init()
+				      // show the view
+				     
+					  // create the view
+					      var loginPage = new LoginView();
+					      document.body.appendChild(loginPage.render().el);
+					      
+					      if(loginPage){
+						  	loginPage.trigger("inTheDOM");
+						  	setTimeout(function(){$("#LoginView").css("opacity", 1)}, 100);
+						  	
+						  }
+				    
 					     
-					     function init(){
-						  // create the view
-						      var loginPage = new LoginView();
-						      document.body.appendChild(loginPage.render().el);
-						      if(loginPage){
-							  showAll();
-							  }
-					     } 
-					     
-					     function showAll(){
-						     loginPage.trigger("inTheDOM");
-							 $("#LoginView").css("opacity", 1);
-						 }
 						 
 				      }else{
 					      this.navigate("start", {trigger: true});
