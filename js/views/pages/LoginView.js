@@ -13,7 +13,7 @@ define(function(require) {
     className: "full-page fadeEffect",
     
     events: {
-	    "tap #login-button": "SCconnect"
+	    "click #login-button": "SCconnect"
     },
 
     initialize: function(options) {
