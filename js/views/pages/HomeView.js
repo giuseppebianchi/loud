@@ -61,6 +61,8 @@ define(function(require) {
 	resetHeight: function(){
 		if(this.el.scrollTop == 0){
 			this.elasticImage.animate({height: ""}, 200, 'ease-out');
+		}else{
+			$(this.el).css("overflow", "");
 		}
 	},
 	
