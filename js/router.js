@@ -114,7 +114,13 @@ define(function(require) {
 				      // show the view
 				      this.changePage(page);
 				      page.elasticImage = $("#cover-view");
-				      page.elasticImage.css("transform", "scale(1)");
+				      this.structureView.snapper.on("drag", function(){
+					      page.enabledElastic = false;
+				      });
+				      this.structureView.snapper.on("animated", function(){
+					      page.enabledElastic = true;
+				      });
+				      
     },
     
 

@@ -21,7 +21,6 @@
   /* transparent link and button selection */
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
 }
-
 body {
   -webkit-touch-callout: none;
   /* no callouts during tap and hold */

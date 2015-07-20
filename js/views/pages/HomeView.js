@@ -8,10 +8,10 @@ define(function(require) {
 
     constructorName: "HomeView",
     events:{
+    	"touchstart": "startTouch",
 	    "touchmove": "elastic",
-	    "touchend": "resetHeight",
-	    "scroll": "checkScroll"
-    },
+	    "touchend": "resetHeight"
+	},
 
     model: TrackModel,
     
@@ -40,21 +40,47 @@ define(function(require) {
       
       return this;
     },
-    elastic: function(e){
-    	var altezza = this.elasticImage.css("height");
-     	if(this.el.scrollTop == 0){
-		    this.elasticImage.css("height", (parseInt(altezza.replace(/px/, ""))+2)+"px");
+    
+    enabledElastic: true,
+    
+    startTouch: function(e){this.firstTouch = e.touches[0].pageY;},
+    
+	elastic: function(e){
+		var altezza = this.elasticImage.css("height");
+		altezza = parseInt(altezza.replace(/px/, ""));
+		if(altezza > 400 && this.el.scrollTop == 0){
+			$(this.el).css("overflow", "hidden");
+		}else{
+			$(this.el).css("overflow", "");
+		}
+     	if(this.enabledElastic && this.el.scrollTop == 0){
+		    this.elasticImage.css("height", (400 + (e.touches[0].pageY - this.firstTouch))+"px");
 	    }
 		//e.touches[0].pageY
 	},
 	resetHeight: function(){
-		this.elasticImage.animate({height: ""}, 200, 'ease-out');
+		if(this.el.scrollTop == 0){
+			this.elasticImage.animate({height: ""}, 200, 'ease-out');
+		}
+	},
+	
+		
+	
+	
+	/*
+elastic: function(e){
+    	var altezza = this.elasticImage.css("height");
+     	if(this.el.scrollTop == 0 && this.enabledElastic){
+		    this.elasticImage.css("height", (parseInt(altezza.replace(/px/, ""))+2)+"px");
+	    }
+		//e.touches[0].pageY
 	},
 	checkScroll: function(){
-		if(this.el.scrollTop > 0 && this.el.scrollTop < 10){
+		if(this.el.scrollTop > 0 && this.el.scrollTop < 5){
 			this.resetHeight();
 		}
 	}
+*/	
 	 /*
 elastic: function(){
 	 	
