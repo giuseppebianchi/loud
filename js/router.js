@@ -83,14 +83,16 @@ define(function(require) {
 					     
 					     function init(){
 						  // create the view
-					      var loginPage = new LoginView();
-					      document.body.appendChild(loginPage.render().el);
-						  showAll()
+						      var loginPage = new LoginView();
+						      document.body.appendChild(loginPage.render().el);
+						      if(loginPage){
+							  showAll();
+							  }
 					     } 
 					     
 					     function showAll(){
-					     loginPage.trigger("inTheDOM");
-						 $("#LoginView").css("opacity", 1)
+						     loginPage.trigger("inTheDOM");
+							 $("#LoginView").css("opacity", 1);
 						 }
 						 
 				      }else{
@@ -115,6 +117,7 @@ define(function(require) {
 				      // show the view
 				      this.changePage(page);
 				      page.elasticImage = $("#cover-view");
+				      page.elasticImage.css("transform", "scale(1)");
     },
     
 
