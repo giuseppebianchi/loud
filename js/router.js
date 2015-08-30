@@ -108,11 +108,11 @@ define(function(require) {
 				        model: listaStream
 				      });
 				      // show the view
-				      
+				      SC.connect(function() {
 				      SC.get('/me/activities', function(activities) {
-                    	console.log(activities);
+                    			console.log(activities);
 					  });
-					  
+				      });  
 					  
 				      this.changePage(page);
 				      
