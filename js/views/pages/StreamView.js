@@ -1,25 +1,23 @@
 define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
-  var TrackModel = require("models/TrackModel");
   var Utils = require("utils");
+  var StreamListTrack = require("collections/StreamListTrack");
+  
 
-  var HomeView = Utils.Page.extend({
+  var StreamView = Utils.Page.extend({
 
-    constructorName: "HomeView",
-    events:{
-    	"touchstart": "startTouch",
-	    "touchmove": "elastic",
-	    "touchend": "resetHeight"
-	},
+    constructorName: "StreamView",
+    
+    events:{	},
 
-    model: TrackModel,
+    model: StreamListTrack,
     
 	elasticImage: undefined,
 	
     initialize: function() {
       // load the precompiled template
-      this.template = Utils.templates.home;
+      this.template = Utils.templates.stream;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -77,6 +75,6 @@ define(function(require) {
     
   });
 
-  return HomeView;
+  return StreamView;
 
 });

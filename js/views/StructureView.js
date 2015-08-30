@@ -14,8 +14,9 @@ define(function(require) {
 	className: "fadeEffect",
 	
     events: {
-      "click #menu-button": "openMenu"
-    },
+      "tap #menu-button": "openMenu",
+      "tap .item_nav_menu": "setActive"
+      },
     initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.structure;
@@ -28,7 +29,8 @@ define(function(require) {
 
     render: function() {
       // load the template
-      this.el.innerHTML = this.template({});
+      var account = JSON.parse(localStorage.getItem("account"));
+      this.el.innerHTML = this.template({username: account.username, picture: account.avatar_url.replace("large", "t500x500")});
       // cache a reference to the content Element
       this.contentElement = this.$el.find('#content')[0];
       return this;
@@ -37,6 +39,14 @@ define(function(require) {
     openMenu: function(){
 	    this.snapper.open("left");
 	    
+    },
+    setActive: function(e){
+    	alert();
+    	var ciao = document.getElementsByClassName("active");
+    	if(ciao.length > 0){
+	    	ciao[0].classList.remove("active");
+    	}
+	    e.currentTarget.classList.add("active");
     },
     initializeMenu: function(){
 
@@ -49,7 +59,7 @@ define(function(require) {
 					transitionSpeed: 0.3,
 					tapToClose: true,
 					touchToDrag: true,
-					slideIntent: 10,
+					slideIntent: 20,
 					minDragDistance: 40 
 			});
     },
@@ -57,11 +67,7 @@ define(function(require) {
     // rendered: function(e) {
     // },
 
-    setActiveTabBarElement: function(elementId) {
-      // here we assume that at any time at least one tab bar element is active
-      //document.getElementsByClassName("active")[0].classList.remove("active");
-      //document.getElementById(elementId).classList.add("active");
-    }
+    
     
   });
 

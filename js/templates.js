@@ -11,5 +11,6 @@
 define({
     structure: "templates/structure.html",
     home: "templates/home.html",
-    login: "templates/login.html"
+    login: "templates/login.html",
+    stream: "templates/stream.html",
 });

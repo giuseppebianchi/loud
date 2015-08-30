@@ -1,3 +1,11 @@
+/* COLORI
+Nero: #140014
+Bianco: #FFFFFF
+Grigio: #F5F7F0
+Rosso Chiaro: #FF003C
+Rosso: #E71D36
+*/
+
 @-webkit-keyframes 'MovingBack' {
 	from {
 	  -webkit-transform: translate3d(0px, 0px, 0px);
@@ -37,6 +45,7 @@ body {
   font-weight: 300;
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
 }
 h2{
 	font-size: 24px;
@@ -50,7 +59,14 @@ body{
 	height: 100%;
 	width: 100%;
 }
+img{
+	max-width: 100%;
+}
 .full-page{
+	height: 100%;
+	width: 100%;
+}
+.scrolling-view{
 	height: 100%;
 	width: 100%;
 	overflow: auto;
@@ -89,10 +105,11 @@ float: right;
 	width: 100%;
 }
 #content{
-	background: white;
+	background: #F5F7F0;
 	height: 100%;
 	width: 100%;
 	position: relative;
+	box-shadow: -5px 0 10px RGBA(0, 0, 0, 0.2);
 }
 .snap-drawer-left{
 	z-index: 0;
@@ -134,7 +151,7 @@ float: right;
   padding-left: 0;
   padding-right: 0;
   background: -webkit-linear-gradient(rgba(255, 0, 60, 0.9), rgba(231, 29, 54, 0.9));
-  background: linear-gradient(rgba(255, 0, 60, 0.9), rgba(231, 29, 54, 0.9))
+  background: linear-gradient(rgba(255, 0, 60, 0.9), rgba(231, 29, 54, 0.9));
   color: #1f1f21;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -144,6 +161,7 @@ float: right;
   white-space: nowrap;
   overflow: visible;
 }
+
 /*
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .navigation-bar {
@@ -220,10 +238,16 @@ float: right;
 .navigation-bar__center:first-child:last-child {
   width: 100%;
 }
-.navigation-bar--transparent {
-  background-color: transparent;
-  background-image: none;
-  border: none;
+
+.navigation-bar--transparent{
+	/* background-color: rgba(255, 0, 60, 0.9); */
+	background-color: rgba(0, 0, 0, 0.95);
+	background-image: none;
+	border:none; 
+	position:fixed;
+	top:0;
+	right: 0;
+	left: 0;
 }
 .toolbar-button,
 .toolbar-button--outline,
@@ -300,6 +324,38 @@ float: right;
 .title-logo-menu{
 	font-size: 40px;
 	color: #FF003C;
+	padding:20px 10px 15px 20px;
+	margin-bottom: 0px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	text-shadow: 0 0 2px #ff003c;
+}
+.item-profile-menu{
+	padding:10px;
+	background:rgba(255, 255, 255, 0.76);
+}
+.image-profile-menu{
+	position: absolute;
+    top: 18px;
+    right: 20px;
+    width: 20%;
+    
+}
+.image-profile-menu > img{
+	border-radius: 50%;
+	transition: 0.2s;
+}
+.image-profile-menu > img:hover{
+	box-shadow: 0 0 10px #140014;
+}
+.name-profile-menu{
+	display: inline-block;
+	width: 70%;
+	vertical-align: top;
+	padding-left: 5px;
+}
+.name-profile-menu > h4{
+	font-weight: 400;
+	margin: 5px 0;
 }
 .login-form {
   text-align: center;
@@ -412,10 +468,70 @@ input[type=email]:focus, input[type=password]:focus {
   pointer-events: none;
 }
 
+.list-track{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.list-track .cover-track{
+  height: 135px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-position-y: -50px;
+}
+.list-track .cover-track .cover-track-overlay{
+	position:relative;
+	width: 100%;
+	height: 100%;
+	background: -webkit-linear-gradient(transparent,rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95));
+	background: linear-gradient(transparent,rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95));
+}
+.list-track .cover-track .cover-track-overlay .list-track-details{
+	position: absolute;
+	bottom: 0;
+	padding-bottom: 5px;
+}
+.list-track .cover-track .cover-track-overlay .title-list-track{
+	margin: 5px 10px;
+	color: white;
+	font-weight: 300;
+	bottom: 0;
+	line-height: 25px;
+}
+.list-track .cover-track .cover-track-overlay .title-list-track > span{
+	font-weight: 500;
+}
+
 #cover-view{
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size:cover;
-	height: 400px;
+	height: 200px;
+}
+
+.snap-drawer{
+	/*background: rgba(255, 255, 255, 0.95);*/
+	background: rgba(0, 0, 0, 0.85);
+}
+.snap-drawers{
+	background: url('../img/avatar.jpg') no-repeat center;
+    background-size: cover;
+}
+.snap-drawer .list__item{
+	background-image: none;
+	line-height: 55px;
+	font-size: 18px;
+	padding-left: 20px;
+	color: #F5F7F0;
+	transition: 0.3s;
+}
+.snap-drawer .list__item.active{
+	background: #FF003C;
+	color: white;
+}
+
+.full-page .scrolling-view > .list {
+	padding-top: 40px;
 }
 

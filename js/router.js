@@ -2,16 +2,10 @@ define(function(require) {
 
   var $ = require("jquery");
   var Backbone = require("backbone");
-  /* MODELLI */
-  var TrackModel = require("models/TrackModel");
-  
-  /* COLLECTION */
-  var TrackList = require("collections/TrackList");
   
   /* VIEW */
   var StructureView = require("views/StructureView");
-  var HomeView = require("views/pages/HomeView");
-  var LoginView = require("views/pages/LoginView");
+
 
   var AppRouter = Backbone.Router.extend({
 
@@ -21,7 +15,7 @@ define(function(require) {
       // the default is Login
       "": "LoginFunction",
       "start": "showStructure",
-      "home": "HomeFunction"
+      "stream": "StreamFunction"
     },
 
     firstView: "HomeFunction",
@@ -67,7 +61,7 @@ define(function(require) {
 				        
 				        
 				        function nextView(){
-					        Backbone.history.navigate("home", {trigger: true});
+					        Backbone.history.navigate("stream", {trigger: true});
 				        }
 				        // go to last view - "home" is default
       
@@ -77,13 +71,14 @@ define(function(require) {
 	LoginFunction: function() {
 				      
 				      if(!localStorage.getItem("account")){
-					      
-				      // show the view
-				     
-					  // create the view
+				      
+					      var LoginView = require("views/pages/LoginView");
+				      
+						  // create the view
 					      var loginPage = new LoginView();
 					      document.body.appendChild(loginPage.render().el);
 					      
+					      // show the view
 					      if(loginPage){
 						  	loginPage.trigger("inTheDOM");
 						  	setTimeout(function(){$("#LoginView").css("opacity", 1)}, 100);
@@ -91,35 +86,45 @@ define(function(require) {
 						  }
 				    
 					     
-						 
-				      }else{
+					  }else{
+					  
 					      this.navigate("start", {trigger: true});
+					      
 				      }
       
     },
 
-    HomeFunction: function() {
-				     
+    StreamFunction: function() {
+				      
+				      var StreamView = require("views/pages/StreamView");
+				      var StreamListTrack = require("collections/StreamListTrack");
 				      // highlight the nav1 tab bar element as the current one
 				      //this.structureView.setActiveTabBarElement("nav1");
 				      // create a model with an arbitrary attribute for testing the template engine
-				      
-				      var listaStream = new TrackList({
-				       	
-				      });
+				      var listaStream = new StreamListTrack;
+				   
 				      // create the view
-				      var page = new HomeView({
+				      var page = new StreamView({
 				        model: listaStream
 				      });
 				      // show the view
+				      
+				      SC.get('/me/activities', function(activities) {
+                    	console.log(activities);
+					  });
+					  
+					  
 				      this.changePage(page);
+				      
 				      page.elasticImage = $("#cover-view");
+				      
 				      this.structureView.snapper.on("drag", function(){
 					      page.enabledElastic = false;
 				      });
 				      this.structureView.snapper.on("animated", function(){
 					      page.enabledElastic = true;
 				      });
+				      
 				      
     },
     
