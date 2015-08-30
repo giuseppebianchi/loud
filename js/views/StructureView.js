@@ -14,8 +14,8 @@ define(function(require) {
 	className: "fadeEffect",
 	
     events: {
-      "tap #menu-button": "openMenu",
-      "tap .item_nav_menu": "setActive"
+      "click #menu-button": "openMenu",
+      "click .item_nav_menu": "setActive"
       },
     initialize: function(options) {
       // load the precompiled template
