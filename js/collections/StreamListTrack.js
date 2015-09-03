@@ -13,7 +13,7 @@ define(function(require) {
             SC.get('/activities', function(result) {
                 console.log(result);
                 activities = result;
-            }
+            });
             return activities;
             
         }
