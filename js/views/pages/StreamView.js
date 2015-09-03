@@ -52,7 +52,9 @@ define(function(require) {
       //this.activities = JSON.parse(localStorage.getItem("activities"));
 
       //$(this.el).html(this.template(this.activities.collection));
+      console.log(this.collection);
       $(this.el).html(this.template(this.collection.toJSON()));
+
       return this;
     },
     
