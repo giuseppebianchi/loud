@@ -7,13 +7,16 @@ define(function(require) {
 		constructorName: "StreamListTrack",
 		model: TrackModel,
         limit: 20,
-        url:  function(){
-        			
-                    SC.get('/me/activities', function(activities) {
-                    	console.log(activities);
-                    //return "http://www.expo.abruzzo.it/rest/news_pag.php?rquest=get&limit="+encodeURIComponent(this.limit);
-                    });
-                }
+        next: null,
+        url: function(){
+            var activities;
+            SC.get('/activities', function(result) {
+                console.log(result);
+                activities = result;
+            }
+            return activities;
+            
+        }
 	});
 
 	return StreamListTrack;

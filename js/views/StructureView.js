@@ -14,8 +14,17 @@ define(function(require) {
 	className: "fadeEffect",
 	
     events: {
+<<<<<<< Updated upstream
       "click #menu-button": "openMenu",
       "click .item_nav_menu": "setActive"
+=======
+<<<<<<< HEAD
+      "click #menu-button": "openMenu"
+=======
+      "click #menu-button": "openMenu",
+      "click .item_nav_menu": "setActive"
+>>>>>>> origin/gh-pages
+>>>>>>> Stashed changes
       },
     initialize: function(options) {
       // load the precompiled template
@@ -40,13 +49,22 @@ define(function(require) {
 	    this.snapper.open("left");
 	    
     },
-    setActive: function(e){
+    /*setActive: function(e){
     	alert();
     	var ciao = document.getElementsByClassName("active");
     	if(ciao.length > 0){
 	    	ciao[0].classList.remove("active");
     	}
 	    e.currentTarget.classList.add("active");
+    },*/
+    setActive: function(elementId){
+        try{
+          document.getElementsByClassName("active")[0].classList.remove("active");
+        }
+        finally{
+          document.getElementById(elementId).classList.add("active");
+        }
+          
     },
     initializeMenu: function(){
 

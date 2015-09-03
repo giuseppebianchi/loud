@@ -10,7 +10,8 @@ require.config({
     templates: '../templates',
     preloader: '../lib/preloader/pre-loader',
     utils: '../lib/utils/utils',
-    snap: '../lib/snap/snap'
+    snap: '../lib/snap/snap',
+    blazy: '../lib/blazy/blazy'
   },
   shim: {
     'jquery': {
@@ -78,7 +79,7 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
 			
 			SC.initialize({
 			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
+			  redirect_uri: 'http://giuseppebianchi.github.io/loud/'
 			});
 			
 			
