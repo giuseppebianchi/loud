@@ -79,7 +79,7 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
 			
 			SC.initialize({
 			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-			  redirect_uri: 'http://giuseppebianchi.github.io/loud/'
+			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
 			});
 			
 			
