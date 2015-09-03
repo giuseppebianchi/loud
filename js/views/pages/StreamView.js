@@ -49,10 +49,10 @@ define(function(require) {
         return new Handlebars.SafeString(large)
       });
 
-      this.activities = JSON.parse(localStorage.getItem("activities"));
+      //this.activities = JSON.parse(localStorage.getItem("activities"));
 
-      $(this.el).html(this.template(this.activities.collection));
-      
+      //$(this.el).html(this.template(this.activities.collection));
+      $(this.el).html(this.template(this.collection.toJSON()));
       return this;
     },
     
