@@ -111,7 +111,8 @@ define(function(require) {
       SC.get("/tracks/" + selectedTrack, function(result){
         // console.log(result);
         $("#totalDuration").text(self.getMinutes(result.duration));
-        $("#miniplayer img").attr("src", result.artwork_url.replace("large", "badge"));
+        $("#miniplayer img").attr("src", result.artwork_url.replace("large", "t500x500"));
+        $(".swiper-slide-active .coverTrackPlayer").css("background-image", "url(" + result.artwork_url.replace("large", "t500x500")+ ")");
       });
 
       var progressBarMini = $("#progressBar");

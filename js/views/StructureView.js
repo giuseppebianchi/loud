@@ -12,7 +12,7 @@ define(function(require) {
 
     id: "main",
     
-	className: "fadeEffect",
+	  className: "fadeEffect",
 	
     events: {
       "click #menu-button": "openMenu",
@@ -20,7 +20,8 @@ define(function(require) {
       "click #chiudiplayer": "closePlayer",
       "click #timePlayer": "toggleProgressbar",
       "click .playControl": "playControl",
-      "touchstart #progressBarPlayer": "seekTrack"
+      "touchstart #progressBarPlayer": "seekTrack",
+      "touchend #progressBarPlayer": "seekTrackEnd"
       },
     initialize: function(options) {
       // load the precompiled template
@@ -29,6 +30,8 @@ define(function(require) {
         var large = string.replace("large","t500x500");
         return new Handlebars.SafeString(large)
       });
+      
+      //{{kFormatter playback_count}}
       Handlebars.registerHelper('kFormatter', function(num) {
         var result;
         if(num > 999){
@@ -36,6 +39,7 @@ define(function(require) {
         }else{
           result = num;
         }
+        console.log(result);
         return new Handlebars.SafeString(result)
       });
 
@@ -132,8 +136,10 @@ define(function(require) {
       currentTrack.togglePause();
     },
     seekTrack: function(e){
-      e.preventDefault();
-      console.log(e);
+      
+    },
+    seekTrackEnd: function(e){
+      
     }
     
     // rendered: function(e) {

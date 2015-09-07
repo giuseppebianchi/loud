@@ -477,10 +477,10 @@ float: right;
   border: none;
 }
 .bottom-bar .navigation-bar__right, .bottom-bar .navigation-bar__left{
-  width: 15%;
+  width: 12%;
 }
 .bottom-bar .navigation-bar__center{
-  width: 68%;
+  width: 74%;
   text-align: left;
 }
 .title-logo{
@@ -837,6 +837,7 @@ input[type=email]:focus, input[type=password]:focus {
 }
 #miniplayer img{
   transition: 0.5s;
+  width: 100%;
 }
 #titleMiniplayer{
   padding: 5px;
