@@ -19,7 +19,8 @@ define(function(require) {
       "click #apriplayer": "openPlayer",
       "click #chiudiplayer": "closePlayer",
       "click #timePlayer": "toggleProgressbar",
-      "click .playControl": "playControl"
+      "click .playControl": "playControl",
+      "touchstart #progressBarPlayer": "seekTrack"
       },
     initialize: function(options) {
       // load the precompiled template
@@ -28,7 +29,16 @@ define(function(require) {
         var large = string.replace("large","t500x500");
         return new Handlebars.SafeString(large)
       });
-      
+      Handlebars.registerHelper('kFormatter', function(num) {
+        var result;
+        if(num > 999){
+         result = (num/1000).toFixed(1) + 'k';
+        }else{
+          result = num;
+        }
+        return new Handlebars.SafeString(result)
+      });
+
 					
       //this.on("inTheDOM", this.rendered);
       // bind the back event to the goBack function
@@ -38,12 +48,6 @@ define(function(require) {
     playerView: null,
 
     coverPlayer: null,
-
-    getMinutes: function (millis) {//for soundcloud track duration
-        var minutes = Math.floor(millis / 60000);
-        var seconds = ((millis % 60000) / 1000).toFixed(0);
-        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-    },
 
     render: function() {
       // load the template
@@ -125,8 +129,11 @@ define(function(require) {
         $("#ios-play").css("display", "block");
         $("#equalizer").css("display", "none");
       }
-      console.log("ok");
       currentTrack.togglePause();
+    },
+    seekTrack: function(e){
+      e.preventDefault();
+      console.log(e);
     }
     
     // rendered: function(e) {

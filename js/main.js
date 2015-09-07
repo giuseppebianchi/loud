@@ -68,28 +68,11 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
           // launch the router
           var router = new AppRouter();
           Backbone.history.start();
-          
-	      /*var snapper = new Snap({
-				element: document.getElementById('content'),
-				disable: "right",
-				addBodyClasses: true,
-				resistance: 0.5,
-				flickThreshold: 10,
-				transitionSpeed: 0.5,
-				tapToClose: true,
-				touchToDrag: true,
-				slideIntent: 10,
-				minDragDistance: 40 
-			});
-			
-		   document.querySelector('#menu-button').addEventListener('click', function() {
-			        snapper.open("left");
-			});*/
-			
-			SC.initialize({
-			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
-			});
+         
+         SC.initialize({
+  			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
+  			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
+			   });
 			
 			
         }

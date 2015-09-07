@@ -99,25 +99,52 @@ define(function(require) {
         
     },
     playTrackStream: function(e){
-
+      var self = this;
       var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
-      console.log(selectedTrack);
       if (typeof currentTrack !== 'undefined') {
         // currentTrack is defined
         currentTrack.destruct();
       }else{
         $("#miniplayer").addClass("opened");
       }
-      var progressBar = $("#progressBar");
+
+      SC.get("/tracks/" + selectedTrack, function(result){
+        // console.log(result);
+        $("#totalDuration").text(self.getMinutes(result.duration));
+        $("#miniplayer img").attr("src", result.artwork_url.replace("large", "badge"));
+      });
+
+      var progressBarMini = $("#progressBar");
+      var progressBarPlayer = $("#progressBarPlayer");
       SC.stream("/tracks/" + selectedTrack, {
         autoPlay: true,
         whileplaying: function(){
-        progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
+        progressBarMini.css("width", ((this.position/this.durationEstimate)*100) + '%');
+        progressBarPlayer.val((this.position/this.durationEstimate)*100);
         }
       },
       function(sound){
        currentTrack = sound;
       });
+    },
+    getMinutes: function (duration) {//for soundcloud track duration
+        /*var minutes = Math.floor(millis / 60000);
+        var seconds = ((millis % 60000) / 1000).toFixed(0);
+        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;*/
+          var seconds = parseInt((duration/1000)%60)
+              , minutes = parseInt((duration/(1000*60))%60)
+              , hours = parseInt((duration/(1000*60*60))%24),
+              total = "";
+          
+          if(hours != "00"){
+             hours = (hours < 10) ? "0" + hours : hours;
+             total += hours + ":";
+          }
+          
+          minutes = (minutes < 10) ? "0" + minutes : minutes;
+          seconds = (seconds < 10) ? "0" + seconds : seconds;
+          total = total + minutes + ":" + seconds;
+          return total;
     },
     showUser: function(e){
       e.stopImmediatePropagation()

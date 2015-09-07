@@ -26,7 +26,7 @@
 <div id="content" class="content">
 
 <div id="miniplayer" class="bottom-bar">
-	<div id="progressBar"></div>
+	<div id="progressBar" class="progressBar"></div>
   	<div class="bottom-bar__line-height" style="text-align:center">
   		<div class="navigation-bar__left">
     		<img id="apriplayer" src="https://i1.sndcdn.com/artworks-000128306494-sg4bnj-badge.jpg">
@@ -76,7 +76,7 @@
 					  		</div>
 						    <div class="navigation-bar__center">
 						    	<span id="timePlayer" class="toolbar-button--quiet navigation-bar__line-height">
-							      3:15 / 5:12
+							      <span id="estimateDuration">3:15</span><strong> / </strong><span id="totalDuration"></span>
 							    </span>
 						    	
 						    </div>
@@ -88,7 +88,7 @@
 							      <i class="fa fa-refresh"></i>
 							    </span> -->
 						  	</div>
-						  	<input type="range" class="range scrubbing" min="0" max="100" value="0">
+						  	<input type="range" id="progressBarPlayer" class="range scrubbing" min="0" max="100" value="0">
 						</div>
 
 					</div>
