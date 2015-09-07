@@ -2,20 +2,22 @@
             <div class="snap-drawer snap-drawer-left" > 
                    <h3 class="title-logo title-logo-menu">LOUD</h3>
                     <div id="goToProfile" class="image-profile-menu"><img src="{{picture}}"></div>
+                    
+                    <!-- <div id="goToProfile" class="image-profile-menu"><i class="fa fa-search"></i></div> -->
                    <!--
 <div class="item-profile-menu">
                                      <div class="name-profile-menu"><h4>{{username}}</h4><span>Profile</span></div>
                    
                    </div>
 -->
-                   <ul class="list" style="background-color: transparent;">
-					  <li id="goToLibrary" class="list__item item_nav_menu active">LIBRARY</li>
-					  <li id="goToStream" class="list__item item_nav_menu">STREAM</li>
-					  <li id="goToDiscover" class="list__item item_nav_menu">DISCOVER</li>
-					  <li id="goToPlaylists" class="list__item item_nav_menu">PLAYLISTS</li>
-					  <li id="goToLikes"class="list__item item_nav_menu">LIKES</li>
-					  <li id="goToFollowing" class="list__item item_nav_menu">FOLLOWING</li>
-					  
+                   <ul class="list" style="background-color: transparent; padding-bottom: 20px;">
+                   	  <!-- <li id="goToLibrary" class="list__item item_nav_menu"><i class="fa fa-user"></i> PROFILE</li> -->
+					  <li id="goToLibrary" class="list__item item_nav_menu active"><i class="fa fa-archive"></i> LIBRARY</li>
+					  <li id="goToStream" class="list__item item_nav_menu"><i class="fa fa-cloud"></i> STREAM</li>
+					  <li id="goToDiscover" class="list__item item_nav_menu"><i class="fa fa-sliders"></i> DISCOVER</li>
+					  <li id="goToPlaylists" class="list__item item_nav_menu"><i class="fa fa-list-ul"></i> PLAYLISTS</li>
+					  <li id="goToLikes"class="list__item item_nav_menu"><i class="fa fa-heart"></i> LIKES</li>
+					  <li id="goToFollowing" class="list__item item_nav_menu"><i class="fa fa-star"></i> FOLLOWING</li>
 					</ul>  
 					   
             </div>
@@ -23,4 +25,147 @@
 
 <div id="content" class="content">
 
+<div id="miniplayer" class="bottom-bar">
+	<div id="progressBar"></div>
+  	<div class="bottom-bar__line-height" style="text-align:center">
+  		<div class="navigation-bar__left">
+    		<img id="apriplayer" src="https://i1.sndcdn.com/artworks-000128306494-sg4bnj-badge.jpg">
+  		</div>
+	    <div id="titleMiniplayer" class="navigation-bar__center">
+	    	<h5>ENTER.Official</h5>
+	    	<h6>Julian Perez: Enter.Week 9, Terrace (Space Ibiza, August 27th)</h6>
+	    </div>
+	  	<div class="navigation-bar__right">
+	  		<div id="equalizer"class="equalizer playControl">
+
+				<span class="equalizer-item equalizer-1"></span>
+				<span class="equalizer-item equalizer-2"></span>
+				<span class="equalizer-item equalizer-3"></span>
+				<span class="equalizer-item equalizer-none"></span>
+			</div>
+		    <span id="ion-play" class="toolbar-button--quiet navigation-bar__line-height playControl control">
+		      <i class="ion-play" style="font-size:32px; vertical-align:-6px;"></i>
+		    </span>
+	  	</div>
+	</div>
+</div>
+</div><!--end content-->
+
+
+
+
+
+
+
+
+<div id="player">
+	<span id="chiudiplayer" class="button"><i class="fa fa-angle-down"></i></span>
+		
+
+	    <div id="contentPlayer">
+					<div class="detail-overlay-bottom">
+	        			<div class="bottom-bar__line-height" style="text-align:center">
+	     
+					  		<div class="navigation-bar__left">
+					    		<!-- <span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="ion-shuffle"></i>
+							    </span> -->
+							    <span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="fa fa-heart"></i>
+							    </span>
+					  		</div>
+						    <div class="navigation-bar__center">
+						    	<span id="timePlayer" class="toolbar-button--quiet navigation-bar__line-height">
+							      3:15 / 5:12
+							    </span>
+						    	
+						    </div>
+						  	<div class="navigation-bar__right">
+						  		<span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="fa fa-ellipsis-h"></i>
+							    </span>
+						  		<!-- <span class="toolbar-button--quiet navigation-bar__line-height control">
+							      <i class="fa fa-refresh"></i>
+							    </span> -->
+						  	</div>
+						  	<input type="range" class="range scrubbing" min="0" max="100" value="0">
+						</div>
+
+					</div>
+				</div>
+	       
+		<div class="swiper-container">
+	    <!-- Additional required wrapper -->
+	    <div class="swiper-wrapper">
+	        <!-- Slides -->
+	        <div class="swiper-slide">
+	        	<div class="coverTrackPlayer" style="background-image: url('https://i1.sndcdn.com/artworks-000128306494-sg4bnj-t500x500.jpg')">
+	        		<div class="detailTrackPlayer">
+	        			<div class="separator"></div>
+	        			<div class="detail-overlay">
+	        			<h6><span scuserid="543081" class="soundcloudArtist">Nastia UA</span></h6>
+						<h6>Nastia @ OUTLINE, Moscow 4.07.2015</h6>
+						</div>
+						
+	        		</div>
+	        	</div>
+	        	
+	         </div>	
+	        <div class="swiper-slide">
+	        	<div class="coverTrackPlayer">
+	        		<div class="detailTrackPlayer">
+	        			<div class="separator"></div>
+	        			<div class="detail-overlay">
+	        			<h6><span scuserid="543081" class="soundcloudArtist">Nastia UA</span></h6>
+						<h6>Nastia @ OUTLINE, Moscow 4.07.2015</h6>
+						</div>
+						<!-- <div class="detail-overlay-bottom">
+	        			<div class="bottom-bar__line-height" style="text-align:center">
+					  		<div class="navigation-bar__left">
+					    		<span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="ion-shuffle"></i>
+							    </span>
+					  		</div>
+						    <div class="navigation-bar__center">
+						    	<span class="toolbar-button--quiet navigation-bar__line-height timePlayer">
+							      3:15 / 5:12
+							    </span>
+						    	
+						    </div>
+						  	<div class="navigation-bar__right">
+						  		<span class="toolbar-button--quiet navigation-bar__line-height control">
+							      <i class="fa fa-refresh"></i>
+							    </span>
+						  	</div>
+						  	<input type="range" class="range scrubbing" min="0" max="100" value="0">
+						</div>
+
+						</div> -->
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="swiper-slide">
+	        	<div class="coverTrackPlayer" style="background-image: url('https://i1.sndcdn.com/artworks-000128306494-sg4bnj-t500x500.jpg')">
+	        		<div class="detailTrackPlayer">
+	        			<div class="separator"></div>
+	        			<div class="detail-overlay">
+	        			<h6><span scuserid="543081" class="soundcloudArtist">Nastia UA</span></h6>
+						<h6>Nastia @ OUTLINE, Moscow 4.07.2015</h6>
+						</div>
+						
+	        		</div>
+	        	</div>
+	        	
+	         </div>	
+
+	    	</div>
+	    </div>
+	
+	<!-- <div id="coverPlayer">
+		<img src="https://i1.sndcdn.com/artworks-000128306494-sg4bnj-t500x500.jpg">
+	</div>
+	<div id="contentPlayer">
+		<h6>Artist</h6>
+		<h5>Title</h5>
+	</div> -->
 </div>

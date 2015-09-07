@@ -17,12 +17,12 @@
 <ul class="list">
   {{#each this}}
     {{#with origin}}
-    <li class="list__item list-track">
+    <li class="list__item list-track" scTrackId="{{id}}">
       <div class="cover-track b-lazy" data-src="{{subString artwork_url}}">
         <div class="cover-track-overlay">
           <div class="list-track-details">
             {{#with user}}
-          <h4 class="title-list-track">{{username}}</h4>
+          <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
           {{/with}}
           <h4 class="title-list-track"><strong>{{title}}</strong></h4>
           </div>
@@ -31,107 +31,8 @@
     </li>
     {{/with}}
   {{/each}}
+  
   <div class="cssload-loader">
   <div class="cssload-ball"></div>
 </div>
-  <!-- <li class="list__item list-track">
-  	<div class="cover-track" style="background-image: url(img/track1.jpg);">
-  		<div class="cover-track-overlay">
-  			<div class="list-track-details">
-  			<h4 class="title-list-track">tINI</h4>
-  			<h4 class="title-list-track"><span>That's Right</span></h4>
-  			</div>
-  		</div>
-  	</div>
-  </li>
-  <li class="list__item list-track">
-  	<div class="cover-track" style="background-image: url(img/track2.jpg)">
-  		<div class="cover-track-overlay">
-  			<div class="list-track-details">
-  			<h4 class="title-list-track">Seb Zito</h4>
-  			<h4 class="title-list-track"><span>That's The Way (Original Mix)</span></h4>
-  			</div>
-  		</div>
-  	</div>
-  </li>
-  <li class="list__item list-track">
-  	<div class="cover-track" style="background-image: url(img/avatar.jpg)">
-  		<div class="cover-track-overlay">
-  			<div class="list-track-details">
-  			<h4 class="title-list-track">tINI</h4>
-  			<h4 class="title-list-track"><span>That's Right</span></h4>
-  			</div>
-  		</div>
-  	</div>
-  </li>
-  <li class="list__item list-track">
-    <div class="cover-track b-lazy" data-src="img/track1.jpg">
-      <div class="cover-track-overlay">
-        <div class="list-track-details">
-        <h4 class="title-list-track">tINI</h4>
-        <h4 class="title-list-track"><span>That's Right</span></h4>
-        </div>
-      </div>
-    </div>
-  </li>
-  <li class="list__item list-track">
-    <div class="cover-track b-lazy" data-src="https://www.wonderplugin.com/wp-content/plugins/wonderplugin-lightbox/images/demo-image2.jpg">
-      <div class="cover-track-overlay">
-        <div class="list-track-details">
-        <h4 class="title-list-track">tINI</h4>
-        <h4 class="title-list-track"><span>That's Right</span></h4>
-        </div>
-      </div>
-    </div>
-  </li>
-  <li class="list__item list-track">
-    <div class="cover-track b-lazy" data-src="https://www.wonderplugin.com/wp-content/plugins/wonderplugin-lightbox/images/demo-image1.jpg">
-      <div class="cover-track-overlay">
-        <div class="list-track-details">
-        <h4 class="title-list-track">tINI</h4>
-        <h4 class="title-list-track"><span>That's Right</span></h4>
-        </div>
-      </div>
-    </div>
-  </li>
-  <li class="list__item list-track">
-    <div class="cover-track b-lazy" data-src="http://www.menucool.com/slider/jsImgSlider/images/image-slider-1.jpg">
-      <div class="cover-track-overlay">
-        <div class="list-track-details">
-        <h4 class="title-list-track">tINI</h4>
-        <h4 class="title-list-track"><span>That's Right</span></h4>
-        </div>
-      </div>
-    </div>
-  </li>
-  
-  
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-  <li class="list__item">Item</li>
-</ul>
-
-<li class="list__item list-track">
-  	<div class="cover-track" style="background-image: url(img/track3.jpg)">
-  		<div class="cover-track-overlay">
-  			<div class="list-track-details">
-  			<h4 class="title-list-track">Seb Zito</h4>
-  			<h4 class="title-list-track"><span>That's The Way (Original Mix)</span></h4>
-  			</div>
-  		</div>
-  	</div>
-  </li> -->
 </div>

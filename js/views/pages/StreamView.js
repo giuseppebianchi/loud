@@ -11,7 +11,8 @@ define(function(require) {
     constructorName: "StreamView",
     
     events:{	
-      
+      "click .soundcloudArtist": "showUser",
+      "click .list-track": "playTrackStream"
     },
 
     collection: StreamListTrack,
@@ -44,28 +45,30 @@ define(function(require) {
     contentList: null,
 
     render: function() {
-      Handlebars.registerHelper('subString', function(string) {
-        var large = string.replace("large","t500x500");
-        return new Handlebars.SafeString(large)
+
+      Handlebars.registerHelper('compare', function(v1, v2, options) {
+          if(v1 === v2) {
+            return options.fn(this);
+          }
+          return options.inverse(this);
       });
 
-      //this.activities = JSON.parse(localStorage.getItem("activities"));
+      this.activities = JSON.parse(localStorage.getItem("activities"));
 
-      //$(this.el).html(this.template(this.activities.collection));
-      console.log(this.collection);
-      $(this.el).html(this.template(this.collection.toJSON()));
+      $(this.el).html(this.template(this.activities.collection));
+      
 
       return this;
     },
     
     enabledElastic: true,
     
-    startTouch: function(e){
+    /*startTouch: function(e){
      		this.elasticImage.css("transition", ""); 
      		this.firstTouch = e.touches[0].pageY;
-     },
+     },*/
     
-    elastic: function(e){
+    /*elastic: function(e){
     	
     	if(this.enabledElastic && ((e.touches[0].pageY - this.firstTouch) > 0) && this.el.scrollTop == 0){
     		var altezza = this.elasticImage.height();
@@ -77,7 +80,7 @@ define(function(require) {
     	}
     	
        	
-    },
+    },*/
     resetHeight: function(e){
     	this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
     	$(this.el).css("overflow", "");
@@ -94,7 +97,33 @@ define(function(require) {
     },
     fetchData: function(){
         
+    },
+    playTrackStream: function(e){
+
+      var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
+      console.log(selectedTrack);
+      if (typeof currentTrack !== 'undefined') {
+        // currentTrack is defined
+        currentTrack.destruct();
+      }else{
+        $("#miniplayer").addClass("opened");
+      }
+      var progressBar = $("#progressBar");
+      SC.stream("/tracks/" + selectedTrack, {
+        autoPlay: true,
+        whileplaying: function(){
+        progressBar.css("width", ((this.position/this.durationEstimate)*100) + '%');
+        }
+      },
+      function(sound){
+       currentTrack = sound;
+      });
+    },
+    showUser: function(e){
+      e.stopImmediatePropagation()
+      alert(e.currentTarget.attributes["scuserid"].value);
     }
+    
 	
 
   });

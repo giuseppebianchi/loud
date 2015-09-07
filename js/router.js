@@ -22,11 +22,14 @@ define(function(require) {
 
     initialize: function(options) {
       this.currentView = undefined;
+      
     },
     
     // load the structure view
     showStructure: function() {
-      	
+
+      					var Swiper = require("swiper");
+      					var Blazy = require("blazy");
 				        // put the el element of the structure view into the DOM
 				        var self = this;
 				        
@@ -53,7 +56,24 @@ define(function(require) {
 				        	
 				        	self.structureView.trigger("inTheDOM");
 					        setTimeout(function(){$("#main").css("opacity", 1)}, 200);
-					        self.structureView.initializeMenu(); 
+					        self.structureView.initializeMenu();
+							self.structureView.playerView = $("#player");
+
+					        $(document).ready(function(){
+					        	self.structureView.coverPlayer  = new Swiper ('.swiper-container',{
+					        		shortSwipes: true,
+					        		threshold: 10,
+					        		simulateTouch: false,
+					        		touchRatio: 0.7,
+					        		
+					        		width: screen.width, 
+					        		/*width: 375, PER IPHONE 6*/
+					        		/*width: 320, PER IPHONE 5/4 */
+					        		longSwipesRatio: 0.3,
+					        		spaceBetween: 1
+								});
+					        });
+					        
 							nextView();
 				        }
 				        
@@ -65,6 +85,8 @@ define(function(require) {
 				        }*/
 				        
 				        function nextView(){
+				        	
+
 					        Backbone.history.navigate("stream", {trigger: true});
 				        }
 				        // go to last view - "home" is default
@@ -136,6 +158,9 @@ define(function(require) {
         				container: '.scrolling-view'
     				  });
 				      localStorage.setItem("lastView", "stream");
+
+
+					  
 				      
 				      
     }, //END STREAM FUNCTION

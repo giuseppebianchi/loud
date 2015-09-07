@@ -7,11 +7,13 @@ require.config({
     text: '../lib/require/text',
     async: '../lib/require/async',
     handlebars: '../lib/handlebars/handlebars',
+    handlebarshelpers: '../lib/handlebars/handlebarshelpers',
     templates: '../templates',
     preloader: '../lib/preloader/pre-loader',
     utils: '../lib/utils/utils',
     snap: '../lib/snap/snap',
-    blazy: '../lib/blazy/blazy'
+    blazy: '../lib/blazy/blazy',
+    swiper: '../lib/swiper/swiper'
   },
   shim: {
     'jquery': {
@@ -22,6 +24,13 @@ require.config({
     },
     'handlebars': {
       exports: 'Handlebars'
+    },
+    'handlebarshelpers': {
+      deps: ['handlebars'],
+      exports: 'Handlebars'
+    },
+    'swiper':{
+      deps: ['jquery']
     }
   }
 });

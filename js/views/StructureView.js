@@ -4,6 +4,7 @@ define(function(require) {
   var Backbone = require("backbone");
   var Utils = require("utils");
   var Snap = require("snap");
+  var Handlebars = require("handlebars");
 
   var StructureView = Backbone.View.extend({
 
@@ -14,16 +15,34 @@ define(function(require) {
 	className: "fadeEffect",
 	
     events: {
-      "click #menu-button": "openMenu"
+      "click #menu-button": "openMenu",
+      "click #apriplayer": "openPlayer",
+      "click #chiudiplayer": "closePlayer",
+      "click #timePlayer": "toggleProgressbar",
+      "click .playControl": "playControl"
       },
     initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.structure;
-     
+      Handlebars.registerHelper('subString', function(string) {
+        var large = string.replace("large","t500x500");
+        return new Handlebars.SafeString(large)
+      });
+      
 					
       //this.on("inTheDOM", this.rendered);
       // bind the back event to the goBack function
       //document.getElementById("back").addEventListener("back", this.goBack(), false);
+    },
+
+    playerView: null,
+
+    coverPlayer: null,
+
+    getMinutes: function (millis) {//for soundcloud track duration
+        var minutes = Math.floor(millis / 60000);
+        var seconds = ((millis % 60000) / 1000).toFixed(0);
+        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     },
 
     render: function() {
@@ -68,9 +87,47 @@ define(function(require) {
 					tapToClose: true,
 					touchToDrag: true,
 					slideIntent: 20,
-					minDragDistance: 40 
+					minDragDistance: 40
 			});
     },
+    openPlayer: function(){
+      this.playerView.animate({
+        display: "block"
+        }, 100, "linear", function(){
+                            $(this).css("opacity", 1);
+                          }
+      );
+    },
+    closePlayer: function(){
+      this.playerView.animate({
+          opacity: 0
+          }, 500, "linear", function(){
+                            $(this).css("display", "none");
+                            }
+      );
+    },
+    toggleProgressbar: function(e){
+      e.stopImmediatePropagation();
+      if(this.playerView.hasClass("toggled")) {
+        this.playerView.removeClass("toggled");
+      }else{
+        this.playerView.addClass("toggled");
+      }
+    },
+    playControl: function(e){
+      e.stopImmediatePropagation();
+      if(this.playerView.hasClass("isPause")) {
+        this.playerView.removeClass("isPause");
+        $("#ios-play").css("display", "none");
+        $("#equalizer").css("display", "block");
+      }else{
+        this.playerView.addClass("isPause");
+        $("#ios-play").css("display", "block");
+        $("#equalizer").css("display", "none");
+      }
+      console.log("ok");
+      currentTrack.togglePause();
+    }
     
     // rendered: function(e) {
     // },
