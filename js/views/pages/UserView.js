@@ -11,7 +11,7 @@ define(function(require) {
     	"touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
-      "click #back": "back"
+      "tap #back": "back"
 	},
 
     //model: UserModel,

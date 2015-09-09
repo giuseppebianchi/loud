@@ -11,12 +11,12 @@ define(function(require) {
     constructorName: "player",
     
     events:{	
-      "click .soundcloudArtist": "showUser",
-      "click #chiudiplayer": "closePlayer",
+      "tap .soundcloudArtist": "showUser",
+      "tap #chiudiplayer": "closePlayer",
       "touchstart #progressBarPlayer": "seekTrack",
       "touchend #progressBarPlayer": "seekTrackEnd",
-      "click #timePlayer": "toggleProgressbar",
-      "click #trackOption": "showOption",
+      "tap #timePlayer": "toggleProgressbar",
+      "tap #trackOption": "showOption",
       "doubleTap": "playPlause"
     },
 
