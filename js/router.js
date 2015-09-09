@@ -2,10 +2,11 @@ define(function(require) {
 
   var $ = require("jquery");
   var Backbone = require("backbone");
-  
+  var Blazy = require("blazy");
   /* VIEW */
   var StructureView = require("views/StructureView");
-
+  var PlayerView = require("views/PlayerView");
+  
 
   var AppRouter = Backbone.Router.extend({
 
@@ -15,7 +16,7 @@ define(function(require) {
       // the default is Login
       "": "LoginFunction",
       "start": "showStructure",
-      "stream": "StreamFunction"
+      "stream": "Stream"
     },
 
     firstView: "HomeFunction",
@@ -28,8 +29,7 @@ define(function(require) {
     // load the structure view
     showStructure: function() {
 
-      					var Swiper = require("swiper");
-      					var Blazy = require("blazy");
+      					
 				        // put the el element of the structure view into the DOM
 				        var self = this;
 				        
@@ -57,26 +57,55 @@ define(function(require) {
 				        	self.structureView.trigger("inTheDOM");
 					        setTimeout(function(){$("#main").css("opacity", 1)}, 200);
 					        self.structureView.initializeMenu();
-							self.structureView.playerView = $("#player");
-
-					        $(document).ready(function(){
-					        	self.structureView.coverPlayer  = new Swiper ('.swiper-container',{
-					        		shortSwipes: true,
-					        		threshold: 10,
-					        		simulateTouch: false,
-					        		touchRatio: 0.7,
-					        		
-					        		width: screen.width, 
-					        		/*width: 375, PER IPHONE 6*/
-					        		/*width: 320, PER IPHONE 5/4 */
-					        		longSwipesRatio: 0.3,
-					        		spaceBetween: 1
-								});
-					        });
-					        
-							nextView();
+					        //build PLAYER
+				        	self.showPlayer();
+							
 				        }
 				        
+				        
+      
+      
+    }, //END STRUCTURE FUNCTION
+    showPlayer: function() {
+
+				        // put the el element of the structure view into the DOM
+				        var self = this;
+				        self.playerView = new PlayerView();
+				        initPlayer();
+				        
+				        function initPlayer(){
+					        
+					        renderPlayer();
+					    }
+				        
+				        function renderPlayer(){
+							document.getElementById("main").appendChild(self.playerView.render().el);
+							finishPlayer();
+				        }
+				        
+				        function finishPlayer(){
+
+				        	self.playerView.trigger("inTheDOM");
+
+							self.playerView.initializeSliderPlayer();
+
+					        self.structureView.player = self.playerView.$el;
+					        
+					        var details = {
+					        	option: $("#trackOption"),
+					        	time: $("#currentTimeTrack"),
+								duration: $("#totalDuration"),
+								miniplayerImg: $("#miniplayerImg"),
+								miniplayerTitle: $("#miniplayerTitle"),
+								miniplayerArtist: $("#miniplayerArtist"),
+								progressBarMini: $("#progressBar"),
+								progressBarPlayer: $("#progressBarPlayer"),
+								showOption: $("#showOption")
+					        }
+					        self.playerView.details = details;
+					        nextView();
+					        
+				        }
 				        /*var lastView = localStorage.getItem(lastView);
 				        if(lastView){
 				        	Backbone.history.navigate(lastView, {trigger:true});
@@ -84,15 +113,15 @@ define(function(require) {
 				        	Backbone.history.navigate("stream", {trigger:true});
 				        }*/
 				        
+				        
+				        // go to last view - "stream" is default
 				        function nextView(){
-				        	
-
-					        Backbone.history.navigate("stream", {trigger: true});
+				        	Backbone.history.navigate("stream", {trigger: true});
 				        }
-				        // go to last view - "home" is default
+
       
       
-    }, //END STRUCTURE FUNCTION
+    }, //END PLAYER FUNCTION
 
 	LoginFunction: function() {
 				      
@@ -120,15 +149,19 @@ define(function(require) {
       
     }, // END LOGIN FUNCTION
 
-    StreamFunction: function() {
+    Stream: function() {
 				      
 				      var StreamView = require("views/pages/StreamView");
-				      var StreamListTrack = require("collections/StreamListTrack");
-				      var Blazy = require("blazy");
+				      var StreamCollection = require("collections/StreamCollection");
+				      var TrackModel = require("models/TrackModel");
 				      // highlight the nav1 tab bar element as the current one
 				      this.structureView.setActive("goToStream");
+
+				      var streamTrackModel = new TrackModel();
 				      // create a model with an arbitrary attribute for testing the template engine
-				      var listaStream = new StreamListTrack;
+				      var listaStream = new StreamCollection({
+				      	model: streamTrackModel
+				      });
 				   
 				      // create the view
 				      var page = new StreamView({
@@ -140,14 +173,7 @@ define(function(require) {
 					  
 				      this.changePage(page);
 				      
-				      /*page.elasticImage = $("#cover-view");
 				      
-				      this.structureView.snapper.on("drag", function(){
-					      page.enabledElastic = false;
-				      });
-				      this.structureView.snapper.on("animated", function(){
-					      page.enabledElastic = true;
-				      });*/
 					  page.scrollingView = $(".scrolling-view");
 					  page.contentList = $(".scrolling-view .list");
 
@@ -157,6 +183,7 @@ define(function(require) {
 				      var bLazy = new Blazy({ 
         				container: '.scrolling-view'
     				  });
+    				  page.player = this.playerView;
 				      localStorage.setItem("lastView", "stream");
 
 
@@ -164,6 +191,7 @@ define(function(require) {
 				      
 				      
     }, //END STREAM FUNCTION
+    
     
 
 

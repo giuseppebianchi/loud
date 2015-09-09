@@ -1,0 +1,71 @@
+
+	<span id="chiudiplayer" class="button"><i class="fa fa-angle-down"></i></span>
+		<!-- <div id="pauseIconPlayer"><i class="fa fa-play-circle"></i></div> -->
+
+	    <div id="contentPlayer">
+					<div class="detail-overlay-bottom">
+	        			<div class="bottom-bar__line-height" style="text-align:center">
+	     
+					  		<div class="navigation-bar__left">
+					    		<!-- <span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="ion-shuffle"></i>
+							    </span> -->
+							    <span class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="fa fa-heart"></i>
+							    </span>
+					  		</div>
+						    <div class="navigation-bar__center">
+						    	<span id="timePlayer" class="toolbar-button--quiet navigation-bar__line-height">
+							      <span id="currentTimeTrack">00:00</span><strong style="border-right: 2px solid rgba(255, 0, 60, 0.5); margin: 0 10px"></strong><span id="totalDuration"></span>
+							    </span>
+						    	
+						    </div>
+						  	<div class="navigation-bar__right">
+						  		<span id="trackOption" class="toolbar-button--quiet navigation-bar__line-height">
+							      <i class="fa fa-ellipsis-h"></i>
+							    </span>
+						  		<!-- <span class="toolbar-button--quiet navigation-bar__line-height control">
+							      <i class="fa fa-refresh"></i>
+							    </span> -->
+						  	</div>
+						  	<input type="range" id="progressBarPlayer" class="range scrubbing" min="0" max="100" value="0">
+						</div>
+
+					</div>
+				</div>
+	       
+		<div class="swiper-container">
+	    <!-- Additional required wrapper -->
+	    <div class="swiper-wrapper">
+	        <!-- Slides -->
+	        {{#each this}}
+	        {{#with origin}}
+	        <div class="swiper-slide" sctrackid="{{id}}">
+	        	
+	        	<div class="coverTrackPlayer" style="background-image: url('{{subString artwork_url}}')">
+	        		<div class="detailTrackPlayer">
+	        			<div class="separator"></div>
+	        			<div class="detail-overlay">
+		        			{{#with user}}
+		        			<h6><span scuserid="{{id}}" class="soundcloudArtist">{{username}}</span></h6>
+		        			{{/with}}
+							<h6>{{title}}</h6>
+							<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
+							    <i class="fa fa-play"></i>{{kFormatter playback_count}}
+							</span>
+							<span class="toolbar-button--quiet navigation-bar__line-height">
+							    <i class="fa fa-heart"></i>{{kFormatter favoritings_count}}
+							</span>
+						</div>
+						
+				
+	        		</div>
+	        	</div>
+	        	
+	         </div>	
+	         {{/with}}
+	         {{/each}}
+	        
+
+	    	</div>
+	    </div>

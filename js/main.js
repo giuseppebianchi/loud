@@ -67,13 +67,21 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
         function startRouter() {
           // launch the router
           var router = new AppRouter();
+
           Backbone.history.start();
-         
-         SC.initialize({
-  			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-  			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
-			   });
-			
+
+          playerPlaylist = [];
+
+          SC.initialize({
+    			  client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
+    			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html'
+  			  });
+			    
+          document.getElementById("closeModal").addEventListener("click", function(){
+            document.getElementById("main").className = "fadeEffect";
+            document.getElementById("showOption").className = "";
+           
+          });
 			
         }
         

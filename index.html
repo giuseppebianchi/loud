@@ -29,5 +29,50 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="http://connect.soundcloud.com/sdk.js"></script>
         <script data-main="js/main" src="lib/require/require.js"></script>
+
+        <div id="showOption">
+            <header class="navigation-bar">
+              <div class="navigation-bar__left">
+                <span id="shuffle" class="toolbar-button--quiet navigation-bar__line-height">
+                  <i class="fa fa-random" style="font-size:32px; vertical-align:-6px;"></i>
+                </span>
+              </div>
+              <div class="navigation-bar__center">
+                <i class="fa fa-heart" style="font-size:32px; vertical-align:-6px;"></i>
+              </div>
+
+                <div class="navigation-bar__right">
+                    <span id="repeat" class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-refresh" style="font-size:32px; vertical-align:-6px;"></i></span>
+                </div>
+            </header>
+            <ul class="list list--noborder">
+              <li class="list__item">
+                <span class="list__item__line-height"><i class="fa fa-plus" style="font-size:32px; vertical-align:-6px;"></i> ADD TO LIBRARY</span>
+              </li>
+              <li class="list__item">
+                <span class="list__item__line-height"><i class="fa fa-plus" style="font-size:32px; vertical-align:-6px;"></i> ADD TO PLAYLIST</span>
+              </li>
+              <li class="list__item">
+                <span class="list__item__line-height"><i class="fa fa-star" style="font-size:32px; vertical-align:-6px;"></i> FOLLOW <span>Artist</span></span>
+              </li>
+              <li class="list__item">
+                <span class="list__item__line-height"><i class="fa fa-twitter" style="font-size:32px; vertical-align:-6px;"></i> TWEET</span>
+              </li>
+              <li class="list__item">
+                <span class="list__item__line-height">COPY LINK</span>
+              </li>
+              
+            </ul>
+            <div id="closeModal" class="bottom-bar__line-height" style="text-align:center">
+                <div class="navigation-bar__center">
+                    <span  class="toolbar-button--quiet navigation-bar__line-height">
+                      CANCEL
+                    </span>
+                </div>
+             </div>
+        </div>
+
+        <div id="search">
+        </div>
     </body>
 </html>

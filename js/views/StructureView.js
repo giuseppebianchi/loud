@@ -15,13 +15,10 @@ define(function(require) {
 	  className: "fadeEffect",
 	
     events: {
-      "click #menu-button": "openMenu",
-      "click #apriplayer": "openPlayer",
-      "click #chiudiplayer": "closePlayer",
-      "click #timePlayer": "toggleProgressbar",
-      "click .playControl": "playControl",
-      "touchstart #progressBarPlayer": "seekTrack",
-      "touchend #progressBarPlayer": "seekTrackEnd"
+      "tap #menu-button": "openMenu",
+      "tap .apriplayer": "openPlayer",
+      "tap .playControl": "playControl"
+      
       },
     initialize: function(options) {
       // load the precompiled template
@@ -30,7 +27,7 @@ define(function(require) {
         var large = string.replace("large","t500x500");
         return new Handlebars.SafeString(large)
       });
-      
+
       //{{kFormatter playback_count}}
       Handlebars.registerHelper('kFormatter', function(num) {
         var result;
@@ -39,7 +36,6 @@ define(function(require) {
         }else{
           result = num;
         }
-        console.log(result);
         return new Handlebars.SafeString(result)
       });
 
@@ -49,9 +45,7 @@ define(function(require) {
       //document.getElementById("back").addEventListener("back", this.goBack(), false);
     },
 
-    playerView: null,
-
-    coverPlayer: null,
+    player: null,
 
     render: function() {
       // load the template
@@ -99,48 +93,26 @@ define(function(require) {
 			});
     },
     openPlayer: function(){
-      this.playerView.animate({
+      this.player.animate({
         display: "block"
         }, 100, "linear", function(){
                             $(this).css("opacity", 1);
                           }
       );
-    },
-    closePlayer: function(){
-      this.playerView.animate({
-          opacity: 0
-          }, 500, "linear", function(){
-                            $(this).css("display", "none");
-                            }
-      );
-    },
-    toggleProgressbar: function(e){
-      e.stopImmediatePropagation();
-      if(this.playerView.hasClass("toggled")) {
-        this.playerView.removeClass("toggled");
-      }else{
-        this.playerView.addClass("toggled");
-      }
+
     },
     playControl: function(e){
       e.stopImmediatePropagation();
-      if(this.playerView.hasClass("isPause")) {
-        this.playerView.removeClass("isPause");
+      if(currentPlayingTrack.paused) {
         $("#ios-play").css("display", "none");
         $("#equalizer").css("display", "block");
       }else{
-        this.playerView.addClass("isPause");
         $("#ios-play").css("display", "block");
         $("#equalizer").css("display", "none");
       }
-      currentTrack.togglePause();
+      currentPlayingTrack.togglePause();
     },
-    seekTrack: function(e){
-      
-    },
-    seekTrackEnd: function(e){
-      
-    }
+    
     
     // rendered: function(e) {
     // },

@@ -13,4 +13,6 @@ define({
     home: "templates/home.html",
     login: "templates/login.html",
     stream: "templates/stream.html",
+    player: "templates/player.html",
+    user: "templates/user.html"
 });
