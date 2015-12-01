@@ -1,35 +1,66 @@
-<div id="cover-user-view" style="background-image:url({{subString avatar_url}})">
-  <div class="overlay-cover-user-view">
+<header class="navigation-bar navigation-bar--transparent user-header" style="background: transparent; box-shadow: none;">
+  <div class="navigation-bar__left">
     <span id="back" class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">{{username}}</div>
+<div class="navigation-bar__right">
+    <span id="userOption" class="toolbar-button--quiet navigation-bar__line-height">
+      •••
+      <!-- <i class="fa fa-ellipsis-h" style="font-size:26px; vertical-align:-6px; color: rgba(255, 0, 60, 0.7)"></i> -->
+    </span>
+</div>
+</header>
+<div id="user-scrolling-view">
+<div id="cover-user-view" style="background-image:url({{subString avatar_url 't500x500'}})">
+  <div class="overlay-cover-user-view">
+    <!-- <span id="back" class="toolbar-button--quiet navigation-bar__line-height">
         <i class="fa fa-angle-left"></i>
-     </span>
-     <h4 id="name">{{username}}</h4>
-     <span>{{city}}</span>, <span>{{country}}</span>
+     </span> -->
+    <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
+    <button class="button" style="margin-bottom: 10px; padding: 5px 10px; position: absolute;font-size: 13px;bottom: 55px;right: 15px;line-height: normal;">Follow</button>
+     <div class="overlay-cover-user-view-details">
+      
+       <h4 id="name">{{username}}</h4>
+       {{#if city}}
+        <span>{{city}}</span> <span>{{country}}</span></br>
+        {{/if}}
+        <span class="follower-count">{{kFormatter followers_count}} Followers</span>
+     </div>
+
+     <div class="tab-bar tab-bar--top tab-bar--top-border">
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" checked="checked">
+            <button class="tab-bar__button tab-bar--top-border__button">
+              <span class="counter">{{track_count}}</span><br>
+              <span class="tab-name">TRACKS</span>
+            </button>
+          </label>
+          <!-- <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" disabled>
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter followers_count}}</span><br>
+              <span class="tab-name">FOLLOWERS</span>
+              
+            </button>
+          </label> -->
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b">
+            <button class="tab-bar__button tab-bar--top-border__button right">
+              <span class="counter">{{playlist_count}}</span><br>
+              <span class="tab-name">PLAYLISTS</span>
+            </button>
+          </label>
+
+          
+      </div>
+
+
   </div>
 </div>
 
-<div class="tab-bar tab-bar--top tab-bar--top-border">
-  <label class="tab-bar__item tab-bar--top-border__item">
-    <input type="radio" name="top-tab-bar-b" checked="checked">
-    <button class="tab-bar__button tab-bar--top-border__button">
-      Tracks
-    </button>
-  </label>
 
-  <label class="tab-bar__item tab-bar--top-border__item">
-    <input type="radio" name="top-tab-bar-b">
-    <button class="tab-bar__button tab-bar--top-border__button">
-      Playlists
-    </button>
-  </label>
-
-  <label class="tab-bar__item tab-bar--top-border__item">
-    <input type="radio" name="top-tab-bar-b">
-    <button class="tab-bar__button tab-bar--top-border__button">
-      Info
-    </button>
-  </label>
-</div>
 <ul class="list">
   <li class="list__item list-track">
   	<div class="cover-track" style="background-image: url(img/track1.jpg);">
@@ -81,3 +112,4 @@
   <li class="list__item">Item</li>
   <li class="list__item">Item</li>
 </ul>
+</div>

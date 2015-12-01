@@ -87,10 +87,11 @@ define(function(require) {
       }
     },
     showUserView: function(e){
+      this.UserModel = require("models/UserModel");
       e.stopImmediatePropagation();
       var temp, self = this;
       var userId = e.currentTarget.attributes["scuserid"].value;
-        
+      
         SC.get("/users/" + userId, function(user){
           self.userView = new UserView({
             model: user
@@ -99,8 +100,15 @@ define(function(require) {
           self.userView.render();
           //append in the current view
           $(self.el).append(self.userView.el);
+
           //set options
           self.userView.elasticImage = $("#cover-user-view");
+
+          self.userView.userScrollingView = $("#user-scrolling-view");
+          self.userView.userScrollingView.bind('scroll', function (ev) {
+                  self.userView.checkScroll(ev);
+          });
+
           self.userView.parent = self;
           self.undelegateEvents();
           //translate

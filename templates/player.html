@@ -14,21 +14,21 @@
 							      <i class="fa fa-heart"></i>
 							    </span>
 					  		</div>
-						    <div class="navigation-bar__center">
-						    	<span id="timePlayer" class="toolbar-button--quiet navigation-bar__line-height">
-							      <span id="currentTimeTrack">00:00</span><strong style="border-right: 2px solid rgba(255, 0, 60, 0.5); margin: 0 10px"></strong><span id="totalDuration"></span>
-							    </span>
-						    	
-						    </div>
+						    <div class="navigation-bar__center"></div>
 						  	<div class="navigation-bar__right">
-						  		<span id="trackOption" class="toolbar-button--quiet navigation-bar__line-height">
-							      <i class="fa fa-ellipsis-h"></i>
+						  		<span id="trackOption" class="toolbar-button--quiet navigation-bar__line-height" style="font-size: 28px;">
+						  			•••
+							      <!-- <i class="fa fa-ellipsis-h"></i> -->
 							    </span>
 						  		<!-- <span class="toolbar-button--quiet navigation-bar__line-height control">
 							      <i class="fa fa-refresh"></i>
 							    </span> -->
 						  	</div>
 						  	<input type="range" id="progressBarPlayer" class="range scrubbing" min="0" max="100" value="0">
+						  	<div class="bottom-player">
+						    	<span id="currentTimeTrack">00:00</span>
+								<span id="totalDuration"></span>
+	        				</div>
 						</div>
 
 					</div>
@@ -36,13 +36,15 @@
 	       
 		<div class="swiper-container">
 	    <!-- Additional required wrapper -->
+	    <div id="pauseButton"><h6><i class="fa fa-play"></i></h6></div>
+
 	    <div class="swiper-wrapper">
 	        <!-- Slides -->
 	        {{#each this}}
 	        {{#with origin}}
 	        <div class="swiper-slide" sctrackid="{{id}}">
 	        	
-	        	<div class="coverTrackPlayer" style="background-image: url('{{subString artwork_url}}')">
+	        	<div class="coverTrackPlayer" style="background-image: url('{{subString artwork_url 't500x500'}}')">
 	        		<div class="detailTrackPlayer">
 	        			<div class="separator"></div>
 	        			<div class="detail-overlay">

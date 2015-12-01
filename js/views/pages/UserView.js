@@ -11,11 +11,14 @@ define(function(require) {
     	"touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
-      "tap #back": "back"
+      "tap #back": "back",
+      "tap #userOption": "showUserOption"
 	},
 
     //model: UserModel,
-    
+
+  userId: undefined,
+
 	elasticImage: undefined,
 	
     initialize: function() {
@@ -46,42 +49,52 @@ define(function(require) {
     enabledElastic: true,
     
     startTouch: function(e){
-
-     		this.elasticImage.css("transition", "");
-          //this.elasticImage.children().addClass("hidden"); 
+        this.elasticImage.css("transition", "");
         this.firstTouch = e.touches[0].pageY;
-
      },
     
 	  elastic: function(e){
-		
-		if(this.enabledElastic && ((e.touches[0].pageY - this.firstTouch) > 0) && this.el.scrollTop == 0){
-			var altezza = this.elasticImage.height();
-			//$(this.el).css("overflow", "hidden");			
-			this.elasticImage.css("height", (300 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
-			e.preventDefault();
-		}else{
-			//$(this.el).css("overflow", "");
-		}
-		
-     	
+  		if(this.enabledElastic && 
+              ((e.touches[0].pageY - this.firstTouch) > 0) 
+                  && this.el.children['user-scrolling-view'].scrollTop == 0){
+
+    			//var altezza = this.elasticImage.height();
+          if(this.elasticImage.height() == 430){
+              this.elasticImage.children().addClass("hidden"); 
+          }
+    			//$(this.el).css("overflow", "hidden");			
+    			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			e.preventDefault();
+
+    	}else{
+    			//$(this.el).css("overflow", "");
+      }
 	},
 	resetHeight: function(e){
-    //this.elasticImage.children().removeClass("hidden"); 
+    this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
-		$(this.el).css("overflow", "");
-		/*
-		this.elasticImage.animate({height: ""}, 200, 'linear');
-				$(this.el).css("overflow", "");
-		*/
 	},
   back: function(e){
     e.stopImmediatePropagation();
     var self = this;
     $(this.el).removeClass("active");
     setTimeout(function(){self.parent.hideUser()}, 200);
-    
-    
+  },
+  showUserOption: function(){
+      $("#showOption").addClass("visible");
+      $("#main").addClass("blurred");
+      $("#main-overlay").addClass("visible");
+      // $("#main").addClass("blurred");
+      // this.detail.showOption.css({display: "block", opacity: 1})
+  },
+  checkScroll: function(e){
+      if(this.el.children['user-scrolling-view'].scrollTop > 100){
+        $(this.el.children[0]).css("background", "");
+        $(this.el.children[0].children[1]).css('opacity', 1);
+      }else{
+         $(this.el.children[0]).css("background", "transparent");
+        $(this.el.children[0].children[1]).css('opacity', 0);
+      }
   }
   /*page.elasticImage = $("#cover-view");
               

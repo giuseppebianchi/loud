@@ -120,7 +120,6 @@ define(function(require) {
       this.isScrolling = false;
     },
     playPlause: function(e){
-      alert("a");
       e.stopImmediatePropagation();
       currentPlayingTrack.togglePause();
     },
@@ -148,7 +147,9 @@ define(function(require) {
       }
 
       this.coverPlayer.slideTo(index, 0);
-      
+      $.getJSON('http://api.soundcloud.com/users/'+track.user.id+'?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a', function(a){
+        console.log(a)
+      });
         // console.log(result);
         this.details.duration.text(this.getMinutes(track.duration));
         this.details.miniplayerTitle.text(track.title);
@@ -164,6 +165,16 @@ define(function(require) {
             self.details.progressBarPlayer.val((this.position/this.durationEstimate)*100);
           }
           self.details.time.text((self.getMinutes(this.position)));
+        },
+        onpause: function(){
+          $("#ios-play").css("display", "block");
+          $("#equalizer").css("display", "none");
+          $("#pauseButton").css("display", "block");
+        },
+        onplay: function(){
+          $("#ios-play").css("display", "none");
+          $("#equalizer").css("display", "block");
+          $("#pauseButton").css("display", "none");
         }
 
       },
@@ -175,6 +186,7 @@ define(function(require) {
     showOption: function(){
       this.details.showOption.addClass("visible");
       $("#main").addClass("blurred");
+      $("#main-overlay").addClass("visible");
       // $("#main").addClass("blurred");
       // this.detail.showOption.css({display: "block", opacity: 1})
     },

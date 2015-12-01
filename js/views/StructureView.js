@@ -23,8 +23,8 @@ define(function(require) {
     initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.structure;
-      Handlebars.registerHelper('subString', function(string) {
-        var large = string.replace("large","t500x500");
+      Handlebars.registerHelper('subString', function(string, replace) {
+        var large = string.replace("large",replace);
         return new Handlebars.SafeString(large)
       });
 
@@ -103,14 +103,15 @@ define(function(require) {
     },
     playControl: function(e){
       e.stopImmediatePropagation();
-      if(currentPlayingTrack.paused) {
+      currentPlayingTrack.togglePause();
+      /*if(currentPlayingTrack.paused) {
         $("#ios-play").css("display", "none");
         $("#equalizer").css("display", "block");
       }else{
         $("#ios-play").css("display", "block");
         $("#equalizer").css("display", "none");
-      }
-      currentPlayingTrack.togglePause();
+      }*/
+      
     },
     
     
