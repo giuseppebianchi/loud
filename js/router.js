@@ -125,7 +125,7 @@ define(function(require) {
 
 	LoginFunction: function() {
 				      
-				      if(!localStorage.getItem("account")){
+				      if(!localStorage.getItem("accessToken")){
 				      
 					      var LoginView = require("views/pages/LoginView");
 				      

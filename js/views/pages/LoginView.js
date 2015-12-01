@@ -39,6 +39,7 @@ define(function(require) {
 		    localStorage.setItem("account", JSON.stringify(me));
 		    Backbone.history.navigate("start", {trigger: true});
 		  });
+		  localStorage.setItem("accessToken", SC.accessToken());
 		  
 		});
 		
