@@ -70,7 +70,9 @@ define(function(require) {
         
     },
     playTrackStream: function(e){
-
+		$.getJSON('/me?oauth_token=' + localStorage.getItem("accessToken"), function(me) {
+		    console.log(me);
+		});
       var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
       //GET THE INDEX AND THE OBJECT WHICH CONTAINS THE SELECTED TRACK
       var result = this.findTrack(selectedTrack);
