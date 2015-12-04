@@ -2,7 +2,6 @@ define(function(require) {
 
 	var Backbone = require("backbone");
 	var TrackModel = require("models/TrackModel");
-	var token = localStorage.getItem("accessToken");
 	debugger;
 	var StreamCollection = Backbone.Collection.extend({
 		constructorName: "StreamCollection",

@@ -152,11 +152,11 @@ define(function(require) {
 				      var activities = new StreamCollection();
 				   
 				      // create the view
-
+					  
 				      var page = new StreamView({
 				        collection: activities
 				      });
-				      
+				      debugger;
 					  //render template
 				      this.changePage(page);
 				      //set player view into current view
