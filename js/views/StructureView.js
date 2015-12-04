@@ -27,6 +27,8 @@ define(function(require) {
 	    if(string){
 		    var large = string.replace("large",replace);
 			return new Handlebars.SafeString(large)
+	    }else{
+		    //set default image url
 	    }
         
       });

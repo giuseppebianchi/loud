@@ -1,12 +1,12 @@
 define(function(require) {
 
 	var Backbone = require("backbone");
-	var TrackModel = require("models/TrackModel");
+	var Activity = require("models/Activity");
 	
 	var StreamCollection = Backbone.Collection.extend({
 		constructorName: "StreamCollection",
-		model: TrackModel,
-		limit: 15,
+		model: Activity,
+		limit: 50,
 		token: null,
 		next: null,
 		future: null,

@@ -26,6 +26,8 @@ define(function(require) {
           }
           return options.inverse(this);
       });
+      
+      
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){

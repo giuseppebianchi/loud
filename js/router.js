@@ -119,7 +119,6 @@ define(function(require) {
     }, //END PLAYER FUNCTION
 
 	LoginFunction: function() {
-				      debugger;
 				      if(!localStorage.getItem("accessToken")){
 				      
 					      var LoginView = require("views/pages/LoginView");
@@ -145,12 +144,13 @@ define(function(require) {
     }, // END LOGIN FUNCTION
 
     Stream: function() {
-				      debugger;
 				      var StreamView = require("views/pages/StreamView");
 				      var StreamCollection = require("collections/StreamCollection");
 				      // create a collection for the template engine
 				      var activities = new StreamCollection();
-				   
+					  $.getJSON('https://api.soundcloud.com/playlists/171964420?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a', function(me) {
+						    console.log(me);
+						});
 				      // create the view
 					  activities.token = localStorage.getItem("accessToken");
 				      var page = new StreamView({
