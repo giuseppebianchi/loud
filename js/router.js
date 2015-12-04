@@ -2,7 +2,6 @@ define(function(require) {
 
   var $ = require("jquery");
   var Backbone = require("backbone");
-  var Blazy = require("blazy");
   /* VIEW */
   var StructureView = require("views/StructureView");
   var PlayerView = require("views/PlayerView");
@@ -89,17 +88,13 @@ define(function(require) {
 
 							self.playerView.initializeSliderPlayer();
 
-					        self.structureView.player = self.playerView.$el;
+					        self.structureView.player = self.playerView;
 					        
 					        var details = {
-					        	option: $("#trackOption"),
-					        	time: $("#currentTimeTrack"),
-								duration: $("#totalDuration"),
 								miniplayerImg: $("#miniplayerImg"),
 								miniplayerTitle: $("#miniplayerTitle"),
 								miniplayerArtist: $("#miniplayerArtist"),
 								progressBarMini: $("#progressBar"),
-								progressBarPlayer: $("#progressBarPlayer"),
 								showOption: $("#showOption")
 					        }
 					        self.playerView.details = details;
@@ -153,39 +148,28 @@ define(function(require) {
 				      
 				      var StreamView = require("views/pages/StreamView");
 				      var StreamCollection = require("collections/StreamCollection");
-				      var TrackModel = require("models/TrackModel");
-				      // highlight the nav1 tab bar element as the current one
-				      this.structureView.setActive("goToStream");
-
-				      var streamTrackModel = new TrackModel();
-				      // create a model with an arbitrary attribute for testing the template engine
-				      var listaStream = new StreamCollection({
-				      	model: streamTrackModel
-				      });
+				      // create a collection for the template engine
+				      var activities = new StreamCollection();
 				   
 				      // create the view
+
 				      var page = new StreamView({
-				        collection: listaStream
+				        collection: activities
 				      });
-				      // show the view
 				      
-				      //GET ACTIVITIES FROM SOUNDCLOUD USER AUTHENTICATED
-					  
+					  //render template
 				      this.changePage(page);
-				      
-				      
-					  page.scrollingView = $(".scrolling-view");
-					  page.contentList = $(".scrolling-view .list");
-
-				      page.scrollingView.bind('scroll', function (ev) {
-      						page.checkScroll(ev);
-       				  });
-				      var bLazy = new Blazy({ 
-        				container: '.scrolling-view'
-    				  });
-    				  page.player = this.playerView;
+				      //set player view into current view
+				      this.player = this.playerView;
+				      //set current view to player view
+    				  this.playerView.currentView = page;
+    				  //set current view to structure view
+    				  this.structureView.currentView = page;
+    				  //set current view in menu
+    				  this.structureView.setActive("goToStream");
+    				  //set last view for next opening
 				      localStorage.setItem("lastView", "stream");
-
+					  
 
 					  
 				      

@@ -9,15 +9,18 @@ define(function(require) {
   var StreamView = Utils.Page.extend({
 
     constructorName: "player",
-    
+    className: "hidden-fade",
     events:{	
       "tap .soundcloudArtist": "showUser",
-      "tap #chiudiplayer": "closePlayer",
-      "touchstart #progressBarPlayer": "seekTrack",
-      "touchend #progressBarPlayer": "seekTrackEnd",
-      "tap #timePlayer": "toggleProgressbar",
-      "tap #trackOption": "showOption",
-      "doubleTap": "playPlause"
+      //"tap #chiudiplayer": "closePlayer",
+      "swipeDown": "closePlayer",
+      "swipeUp": "closePlayer",
+      "touchstart .progressBarPlayer": "seekTrack",
+      "touchend .progressBarPlayer": "seekTrackEnd",
+      "tap .timePlayer": "toggleProgressbar",
+      "tap .trackOption": "showOption",
+      "doubleTap": "playPlause",
+      "input .progressBarPlayer": "update_time_while_scrolling_bar" 
     },
 
     collection: StreamListTrack,
@@ -45,6 +48,13 @@ define(function(require) {
     details: null,
 
     render: function() {
+	    var self = this;
+	    Handlebars.registerHelper('getMinutes', function(duration) {
+	      
+	      var result = self.getMinutes(duration);
+	       
+	      return new Handlebars.SafeString(result);
+	    });
         var data = JSON.parse(localStorage.getItem("activities"));
         this.el.innerHTML = this.template(data.collection);
         return this;
@@ -58,17 +68,20 @@ define(function(require) {
                       threshold: 10,
                       simulateTouch: false,
                       touchRatio: 0.7,
-                      
+                      parallax: false,
                       width: screen.width, 
                       /*width: 375, PER IPHONE 6*/
                       /*width: 320, PER IPHONE 5/4 */
                       longSwipesRatio: 0.3,
-                      spaceBetween: 1
+                      spaceBetween: 1,
+                      onSlideChangeStart: function(e){
+	                      
+	                      //self.playTrack(e.slides[e.activeIndex].attributes["sctrackid"].value, e.activeIndex);
+                      }
                 });
              });
+        
     },
-    
-    
     getMinutes: function (duration) {//for soundcloud track duration
         /*var minutes = Math.floor(millis / 60000);
         var seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -93,31 +106,33 @@ define(function(require) {
       alert(e.currentTarget.attributes["scuserid"].value);
     },
     openPlayer: function(){
-      $(this.currentView).css("display", "none");
-      this.$el.animate({
-        display: "block"
-        }, 100, "linear", function(){
-                            $(this).css("opacity", 1);
-                          }
-      );
+	    /*CANCEL EVENTS OF VIEW - HIDDEN FADE CLASS: NO BEHAVIOR FOR NOW*/
+	    this.currentView.undelegateEvents();
+	    this.currentView.$el.addClass("hidden-fade");
+		this.$el.removeClass("hidden-fade")
 
     },
     closePlayer: function(){
-      $(this.currentView).css("display", "block");
-      this.$el.animate({
-          opacity: 0
-          }, 500, "linear", function(){
-                            $(this).css("display", "none");
-                            }
-      );
+	  /*RELOAD EVENTS OF VIEW*/
+      this.currentView.$el.removeClass("hidden-fade");
+      this.currentView.delegateEvents();
+      this.$el.addClass("hidden-fade");
+      this.undelegateEvents();
+      
     },
     seekTrack: function(e){
-      this.isScrolling = true;
+	    this.coverPlayer.detachEvents();
+		/*to prevent width updating in whileplaying function*/
+		this.isScrolling = true;
     },
     seekTrackEnd: function(e){
-      var position = (e.currentTarget.value*currentPlayingTrack.durationEstimate)/100;
+      var position = e.currentTarget.value;
       currentPlayingTrack.setPosition(position);
+      this.coverPlayer.attachEvents();
       this.isScrolling = false;
+    },
+    update_time_while_scrolling_bar: function(e){
+	    this.details.time.text(this.getMinutes(e.target.value));
     },
     playPlause: function(e){
       e.stopImmediatePropagation();
@@ -139,6 +154,7 @@ define(function(require) {
         // currentPlayingTrack is defined
         if(track.id == currentPlayingTrack.loudId){
           this.openPlayer();
+          this.delegateEvents();
           return false;
         }
         currentPlayingTrack.destruct();
@@ -147,11 +163,13 @@ define(function(require) {
       }
 
       this.coverPlayer.slideTo(index, 0);
+/*
       $.getJSON('http://api.soundcloud.com/users/'+track.user.id+'?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a', function(a){
         console.log(a)
       });
-        // console.log(result);
-        this.details.duration.text(this.getMinutes(track.duration));
+*/		
+        self.details.progressBarPlayer = $(".swiper-slide-active .progressBarPlayer");
+        self.details.time = $(".swiper-slide-active .currentTimeTrack");
         this.details.miniplayerTitle.text(track.title);
         this.details.miniplayerArtist.text(track.user.username);
         this.details.miniplayerImg.attr("src", track.artwork_url.replace("large", "t500x500"));
@@ -162,19 +180,23 @@ define(function(require) {
         whileplaying: function(){
           if(!self.isScrolling){
             self.details.progressBarMini.css("width", ((this.position/this.durationEstimate)*100) + '%');
-            self.details.progressBarPlayer.val((this.position/this.durationEstimate)*100);
+			//self.details.progressBarPlayer.val((this.position/this.durationEstimate)*100);
+			self.details.progressBarPlayer.val(this.position);
+			self.details.time.text((self.getMinutes(this.position)));
           }
-          self.details.time.text((self.getMinutes(this.position)));
         },
         onpause: function(){
           $("#ios-play").css("display", "block");
           $("#equalizer").css("display", "none");
           $("#pauseButton").css("display", "block");
+          $(".coverTrackPlayer").addClass("blurred");
+
         },
         onplay: function(){
           $("#ios-play").css("display", "none");
           $("#equalizer").css("display", "block");
           $("#pauseButton").css("display", "none");
+          $(".coverTrackPlayer").removeClass("blurred");
         }
 
       },

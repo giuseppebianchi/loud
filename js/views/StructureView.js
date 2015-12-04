@@ -24,8 +24,11 @@ define(function(require) {
       // load the precompiled template
       this.template = Utils.templates.structure;
       Handlebars.registerHelper('subString', function(string, replace) {
-        var large = string.replace("large",replace);
-        return new Handlebars.SafeString(large)
+	    if(string){
+		    var large = string.replace("large",replace);
+			return new Handlebars.SafeString(large)
+	    }
+        
       });
 
       //{{kFormatter playback_count}}
@@ -46,11 +49,13 @@ define(function(require) {
     },
 
     player: null,
+    
+    currentView: null,
 
     render: function() {
       // load the template
       var account = JSON.parse(localStorage.getItem("account"));
-      this.el.innerHTML = this.template({username: account.username, picture: account.avatar_url.replace("large", "t500x500")});
+      this.el.innerHTML = this.template({permalink: account.permalink, picture: account.avatar_url.replace("large", "t500x500")});
       // cache a reference to the content Element
       this.contentElement = this.$el.find('#content')[0];
       return this;
@@ -93,12 +98,18 @@ define(function(require) {
 			});
     },
     openPlayer: function(){
-      this.player.animate({
-        display: "block"
-        }, 100, "linear", function(){
-                            $(this).css("opacity", 1);
-                          }
-      );
+	    this.currentView.undelegateEvents();
+	    this.currentView.$el.addClass("hidden-fade");
+		this.player.$el.removeClass("hidden-fade");
+		this.player.delegateEvents();
+		/*
+		this.player.animate({
+			display: "block"
+			}, 100, "linear", function(){
+			                $(this).css("opacity", 1);
+			              }
+		);
+		*/
 
     },
     playControl: function(e){

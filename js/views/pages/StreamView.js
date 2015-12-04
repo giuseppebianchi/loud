@@ -1,9 +1,9 @@
 define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
-  var Handlebars = require("handlebars")
+  var Handlebars = require("handlebars");
+  var Blazy = require("blazy");
   var Utils = require("utils");
-  var StreamListTrack = require("collections/StreamCollection");
   var UserView = require("views/pages/UserView");
 
   var StreamView = Utils.Page.extend({
@@ -11,14 +11,11 @@ define(function(require) {
     constructorName: "StreamView",
     
     events:{	
-      "tap .soundcloudArtist": "showUser",
       "tap .list-track": "playTrackStream",
       "tap .soundcloudArtist": "showUserView"
     },
-
-    collection: StreamListTrack,
     
-	  userView: undefined,
+	userView: undefined,
 	
     initialize: function() {
       // load the precompiled template
@@ -51,10 +48,29 @@ define(function(require) {
     contentList: null,
 
     render: function() {
+		var that = this;
+		  this.collection.fetch({
+			  success: function(activities){
+				  	console.log(activities.models)
+				  	//set received data into template
+					that.$el.html(that.template(activities.models));
+					
+					//set element that gets scroll event - to reload new data
+					that.scrollingView = $(".scrolling-view");
+					that.contentList = $(".scrolling-view .list");
+						  
+					//set event listener to scroll
+					that.scrollingView.bind('scroll', function (ev) {
+						that.checkScroll(ev);
+					});
+					//initialize lazy loading library
+					that.bLazy = new Blazy({ 
+						container: '.scrolling-view'
+					});
+					
+			  }
+		  })
 
-      this.activities = JSON.parse(localStorage.getItem("activities"));
-
-      $(this.el).html(this.template(this.activities.collection));
       
 
       return this;
@@ -70,9 +86,11 @@ define(function(require) {
         
     },
     playTrackStream: function(e){
+/*
 		$.getJSON('https://api.soundcloud.com/me?oauth_token=' + localStorage.getItem("accessToken"), function(me) {
 		    console.log(me);
 		});
+*/
       var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
       //GET THE INDEX AND THE OBJECT WHICH CONTAINS THE SELECTED TRACK
       var result = this.findTrack(selectedTrack);
@@ -89,8 +107,8 @@ define(function(require) {
       }
     },
     showUserView: function(e){
+	  e.stopImmediatePropagation();
       this.UserModel = require("models/UserModel");
-      e.stopImmediatePropagation();
       var temp, self = this;
       var userId = e.currentTarget.attributes["scuserid"].value;
       

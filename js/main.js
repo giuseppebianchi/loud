@@ -4,6 +4,7 @@ require.config({
     jquery: '../lib/zepto/zepto', // ../lib/jquery/jquery', 
     underscore: '../lib/underscore/underscore',
     backbone: "../lib/backbone/backbone",
+    SC: "../lib/soundcloud-sdk/soundcloud-sdk",
     text: '../lib/require/text',
     async: '../lib/require/async',
     handlebars: '../lib/handlebars/handlebars',
