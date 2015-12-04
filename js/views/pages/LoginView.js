@@ -35,8 +35,8 @@ define(function(require) {
     SCconnect: function(){
 	    // initiate auth popup
 		SC.connect(function(result) {
-		 console.log(result);
 		  SC.get('/me', function(me) {
+			console.log(me);
 		    localStorage.setItem("account", JSON.stringify(me));
 		    Backbone.history.navigate("start", {trigger: true});
 		  });
