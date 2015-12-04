@@ -721,6 +721,9 @@ input[type=email]:focus, input[type=password]:focus {
   /*background-position-y: -50px;*/
   transition: 0.5s;
 }
+.list-track.playlist-type .cover-track{
+	height: 220px;
+}
 .list-track .cover-track .cover-track-overlay{
 	position:relative;
 	width: 100%;
@@ -1318,7 +1321,9 @@ input[type=email]:focus, input[type=password]:focus {
 
 
 
-
+.b-error{
+	background-image: url(../img/avatar.jpg) !important
+}
 .hidden-fade{
 	visibility: hidden;
 	opacity: 0;
