@@ -1,7 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
-  //var UserModel = require("models/UserModel");
   var Utils = require("utils");
 
   var UserView = Utils.Page.extend({
@@ -14,10 +13,6 @@ define(function(require) {
       "tap #back": "back",
       "tap #userOption": "showUserOption"
 	},
-
-    //model: UserModel,
-
-  userId: undefined,
 
 	elasticImage: undefined,
 	
@@ -42,7 +37,24 @@ define(function(require) {
     parent: undefined,
 
     render: function() {
-      $(this.el).html(this.template(this.model));
+	   var that = this;
+	   this.model.fetch({
+		   success: function(data){
+			   
+			   that.$el.html(that.template(data.attributes));
+			    //set options
+			      that.elasticImage = $("#cover-user-view");
+			
+			      that.userScrollingView = $("#user-scrolling-view");
+			
+			      that.userScrollingView.bind('scroll', function (ev) {
+			            that.checkScroll(ev);
+			      });
+			
+				 
+		   }
+	   })
+       
       return this;
     },
     

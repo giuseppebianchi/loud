@@ -4,6 +4,7 @@ define(function(require) {
   var Handlebars = require("handlebars");
   var Blazy = require("blazy");
   var Utils = require("utils");
+  
   var UserView = require("views/pages/UserView");
 
   var StreamView = Utils.Page.extend({
@@ -12,7 +13,7 @@ define(function(require) {
     
     events:{	
       "tap .list-track": "playTrackStream",
-      "tap .soundcloudArtist": "showUserView"
+      "tap .soundcloudArtist": "showUser"
     },
     
 	userView: undefined,
@@ -108,37 +109,29 @@ define(function(require) {
         }
       }
     },
-    showUserView: function(e){
+    
+    showUser: function(e){
 	  e.stopImmediatePropagation();
-      this.UserModel = require("models/UserModel");
-      var temp, self = this;
+      var UserModel = require("models/UserModel");
+      var self = this;
       var userId = e.currentTarget.attributes["scuserid"].value;
+      var user = new UserModel({
+	      id_user: userId
+      });
       
-        SC.get("/users/" + userId, function(user){
-          self.userView = new UserView({
+      this.userView = new UserView({
             model: user
-          });
-          // render the new view
-          self.userView.render();
-          //append in the current view
-          $(self.el).append(self.userView.el);
-
-          //set options
-          self.userView.elasticImage = $("#cover-user-view");
-
-          self.userView.userScrollingView = $("#user-scrolling-view");
-          self.userView.userScrollingView.bind('scroll', function (ev) {
-                  self.userView.checkScroll(ev);
-          });
-
-          self.userView.parent = self;
-          self.undelegateEvents();
-          //translate
-          //$(self.userView.el).addClass("active");
-          //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-          setTimeout(function(){$(self.userView.el).addClass("active")}, 200);
-        });
-        
+      });
+      this.userView.parent = this;
+      // render the new view
+      this.userView.render();
+      //append in the current view
+	  this.$el.append(this.userView.el);
+      this.undelegateEvents();
+      //translate
+      //$(self.userView.el).addClass("active");
+      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+      setTimeout(function(){$(self.userView.el).addClass("active")}, 200);
       
 
       

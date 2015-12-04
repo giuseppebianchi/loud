@@ -148,9 +148,7 @@ define(function(require) {
 				      var StreamCollection = require("collections/StreamCollection");
 				      // create a collection for the template engine
 				      var activities = new StreamCollection();
-					  $.getJSON('https://api.soundcloud.com/playlists/171964420?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a', function(me) {
-						    console.log(me);
-						});
+					  
 				      // create the view
 					  activities.token = localStorage.getItem("accessToken");
 				      var page = new StreamView({
@@ -168,13 +166,10 @@ define(function(require) {
     				  //set current view in menu
     				  this.structureView.setActive("goToStream");
     				  //set last view for next opening
-				      localStorage.setItem("lastView", "stream");
-					  
-
-					  
-				      
+				      localStorage.setItem("lastView", "stream");			      
 				      
     }, //END STREAM FUNCTION
+    
     
     
 

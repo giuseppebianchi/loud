@@ -706,6 +706,7 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .tab-bar--top-border__button .tab-name{
   font-size: 13px;
+  font-size: 16px;
 }
 .list-track{
   padding-top: 10px;
@@ -1263,7 +1264,7 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .overlay-cover-user-view-details > span.follower-count{
     display: block;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
 }
 .tab-bar{
  /* background: white;*/
