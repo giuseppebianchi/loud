@@ -59,9 +59,15 @@ define(function(require) {
                   && this.el.children['user-scrolling-view'].scrollTop == 0){
 
     			//var altezza = this.elasticImage.height();
-          if(this.elasticImage.height() == 430){
-              this.elasticImage.children().addClass("hidden"); 
-          }
+    			
+    			//hidden content 
+    			/*
+		        if(this.elasticImage.height() == 430){
+		            this.elasticImage.children().addClass("hidden"); 
+		        }
+				*/
+				
+				
     			//$(this.el).css("overflow", "hidden");			
     			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
@@ -71,7 +77,8 @@ define(function(require) {
       }
 	},
 	resetHeight: function(e){
-    this.elasticImage.children().removeClass("hidden"); 
+	//reset content
+    //this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
   back: function(e){

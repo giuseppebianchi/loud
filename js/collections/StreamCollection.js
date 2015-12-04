@@ -6,7 +6,7 @@ define(function(require) {
 	var StreamCollection = Backbone.Collection.extend({
 		constructorName: "StreamCollection",
 		model: Activity,
-		limit: 50,
+		limit: 15,
 		token: null,
 		next: null,
 		future: null,
