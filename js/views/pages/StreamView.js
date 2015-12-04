@@ -54,7 +54,7 @@ define(function(require) {
 				  	console.log(activities.models)
 				  	//set received data into template
 					that.$el.html(that.template(activities.models));
-					debugger;
+					
 					//set element that gets scroll event - to reload new data
 					that.scrollingView = $(".scrolling-view");
 					that.contentList = $(".scrolling-view .list");

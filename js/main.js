@@ -4,7 +4,6 @@ require.config({
     jquery: '../lib/zepto/zepto', // ../lib/jquery/jquery', 
     underscore: '../lib/underscore/underscore',
     backbone: "../lib/backbone/backbone",
-    SC: "../lib/soundcloud-sdk/soundcloud-sdk",
     text: '../lib/require/text',
     async: '../lib/require/async',
     handlebars: '../lib/handlebars/handlebars',
@@ -40,8 +39,7 @@ require.config({
 require(['backbone', 'utils'], function(Backbone, Utils) {
   require(['preloader', 'router'], function(PreLoader, AppRouter) {
 	 
-	 
-		
+
     //document.addEventListener("deviceready", run, false);
     run();
     
@@ -68,14 +66,14 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
         function startRouter() {
           // launch the router
           var router = new AppRouter();
+          
 		  var SCoptions = {
 	          client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
 			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html',
 			  scope: 'non-expiring',
           }
+          
           Backbone.history.start();
-
-          playerPlaylist = [];
           
 		  var accessToken = localStorage.getItem("accessToken");
 		  

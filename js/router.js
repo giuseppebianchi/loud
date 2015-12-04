@@ -28,7 +28,7 @@ define(function(require) {
     // load the structure view
     showStructure: function() {
 
-      					
+
 				        // put the el element of the structure view into the DOM
 				        var self = this;
 				        
@@ -119,7 +119,7 @@ define(function(require) {
     }, //END PLAYER FUNCTION
 
 	LoginFunction: function() {
-				      
+				      debugger;
 				      if(!localStorage.getItem("accessToken")){
 				      
 					      var LoginView = require("views/pages/LoginView");
@@ -145,18 +145,18 @@ define(function(require) {
     }, // END LOGIN FUNCTION
 
     Stream: function() {
-				      
+				      debugger;
 				      var StreamView = require("views/pages/StreamView");
 				      var StreamCollection = require("collections/StreamCollection");
 				      // create a collection for the template engine
 				      var activities = new StreamCollection();
 				   
 				      // create the view
-					  
+					  activities.token = localStorage.getItem("accessToken");
 				      var page = new StreamView({
 				        collection: activities
 				      });
-				      debugger;
+
 					  //render template
 				      this.changePage(page);
 				      //set player view into current view

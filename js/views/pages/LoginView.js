@@ -3,7 +3,7 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
-
+  
   var LoginView = Backbone.View.extend({
 
     constructorName: "LoginView",
@@ -37,11 +37,10 @@ define(function(require) {
 		SC.connect(function() {
 		  SC.get('/me', function(me) {
 			console.log(me);
+			localStorage.setItem("accessToken", SC.accessToken());
 		    localStorage.setItem("account", JSON.stringify(me));
 		    Backbone.history.navigate("start", {trigger: true});
 		  });
-		  debugger;
-		  localStorage.setItem("accessToken", SC.accessToken());
 		  
 		});
 		
