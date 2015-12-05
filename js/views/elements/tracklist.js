@@ -2,42 +2,44 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
+  var Blazy = require("blazy");
+  
+  var TracklistView = Utils.Page.extend({
 
-  var CarouselView = Utils.Page.extend({
-
-    constructorName: "CarouselView",
+    constructorName: "TracklistView",
     
     events:{
-	    "touchstart": "prevent"
+	   
 	},
 	
     initialize: function() {
       // load the precompiled template
-      this.template = Utils.templates.carousel;
+      this.template = Utils.templates.tracklist;
     },
     
-    tagName: "div",
+    tagName: "ul",
     
-    className: "carousel",
+    className: "list",
     
     parent: undefined,
 
     render: function() {
 		var that = this;
 		  this.collection.fetch({
-			  success: function(playlist){
+			  success: function(tracks){
 				  	//set received data into template
-					that.$el.html(that.template(playlist.models));
+					that.$el.html(that.template(tracks.models));
+					
+					that.bLazy = new Blazy({ 
+						container: '#user-scrolling-view'
+					});
 			  }
 		  })
 
       return this;
     },
-    prevent: function(e){
-	    e.stopImmediatePropagation();
-    }
  });
 
-  return CarouselView;
+  return TracklistView;
 
 });

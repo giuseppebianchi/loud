@@ -1,0 +1,18 @@
+{{#each this}}
+{{#with attributes}}
+  <div class="item-single-track">
+        <li class="list__item list-track" scTrackId="{{id}}">
+          <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+            <div class="cover-track-overlay">
+              <div class="list-track-details">
+                {{#with user}}
+                <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+                {{/with}}
+                <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+              </div>
+            </div>
+          </div>
+        </li>
+  </div>
+ {{/with}}
+{{/each}}

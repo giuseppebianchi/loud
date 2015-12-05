@@ -3,6 +3,7 @@ define(function(require) {
   var Backbone = require("backbone");
   var Utils = require("utils");
   var CarouselView = require("views/elements/carousel");
+  var TracklistView = require("views/elements/tracklist");
   var UserView = Utils.Page.extend({
 
     constructorName: "UserView",
@@ -19,7 +20,6 @@ define(function(require) {
     initialize: function() {
       // load the precompiled template
       this.template = Utils.templates.user;
-      this.screenHeight = screen.height - 40;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -44,6 +44,7 @@ define(function(require) {
 			   
 			   that.$el.html(that.template(data.attributes));
 			    //set options
+			    console.log(data)
 			      that.elasticImage = $("#cover-user-view");
 			
 			      that.userScrollingView = $("#user-scrolling-view");
@@ -52,6 +53,7 @@ define(function(require) {
 			            that.checkScroll(ev);
 			      });
 			    
+			    // CREATE CAROUSEL VIEW FOR PLAYLIST
 			    var PlaylistCollection = require("collections/PlaylistCollection");
 			    // create a collection for the template engine
 			    var user_playlists = new PlaylistCollection({
@@ -62,6 +64,20 @@ define(function(require) {
 			    })
 			    that.carousel.render()  
 				$("#UserCarousel").html(that.carousel.el);
+				
+				
+				// CREATE LIST VIEW FOR TRACKS
+				var TrackCollection = require("collections/TrackCollection");
+			    // create a collection for the template engine
+			    var user_tracks = new TrackCollection({
+				    id: data.attributes.id
+				})  
+			    that.tracklist = new TracklistView({
+				    collection: user_tracks
+			    })
+			    that.tracklist.render()  
+				$("#tracklist").html(that.tracklist.el);
+				
 				 
 		   }
 	   })
@@ -84,15 +100,15 @@ define(function(require) {
     			//var altezza = this.elasticImage.height();
     			
     			//hidden content 
-    			
-		        if(this.elasticImage.height() == this.screenHeight ){
+    			/*
+		        if(this.elasticImage.height() == 430){
 		            this.elasticImage.children().addClass("hidden"); 
 		        }
-				
+				*/
 				
 				
     			//$(this.el).css("overflow", "hidden");			
-    			this.elasticImage.css("height", (this.screenHeight + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
 
     	}else{
@@ -100,8 +116,8 @@ define(function(require) {
       }
 	},
 	resetHeight: function(e){
-		//reset content
-    	this.elasticImage.children().removeClass("hidden"); 
+	//reset content
+    //this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
   back: function(e){

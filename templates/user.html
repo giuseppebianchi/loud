@@ -13,14 +13,14 @@
 <div id="cover-user-view" style="background-image:url({{subString avatar_url 't500x500'}})">
   <div class="overlay-cover-user-view">
     <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
-    <button class="button" style="margin-bottom: 10px; padding: 5px 10px; position: absolute;font-size: 13px;bottom: 55px;right: 15px;line-height: normal;">Follow</button>
+    
      <div class="overlay-cover-user-view-details">
       
        <h4 id="name">{{username}}</h4>
        {{#if city}}
         <span>{{city}}</span> <span>{{country}}</span></br>
         {{/if}}
-        <span class="follower-count">{{kFormatter followers_count}} Followers</span>
+        
      </div>
 
      <div class="tab-bar tab-bar--top tab-bar--top-border">
@@ -33,19 +33,15 @@
           <label class="tab-bar__item tab-bar--top-border__item">
 <!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
             <button class="tab-bar__button tab-bar--top-border__button center">
-              <span class="tab-name"><i class="fa fa-random"></i></span>
+              <span class="counter">{{kFormatter followers_count}}</span>
+              <span class="tab-name">FOLLOWERS</span>
             </button>
           </label>
+          
           <label class="tab-bar__item tab-bar--top-border__item">
-<!--             <input type="checkbox" name="top-tab-bar-b"> -->
             <button class="tab-bar__button tab-bar--top-border__button center">
-              <span class="tab-name"><i class="fa fa-refresh"></i></span>
-            </button>
-          </label>
-          <label class="tab-bar__item tab-bar--top-border__item">
-            <button class="tab-bar__button tab-bar--top-border__button center" id="userOption">
 <!--               <span class="counter">{{playlist_count}}</span><br> --> 
-              <span class="tab-name" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}">•••</span>
+              <span class="tab-name" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" id="userOption">FOLLOW</span>
             </button>
           </label>
 
@@ -55,9 +51,9 @@
 
   </div>
 </div>
-<p class="user-page-title">Playlists <span>({{playlist_count}})</span></p>
+<p class="user-page-title">Playlists <!-- <span>({{playlist_count}})</span> --></p>
 <div id="UserCarousel"></div>
-<ul class="list">
-  
-</ul>
+<p class="user-page-title">Tracks <!-- <span>({{track_count}})</span> --></p>
+<div id="tracklist"></div>
+
 </div>
