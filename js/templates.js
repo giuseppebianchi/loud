@@ -14,5 +14,6 @@ define({
     login: "templates/login.html",
     stream: "templates/stream.html",
     player: "templates/player.html",
-    user: "templates/user.html"
+    user: "templates/user.html",
+    carousel: "templates/elements/carousel.html"
 });

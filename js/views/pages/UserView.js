@@ -2,7 +2,7 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
-
+  var CarouselView = require("views/elements/carousel");
   var UserView = Utils.Page.extend({
 
     constructorName: "UserView",
@@ -19,6 +19,7 @@ define(function(require) {
     initialize: function() {
       // load the precompiled template
       this.template = Utils.templates.user;
+      this.screenHeight = screen.height - 40;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -50,7 +51,17 @@ define(function(require) {
 			      that.userScrollingView.bind('scroll', function (ev) {
 			            that.checkScroll(ev);
 			      });
-			
+			    
+			    var PlaylistCollection = require("collections/PlaylistCollection");
+			    // create a collection for the template engine
+			    var user_playlists = new PlaylistCollection({
+				    id: data.attributes.id
+				})  
+			    that.carousel = new CarouselView({
+				    collection: user_playlists
+			    })
+			    that.carousel.render()  
+				$("#UserCarousel").html(that.carousel.el);
 				 
 		   }
 	   })
@@ -73,15 +84,15 @@ define(function(require) {
     			//var altezza = this.elasticImage.height();
     			
     			//hidden content 
-    			/*
-		        if(this.elasticImage.height() == 430){
+    			
+		        if(this.elasticImage.height() == this.screenHeight ){
 		            this.elasticImage.children().addClass("hidden"); 
 		        }
-				*/
+				
 				
 				
     			//$(this.el).css("overflow", "hidden");			
-    			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			this.elasticImage.css("height", (this.screenHeight + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
 
     	}else{
@@ -89,15 +100,15 @@ define(function(require) {
       }
 	},
 	resetHeight: function(e){
-	//reset content
-    //this.elasticImage.children().removeClass("hidden"); 
+		//reset content
+    	this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
   back: function(e){
     e.stopImmediatePropagation();
     var self = this;
     $(this.el).removeClass("active");
-    setTimeout(function(){self.parent.hideUser()}, 200);
+    setTimeout(function(){self.hideUser()}, 200);
   },
   showUserOption: function(){
       $("#showOption").addClass("visible");
@@ -114,7 +125,11 @@ define(function(require) {
          $(this.el.children[0]).css("background", "transparent");
         $(this.el.children[0].children[1]).css('opacity', 0);
       }
-  }
+  },
+  hideUser: function(){ //fired from UserView
+      this.parent.delegateEvents();
+      this.close();
+    }
   /*page.elasticImage = $("#cover-view");
               
               this.structureView.snapper.on("drag", function(){

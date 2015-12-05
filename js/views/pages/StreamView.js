@@ -135,11 +135,6 @@ define(function(require) {
       
 
       
-    },
-    hideUser: function(){ //fired from UserView
-      this.delegateEvents();
-      this.userView.close();
-      this.userView = null;
     }
     
     
