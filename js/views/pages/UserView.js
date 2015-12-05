@@ -135,11 +135,9 @@ define(function(require) {
   },
   checkScroll: function(e){
       if(this.el.children['user-scrolling-view'].scrollTop > 100){
-        $(this.el.children[0]).css("background", "");
-        $(this.el.children[0].children[1]).css('opacity', 1);
+        $(this.el.children[0]).addClass("header-visible")
       }else{
-         $(this.el.children[0]).css("background", "transparent");
-        $(this.el.children[0].children[1]).css('opacity', 0);
+         $(this.el.children[0]).removeClass("header-visible")
       }
   },
   hideUser: function(){ //fired from UserView

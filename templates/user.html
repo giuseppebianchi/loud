@@ -1,4 +1,4 @@
-<header class="navigation-bar navigation-bar--transparent user-header" style="background: transparent; box-shadow: none;">
+<header class="navigation-bar navigation-bar--transparent user-header">
   <div class="navigation-bar__left">
     <span id="back" class="toolbar-button--quiet navigation-bar__line-height">
       <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
@@ -6,7 +6,7 @@
   </div>
   <div class="navigation-bar__center">{{username}}</div>
 <div class="navigation-bar__right">
-    
+    <span id="userOption" class="toolbar-button--quiet navigation-bar__line-height" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" style="line-height: 45px;">•••</span>
 </div>
 </header>
 <div id="user-scrolling-view">
@@ -25,7 +25,7 @@
 
      <div class="tab-bar tab-bar--top tab-bar--top-border">
 	     <label class="tab-bar__item tab-bar--top-border__item">
-<!--             <input type="radio" name="top-tab-bar-b" checked="checked"> -->
+		 <input type="checkbox" name="top-tab-bar-b">
             <button class="tab-bar__button tab-bar--top-border__button center">
               <span class="tab-name"><i class="fa fa-play"></i></span>
             </button>
@@ -39,9 +39,13 @@
           </label>
           
           <label class="tab-bar__item tab-bar--top-border__item">
-            <button class="tab-bar__button tab-bar--top-border__button center">
-<!--               <span class="counter">{{playlist_count}}</span><br> --> 
-              <span class="tab-name" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" id="userOption">FOLLOW</span>
+<!--
+          	<button id="follow" class="tab-bar__button tab-bar--top-border__button center following">
+              <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
+            </button>
+-->
+            <button id="follow" class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name" data-code="{{id}}">FOLLOW</span>
             </button>
           </label>
 

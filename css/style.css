@@ -198,6 +198,7 @@ img{
 .full-page{
 	height: 100%;
 	width: 100%;
+	background: #00000A;
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
 }
@@ -249,7 +250,7 @@ float: right;
 }
 
 .list{
-	background: #FAFAF5;
+	background: transparent;
 }
 
 
@@ -377,8 +378,9 @@ float: right;
 }
 
 .navigation-bar--transparent{
-	/*background-color: rgba(255, 255, 255, 0.95);*/
-	background-color: rgba(0, 0, 0, 0.935);
+	/*background-color: rgba(255, 255, 255, 0.95);
+	background-color: rgba(0, 0, 0, 0.935);*/
+	background-color: rgba(255, 0, 60, 0.8);
 	background-image: none;
 	border:none; 
 	position:fixed;
@@ -711,12 +713,12 @@ input[type=email]:focus, input[type=password]:focus {
   display:block;
 }
 .list-track{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 15px;
 }
 .list-track .cover-track{
   height: 135px;
   width: 100%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
   background-image: url(../img/empty.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -745,7 +747,8 @@ input[type=email]:focus, input[type=password]:focus {
 	color: white;
 	font-weight: 300;
 	bottom: 0;
-  line-height: 20px;
+	font-size: 16px;
+  line-height: 18px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -753,7 +756,7 @@ input[type=email]:focus, input[type=password]:focus {
 
 }
 .list-track .cover-track .cover-track-overlay .title-list-track .soundcloudArtist{
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
 /*   color: rgba(255, 0, 60, 0.8); */
@@ -769,6 +772,7 @@ input[type=email]:focus, input[type=password]:focus {
     margin: 0 0 5px;
     font-weight: 500;
     opacity: 0.5;
+    color: white;
 }
 .d-playlist{
 	float: right;
@@ -1189,7 +1193,6 @@ input[type=email]:focus, input[type=password]:focus {
     width: 100%;
     top: 0;
     height: 100%;
-    background: white;
     -webkit-transform: translate3d(375px, 0, 0);
     transform: translate3d(375px, 0, 0);
     -webkit-transition: 0.3s;
@@ -1201,42 +1204,45 @@ input[type=email]:focus, input[type=password]:focus {
     height: 100%;
     overflow: auto;
 }
-#userOption{
-  color: rgba(255, 0, 60, 0.7);
-}
 #User.active{
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 #User .user-header{
   position: absolute;
+  background: transparent;
+  box-shadow: none;
   transition: background 0.3s;
 }
+#User .user-header.header-visible{
+  background: rgba(255, 0, 60, 0.8) 
+}
+#User .user-header span, #User .user-header span i{
+  color: rgba(255, 0, 60, 0.9);
+}
 #User .user-header .navigation-bar__center{
-  font-size: 14px;
-  margin-top: 3px;
-  opacity: 0;
+  text-transform: uppercase;
+  color: transparent;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.4s;
+  transition: 0.4s;
+}
+#User .user-header.header-visible span, #User .user-header.header-visible span i, #User .user-header.header-visible .navigation-bar__center{
+  color: white;
 }
 #User .user-page-title{
-	padding: 10px 15px;
-    margin: 0;
+	padding: 10px 0 5px;
+    margin: 0 15px;
     text-transform: uppercase;
-    font-size: 14px;
-    line-height: 30px;
+    font-size: 12px;
+    line-height: 20px;
     font-weight: 400;
     letter-spacing: 1px;
     color: rgba(255, 0, 60, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3)
 }
 #User .user-page-title > span{
 	font-weight: 500;	
-}
-#back > i{
-  font-size: 32px;
-  padding: 5px 0 0;
-  color: rgba(255, 0, 60, 0.7);
 }
 .overlay-cover-user-view{
   position: relative;
@@ -1279,20 +1285,26 @@ input[type=email]:focus, input[type=password]:focus {
     display: block;
     color: rgba(255, 255, 255, 0.6);
 }
+#follow{
+	color: #ff003c;
+	transition: 0.5s;
+}
+#follow.following{
+	color: white;
+	background: #ff003c;
+}
 .tab-bar{
  /* background: white;*/
     background: transparent;
     position: absolute;
     top: auto;
     bottom: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .tab-bar :checked + .tab-bar--top-border__button{
   color: #ff003c;
   border-bottom: 4px solid #ff003c;
-}
-#UserCarousel{
-	background: #FAFAF5;
 }
 .carousel{
 	height: 160px;
@@ -1323,8 +1335,9 @@ input[type=email]:focus, input[type=password]:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    opacity: 0.6;
+    opacity: 0.4;
     font-weight:500;
+    color: white;
     
 }
 
