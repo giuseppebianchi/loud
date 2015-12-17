@@ -22,16 +22,19 @@ define(function(require) {
     className: "list",
     
     parent: undefined,
-
+    
+    viewId: undefined,
+    
     render: function() {
 		var that = this;
+		
 		  this.collection.fetch({
 			  success: function(tracks){
+				  	
 				  	//set received data into template
-					that.$el.html(that.template(tracks.models));
-					
+					that.$el.html(that.template(tracks));
 					that.bLazy = new Blazy({ 
-						container: '#user-scrolling-view'
+						container: "#user-scrolling-view-" + tracks.user_id
 					});
 			  }
 		  })

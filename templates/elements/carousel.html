@@ -1,3 +1,5 @@
+{{#if this.length}}
+
 {{#each this}}
 	{{#if attributes.artwork_url}}
 		<div class="carousel-item"><div class="carousel-item-image" style="background-image: url({{attributes.artwork_url}})"></div><p class="carousel-item-title">{{attributes.title}}</p></div>
@@ -7,3 +9,9 @@
 {{/each}}
 
 	<div class="carousel-item"><div class="carousel-item-image"></div><p class="carousel-item-title">&nbsp;</p></div>
+
+{{else}}
+	
+	<div class="carousel-empty"></div>
+	
+{{/if}}

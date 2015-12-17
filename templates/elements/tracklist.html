@@ -1,4 +1,6 @@
-{{#each this}}
+{{#if this.length}}
+
+{{#each this.models}}
 {{#with attributes}}
   <div class="item-single-track">
         <li class="list__item list-track" scTrackId="{{id}}">
@@ -16,3 +18,13 @@
   </div>
  {{/with}}
 {{/each}}
+<!-- <p class="user-page-title show-more">Show all {{this.track_count}} tracks</p> -->
+
+{{else}}
+	{{#if track_count}}
+	
+	{{else}}
+		<p class="user-page-title">No track</p>
+	{{/if}}
+
+{{/if}}

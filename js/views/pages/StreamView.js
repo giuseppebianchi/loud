@@ -21,6 +21,7 @@ define(function(require) {
     initialize: function() {
       // load the precompiled template
       this.template = Utils.templates.stream;
+      this.templateList = Utils.templates.streamlist;
       Handlebars.registerHelper('compare', function(v1, v2, options) {
           if(v1 == v2) {
             return options.fn(this);
@@ -49,18 +50,19 @@ define(function(require) {
     scrollingView: null,
 
     contentList: null,
-
+	
+	loadingContents: false,
+	
     render: function() {
 		var that = this;
 		  this.collection.fetch({
 			  success: function(activities){
-				  	console.log(activities.models)
 				  	//set received data into template
 					that.$el.html(that.template(activities.models));
 					
 					//set element that gets scroll event - to reload new data
-					that.scrollingView = $(".scrolling-view");
-					that.contentList = $(".scrolling-view .list");
+					that.scrollingView = $("#stream-scrolling-view");
+					that.contentList = $("#stream-scrolling-view .list");
 						  
 					//set event listener to scroll
 					that.scrollingView.bind('scroll', function (ev) {
@@ -68,7 +70,7 @@ define(function(require) {
 					});
 					//initialize lazy loading library
 					that.bLazy = new Blazy({ 
-						container: '.scrolling-view'
+						container: '#stream-scrolling-view'
 					});
 					
 			  }
@@ -80,12 +82,20 @@ define(function(require) {
     },
     
     checkScroll: function(){
-
-      if(this.scrollingView.scrollTop() == (this.contentList.height() - this.scrollingView.height())) {
+      if(!this.loadingContents && this.scrollingView.scrollTop() > (this.contentList.height() - this.scrollingView.height())) {
+	   this.loadingContents = true;
        this.fetchData();
       }
     },
     fetchData: function(){
+	    var that = this;
+		this.collection.fetch({
+	        success: function(more){
+		        that.scrollingView.children(".list").append(that.templateList(more.models));
+		        that.bLazy.revalidate();
+		        that.loadingContents = false;
+		    }
+        })
         
     },
     playTrackStream: function(e){
@@ -131,7 +141,6 @@ define(function(require) {
       //translate
       //$(self.userView.el).addClass("active");
       //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-      setTimeout(function(){$(self.userView.el).addClass("active")}, 200);
       
 
       

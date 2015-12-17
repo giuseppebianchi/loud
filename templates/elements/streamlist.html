@@ -1,22 +1,4 @@
-
-<header class="navigation-bar navigation-bar--transparent">
-  <div class="navigation-bar__left">
-    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
-      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
-    </span>
-  </div>
-  <div class="navigation-bar__center">
-    STREAM
-  </div>
-<div class="navigation-bar__right">
-    <span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-search" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span>
-  </div>
-</header>
-<div id="stream-scrolling-view" class="scrolling-view">
-<ul class="list">
-
-<!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
-  {{#each this}}
+{{#each this}}
   <div class="item-single-track">
     {{#compare attributes.type "track-repost"}}
       <span class="repost"><i class="fa fa-retweet"></i></span>
@@ -90,8 +72,3 @@
     {{/compare}}
   </div>
 {{/each}}
-</ul>
-<div class="cssload-loader">
-  <div class="cssload-ball"></div>
-  </div>
-</div>

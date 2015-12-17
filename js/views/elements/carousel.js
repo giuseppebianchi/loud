@@ -28,6 +28,11 @@ define(function(require) {
 			  success: function(playlist){
 				  	//set received data into template
 					that.$el.html(that.template(playlist.models));
+					
+					//disable events and set empty (blurred)image on playlists container
+					if(!playlist.length){
+						that.undelegateEvents();
+					}
 			  }
 		  })
 

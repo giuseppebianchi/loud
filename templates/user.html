@@ -1,16 +1,21 @@
 <header class="navigation-bar navigation-bar--transparent user-header">
   <div class="navigation-bar__left">
-    <span id="back" class="toolbar-button--quiet navigation-bar__line-height">
+    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
       <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
     </span>
   </div>
   <div class="navigation-bar__center">{{username}}</div>
 <div class="navigation-bar__right">
-    <span id="userOption" class="toolbar-button--quiet navigation-bar__line-height" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" style="line-height: 45px;">•••</span>
+    <span class="toolbar-button--quiet navigation-bar__line-height userOption" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" style="line-height: 45px;">•••</span>
 </div>
 </header>
-<div id="user-scrolling-view">
-<div id="cover-user-view" style="background-image:url({{subString avatar_url 't500x500'}})">
+
+
+<div id="user-scrolling-view-{{id}}" class="user-scrolling-view">
+<div class="user-content-view">
+	
+	
+<div class="cover-user-view" style="background-image:url({{subString avatar_url 't500x500'}})">
   <div class="overlay-cover-user-view">
     <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
     
@@ -44,7 +49,7 @@
               <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
             </button>
 -->
-            <button id="follow" class="tab-bar__button tab-bar--top-border__button center">
+            <button class="tab-bar__button tab-bar--top-border__button center follow-button">
               <span class="tab-name" data-code="{{id}}">FOLLOW</span>
             </button>
           </label>
@@ -56,8 +61,16 @@
   </div>
 </div>
 <p class="user-page-title">Playlists <!-- <span>({{playlist_count}})</span> --></p>
-<div id="UserCarousel"></div>
-<p class="user-page-title">Tracks <!-- <span>({{track_count}})</span> --></p>
-<div id="tracklist"></div>
+<div class="UserCarousel"><div class="cssload-loader">
+  <div class="cssload-ball"></div>
+  </div></div>
+<p class="user-page-title"><span>{{track_count}} </span> Tracks <!-- <span>({{track_count}})</span> --></p>
+<div class="tracklist"></div>
 
+<div class="cssload-loader tracks-loader">
+  <div class="cssload-ball"></div>
+  </div>
+  
+ 
+</div>
 </div>

@@ -16,5 +16,7 @@ define({
     player: "templates/player.html",
     user: "templates/user.html",
     carousel: "templates/elements/carousel.html",
-    tracklist: "templates/elements/tracklist.html"
+    tracklist: "templates/elements/tracklist.html",
+    playlist: "templates/elements/playlist.html",
+    streamlist: "templates/elements/streamlist.html"
 });

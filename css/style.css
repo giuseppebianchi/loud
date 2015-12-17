@@ -90,9 +90,8 @@ Rosso: #E71D36
 
 /*LOADER*/
 .cssload-loader {
-  height: 50px;
   margin: auto;
-  padding: 10px;
+  padding: 25px;
   text-align: center;
   transition: 1s;
 }
@@ -206,6 +205,9 @@ img{
 	height: 100%;
 	width: 100%;
 	overflow: auto;
+}
+.snapjs-left .scrolling-view{
+	pointer-events: none;
 }
 .fadeEffect{
 	opacity: 0;
@@ -361,7 +363,7 @@ float: right;
   text-align: center;
   line-height: 44px;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 400;
   color: #fff;
 }
 .navigation-bar__title {
@@ -718,7 +720,7 @@ input[type=email]:focus, input[type=password]:focus {
 .list-track .cover-track{
   height: 135px;
   width: 100%;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
   background-image: url(../img/empty.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -777,7 +779,7 @@ input[type=email]:focus, input[type=password]:focus {
 .d-playlist{
 	float: right;
 }
-#cover-user-view{
+.cover-user-view{
   background-color: #111;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -1096,6 +1098,7 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .item-single-track{
   position: relative;
+  margin: 5px 0;
 }
 .repost{
     position: absolute;
@@ -1187,7 +1190,7 @@ input[type=email]:focus, input[type=password]:focus {
   padding: 15px 0;
   display: none;
 }
-#User{
+.User{
     position: absolute;
     z-index: 5;
     width: 100%;
@@ -1199,38 +1202,39 @@ input[type=email]:focus, input[type=password]:focus {
     transition: 0.3s;
 
 }
-#user-scrolling-view{
+.user-scrolling-view{
     position: relative;
     height: 100%;
     overflow: auto;
 }
-#User.active{
+.User.active{
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-#User .user-header{
+.User .user-header{
   position: absolute;
   background: transparent;
   box-shadow: none;
   transition: background 0.3s;
 }
-#User .user-header.header-visible{
+.User .user-header.header-visible{
   background: rgba(255, 0, 60, 0.8) 
 }
-#User .user-header span, #User .user-header span i{
+.User .user-header span, .User .user-header span i{
   color: rgba(255, 0, 60, 0.9);
 }
-#User .user-header .navigation-bar__center{
+.User .user-header .navigation-bar__center{
   text-transform: uppercase;
   color: transparent;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 0.4s;
+  font-size: 14px;
 }
-#User .user-header.header-visible span, #User .user-header.header-visible span i, #User .user-header.header-visible .navigation-bar__center{
+.User .user-header.header-visible span, .User .user-header.header-visible span i, .User .user-header.header-visible .navigation-bar__center{
   color: white;
 }
-#User .user-page-title{
+.User .user-page-title{
 	padding: 10px 0 5px;
     margin: 0 15px;
     text-transform: uppercase;
@@ -1241,7 +1245,13 @@ input[type=email]:focus, input[type=password]:focus {
     color: rgba(255, 0, 60, 0.9);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3)
 }
-#User .user-page-title > span{
+
+.User .user-page-title.show-more{
+	text-align: center;
+    line-height: 30px;
+    border-bottom: none;
+}
+.User .user-page-title > span{
 	font-weight: 500;	
 }
 .overlay-cover-user-view{
@@ -1285,11 +1295,11 @@ input[type=email]:focus, input[type=password]:focus {
     display: block;
     color: rgba(255, 255, 255, 0.6);
 }
-#follow{
+.follow-button{
 	color: #ff003c;
 	transition: 0.5s;
 }
-#follow.following{
+.follow-button.following{
 	color: white;
 	background: #ff003c;
 }
@@ -1326,7 +1336,7 @@ input[type=email]:focus, input[type=password]:focus {
     background-size: cover;
     width: 130px;
     height:130px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 .carousel-item-title{
     margin: 0;
@@ -1398,8 +1408,8 @@ input[type=email]:focus, input[type=password]:focus {
 
 
 
-.b-error{
-	background-image: url(../img/avatar.jpg) !important
+.list-track .cover-track.b-error{
+	background-image: url(../img/avatar.jpg)
 }
 .hidden-fade{
 	visibility: hidden;
@@ -1418,7 +1428,7 @@ and (orientation : portrait) {
 @media (min-device-width : 375px) and (max-device-width : 627px) 
 and (orientation : portrait) { 
   .list-track .cover-track .cover-track-overlay .title-list-track{
-    width: 330px;
+    width: 320px;
   }
 }
 /*IPHONE 6 PLUS
