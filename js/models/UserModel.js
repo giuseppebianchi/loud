@@ -4,7 +4,7 @@ define(function(require) {
 	var UserModel = Backbone.Model.extend({
 		constructorName: "UserModel",
 		
-		initialize: function (a) {
+		initialize: function(a) {
 			this.id_user = a.id_user;
 		},
 		

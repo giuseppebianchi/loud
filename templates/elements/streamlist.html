@@ -3,7 +3,7 @@
     {{#compare attributes.type "track-repost"}}
       <span class="repost"><i class="fa fa-retweet"></i></span>
       {{#with attributes.origin}}
-        <li class="list__item list-track" scTrackId="{{id}}">
+        <li class="list__item list-track play-track" scTrackId="{{id}}">
           <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
             <div class="cover-track-overlay">
               <div class="list-track-details">
@@ -19,7 +19,7 @@
     {{else}}
 		{{#compare attributes.type "track"}}
 		    {{#with attributes.origin}}
-		    <li class="list__item list-track" scTrackId="{{id}}">
+		    <li class="list__item list-track play-track" scTrackId="{{id}}">
 		      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
 		        <div class="cover-track-overlay">
 		          <div class="list-track-details">
@@ -46,6 +46,7 @@
 			          </div>
 			        </div>
 			      </div>
+			      <p class="detail-playlist-type"><span class="n-playlist">{{track_count}}</span> Tracks<span class="d-playlist">{{getMinutes duration}}</span></p>
 			    </li>
 			    {{/with}}
 			{{else}}

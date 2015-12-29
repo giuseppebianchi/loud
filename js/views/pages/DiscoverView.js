@@ -9,7 +9,7 @@ define(function(require) {
 
   var StreamView = Utils.Page.extend({
 
-    constructorName: "StreamView",
+    constructorName: "DiscoverView",
     
     events:{	
       "tap .list-track": "playTrackStream",
@@ -20,8 +20,8 @@ define(function(require) {
 	
     initialize: function() {
       // load the precompiled template
-      this.template = Utils.templates.stream;
-      this.templateList = Utils.templates.streamlist;
+      this.template = Utils.templates.discover;
+      this.templateList = Utils.templates.discoverlist;
       
       
       // here we can register to inTheDOM or removing events
@@ -51,12 +51,13 @@ define(function(require) {
 		var that = this;
 		  this.collection.fetch({
 			  success: function(activities){
+				  	console.log(activities)
 				  	//set received data into template
 					that.$el.html(that.template(activities.models));
 					
 					//set element that gets scroll event - to reload new data
-					that.scrollingView = $("#stream-scrolling-view");
-					that.contentList = $("#stream-scrolling-view .list");
+					that.scrollingView = $("#discover-scrolling-view");
+					that.contentList = $(that.$el.find(".list").get(0));
 						  
 					//set event listener to scroll
 					that.scrollingView.bind('scroll', function (ev) {
@@ -64,7 +65,7 @@ define(function(require) {
 					});
 					//initialize lazy loading library
 					that.bLazy = new Blazy({ 
-						container: '#stream-scrolling-view'
+						container: '#discover-scrolling-view'
 					});
 					
 			  }
@@ -76,7 +77,10 @@ define(function(require) {
     },
     
     checkScroll: function(){
-      if(!this.loadingContents && this.scrollingView.scrollTop() > (this.contentList.height() - this.scrollingView.height())) {
+      if(!this.loadingContents && 
+      		this.scrollingView.scrollTop() > 
+      			(this.contentList.height() - this.scrollingView.height() - 20)) {
+	      			
 	   this.loadingContents = true;
        this.fetchData();
       }
@@ -86,7 +90,7 @@ define(function(require) {
 	    if(this.collection.next){
 			this.collection.fetch({
 		        success: function(more){
-			        that.scrollingView.children(".list").append(that.templateList(more.models));
+			        that.scrollingView.children(".list").append(that.templateList(more));
 			        that.bLazy.revalidate();
 			        that.loadingContents = false;
 			    }

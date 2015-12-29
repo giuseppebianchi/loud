@@ -1,7 +1,7 @@
-{{#if this.length}}
+{{#if this.attributes.track_count}}
 
-{{#each this.models}}
 {{#with attributes}}
+{{#each tracks}}
   <div class="item-single-track">
         <li class="list__item list-track play-track" scTrackId="{{id}}">
           <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
@@ -16,13 +16,10 @@
           </div>
         </li>
   </div>
- {{/with}}
 {{/each}}
+{{/with}}
 {{else}}
-	{{#if track_count}}
-	
-	{{else}}
+
 		<p class="user-page-title">No track</p>
-	{{/if}}
 
 {{/if}}

@@ -1,12 +1,12 @@
-<header class="navigation-bar navigation-bar--transparent user-header">
+<header class="navigation-bar navigation-bar--transparent profile-header">
   <div class="navigation-bar__left">
-    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
-      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    <span class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
     </span>
   </div>
-  <div class="navigation-bar__center">{{username}}</div>
+  <div class="navigation-bar__center">PROFILE</div>
 <div class="navigation-bar__right">
-    <span class="toolbar-button--quiet navigation-bar__line-height userOption" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" style="line-height: 45px;">•••</span>
+<!--     <span class="toolbar-button--quiet navigation-bar__line-height userOption" data-code="{{id}}" data-username="{{username}}" data-city="{{city}} {{country}}" style="line-height: 45px;">•••</span> -->
 </div>
 </header>
 
@@ -49,8 +49,9 @@
               <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
             </button>
 -->
-            <button class="tab-bar__button tab-bar--top-border__button center follow-button">
-              <span class="tab-name" data-code="{{id}}">FOLLOW</span>
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter public_favorites_count}}</span>
+              <span class="tab-name">LIKES</span>
             </button>
           </label>
 
@@ -60,18 +61,39 @@
 
   </div>
 </div>
-<h4 class="name" style="color: #777;padding: 0 15px;font-weight: 400;font-size: 14px;margin: 15px 0 10px;">{{track_count}} Tracks, {{playlist_count}} Playlists</h4>
+
 <p class="user-page-title morePlaylist-title">Playlists <!-- <span>({{playlist_count}})</span> --></p>
 <div class="UserCarousel"><div class="cssload-loader">
   <div class="cssload-ball"></div>
   </div></div>
 <p class="user-page-title">Tracks <!-- <span>({{track_count}})</span> --></p>
-<div class="tracklist"></div>
-
-<div class="cssload-loader tracks-loader">
-  <div class="cssload-ball"></div>
+<div class="tracklist">
+  <div class="cssload-loader tracks-loader">
+  	<div class="cssload-ball"></div>
   </div>
-  
+</div>
+
+<div class="item-single-track" style="margin: 40px 0">
+	<li class="list__item list-track" scTrackId="{{id}}" style="padding: 0">
+      <div class="cover-track" style="background-image: url(img/turn.jpg); height: 100px;">
+        <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.78)">
+            <h3 style="font-weight: 200;color: #ff003c;text-align: center; margin: 0; position: relative; top: 25px;">LIKES</h3>
+        </div>
+      </div>
+</li>
+</div>
+
+<p class="user-page-title">FOLLOWING <!-- <span>({{track_count}})</span> --></p>
+<div class="bullet-section">
+<div class="bullet-item">
+  <div class="bullet-image"><img src="{{avatar_url}}"></div><div class="bullet-name"><h4>{{username}}</h4></div>
+</div>
+<div class="bullet-item">
+  <div class="bullet-image"><img src="{{avatar_url}}"></div><div class="bullet-name"><h4>{{username}}</h4></div>
+</div>
+</div>
+
+
  
 </div>
 </div>

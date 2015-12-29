@@ -13,9 +13,10 @@ define(function(require) {
 	    "touchend": "resetHeight",
       "tap .back-button": "back",
       "tap .userOption": "showUserOption",
-      
-      //to remove and put it in tracklist view
-      "tap .soundcloudArtist": "showUser"
+       "tap .soundcloudPlaylist": "showPlaylist",
+       "tap .morePlaylists": "Playlists",
+       "tap .morePlaylists-title": "Playlists"
+      //"tap .soundcloudArtist": "showUser"
 	},
 
 	elasticImage: undefined,
@@ -62,10 +63,11 @@ define(function(require) {
 			      });
 			    
 			    // CREATE CAROUSEL VIEW FOR PLAYLIST
-			    var PlaylistCollection = require("collections/PlaylistCollection");
+			    var UserPlaylistCollection = require("collections/UserPlaylistCollection");
 			    // create a collection for the template engine
-			    var user_playlists = new PlaylistCollection({
-				    id: data.attributes.id
+			    var user_playlists = new UserPlaylistCollection({
+				    id: data.attributes.id,
+				    total: data.attributes.playlist_count
 				})  
 			    that.carousel = new CarouselView({
 				    collection: user_playlists
@@ -76,9 +78,9 @@ define(function(require) {
 				
 				
 				// CREATE LIST VIEW FOR TRACKS
-				var TrackCollection = require("collections/TrackCollection");
+				var UserTrackCollection = require("collections/UserTrackCollection");
 			    // create a collection for the template engine
-			    var user_tracks = new TrackCollection({
+			    var user_tracks = new UserTrackCollection({
 				    id: data.attributes.id,
 				    track_count: data.attributes.track_count
 				})  
@@ -167,6 +169,7 @@ define(function(require) {
 			    }
 	        })
         }else{
+	       this.loadingContents = true;
 	       this.$el.find(".tracks-loader").css("opacity", 0)
         }
         
@@ -199,8 +202,69 @@ define(function(require) {
       
 
       
+    },
+    showPlaylist: function(e){
+	  if(this.carousel.active){
+		  return false;
+	  }
+	  e.stopImmediatePropagation();
+      var PlaylistModel = require("models/PlaylistModel");
+      var PlaylistView = require("views/pages/PlaylistView");
+      var self = this;
+      var playlistId = e.currentTarget.attributes["playlistid"].value;
+      var playlistImage = e.currentTarget.attributes["artwork_playlist"].value;
+      var playlist = new PlaylistModel({
+	      id_playlist: playlistId,
+	      image: playlistImage
+      });
+      
+      this.PlaylistView = new PlaylistView({
+            model: playlist
+      });
+      this.PlaylistView.parent = this;
+      // render the new view
+      this.PlaylistView.render();
+      //append in the current view
+	  this.$el.append(this.PlaylistView.el);
+      this.undelegateEvents();
+      //translate
+      //$(self.userView.el).addClass("active");
+      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+      
+
+      
+    },
+    Playlists: function(e){
+	  e.stopImmediatePropagation();
+	  
+      var AllPlaylistView = require("views/pages/AllPlaylistView");
+      var self = this;
+
+      var UserPlaylistCollection = require("collections/UserPlaylistCollection");
+		    // create a collection for the template engine
+	  var user_playlists = new UserPlaylistCollection({
+		id: self.model.id,
+		total: self.model.attributes.playlist_count,
+		name: self.model.attributes.username,
+		all: true
+	  })  
+      
+      this.AllPlaylistView = new AllPlaylistView({
+            collection: user_playlists
+      });
+      this.AllPlaylistView.parent = this;
+      // render the new view
+      this.AllPlaylistView.render();
+      //append in the current view
+	  this.$el.append(this.AllPlaylistView.el);
+      this.undelegateEvents();
+      //translate
+      //$(self.userView.el).addClass("active");
+      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+      
+
+      
     }
-  
 	
 		
 	

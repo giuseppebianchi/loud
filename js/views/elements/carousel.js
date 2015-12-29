@@ -8,7 +8,8 @@ define(function(require) {
     constructorName: "CarouselView",
     
     events:{
-	    "touchstart": "prevent"
+	    "touchend .carousel-item": "preventEnd",
+	    "touchmove .carousel-item": "prevent",
 	},
 	
     initialize: function() {
@@ -27,7 +28,7 @@ define(function(require) {
 		  this.collection.fetch({
 			  success: function(playlist){
 				  	//set received data into template
-					that.$el.html(that.template(playlist.models));
+					that.$el.html(that.template(playlist));
 					
 					//disable events and set empty (blurred)image on playlists container
 					if(!playlist.length){
@@ -38,8 +39,16 @@ define(function(require) {
 
       return this;
     },
+    active: false,
     prevent: function(e){
+	    this.active = true;
 	    e.stopImmediatePropagation();
+    },
+    preventEnd: function(e){
+	    if(this.active){
+		    this.active = false;
+		    e.stopImmediatePropagation();
+	    }
     }
  });
 

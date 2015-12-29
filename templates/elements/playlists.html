@@ -1,0 +1,23 @@
+{{#each this.models}}
+  <div class="item-single-track">
+    {{#with attributes}}
+    <li class="list__item list-track playlist-type" playlistId="{{id}}">
+      {{#if artwork_url}}
+      	<div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+	  {{else}}
+		<div class="cover-track b-lazy" data-src="{{subString tracks.0.artwork_url 't300x300'}}">
+	  {{/if}}
+        <div class="cover-track-overlay">
+          <div class="list-track-details">
+            {{#with user}}
+            <h4 class="title-list-track"><span scuserid="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+            {{/with}}
+            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+          </div>
+        </div>
+      </div>
+      <p class="detail-playlist-type"><span class="n-playlist">{{track_count}}</span> Tracks<span class="d-playlist">{{getMinutes duration}}</span></p>
+    </li>
+    {{/with}}
+  </div>
+{{/each}}

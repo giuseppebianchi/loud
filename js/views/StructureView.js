@@ -17,12 +17,27 @@ define(function(require) {
     events: {
       "tap #menu-button": "openMenu",
       "tap .apriplayer": "openPlayer",
-      "tap .playControl": "playControl"
+      "tap .playControl": "playControl",
+      "tap .item_nav_menu": "changePage"
       
       },
     initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.structure;
+      Handlebars.registerHelper('compare', function(v1, v2, options) {
+          if(v1 == v2) {
+            return options.fn(this);
+          }
+          return options.inverse(this);
+      });
+      
+      Handlebars.registerHelper('cond', function(v1, v2, options) {
+          if(v1 > v2) {
+            return options.fn(this);
+          }
+          return options.inverse(this);
+      });
+      
       Handlebars.registerHelper('subString', function(string, replace) {
 	    if(string){
 		    var large = string.replace("large",replace);
@@ -99,6 +114,11 @@ define(function(require) {
 					minDragDistance: 40
 			});
     },
+    changePage: function(e){
+	    var page = e.currentTarget.dataset.page;
+	    Backbone.history.navigate(page, {trigger:true});
+	    this.snapper.close("left")
+    },
     openPlayer: function(){
 	    this.currentView.undelegateEvents();
 	    this.currentView.$el.addClass("hidden-fade");
@@ -126,6 +146,7 @@ define(function(require) {
       }*/
       
     },
+    
     
     
     // rendered: function(e) {

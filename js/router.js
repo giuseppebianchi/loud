@@ -15,7 +15,9 @@ define(function(require) {
       // the default is Login
       "": "LoginFunction",
       "start": "showStructure",
-      "stream": "Stream"
+      "stream": "Stream",
+      "discover": "Discover",
+      "profile": "Profile"
     },
 
     firstView: "HomeFunction",
@@ -101,17 +103,17 @@ define(function(require) {
 					        nextView();
 					        
 				        }
-				        /*var lastView = localStorage.getItem(lastView);
-				        if(lastView){
-				        	Backbone.history.navigate(lastView, {trigger:true});
-				        }else{
-				        	Backbone.history.navigate("stream", {trigger:true});
-				        }*/
-				        
 				        
 				        // go to last view - "stream" is default
 				        function nextView(){
-				        	Backbone.history.navigate("stream", {trigger: true});
+					        var lastView = localStorage.getItem("lastView");
+					        
+					        if(lastView){
+				        		Backbone.history.navigate(lastView, {trigger:true});
+					        }else{
+					        	Backbone.history.navigate("stream", {trigger:true});
+					        }
+				        	//Backbone.history.navigate("stream", {trigger: true});
 				        }
 
       
@@ -158,7 +160,7 @@ define(function(require) {
 					  //render template
 				      this.changePage(page);
 				      //set player view into current view
-				      this.player = this.playerView;
+				      page.player = this.playerView;
 				      //set current view to player view
     				  this.playerView.currentView = page;
     				  //set current view to structure view
@@ -169,6 +171,54 @@ define(function(require) {
 				      localStorage.setItem("lastView", "stream");			      
 				      
     }, //END STREAM FUNCTION
+    Discover: function() {
+				      var DiscoverView = require("views/pages/DiscoverView");
+				      var DiscoverCollection = require("collections/DiscoverCollection");
+				      // create a collection for the template engine
+				      var activities = new DiscoverCollection()
+					  
+				      var page = new DiscoverView({
+				        collection: activities
+				      });
+
+					  //render template
+				      this.changePage(page);
+				      //set player view into current view
+				      page.player = this.playerView;
+				      //set current view to player view
+    				  this.playerView.currentView = page;
+    				  //set current view to structure view
+    				  this.structureView.currentView = page;
+    				  //set current view in menu
+    				  this.structureView.setActive("goToDiscover");
+    				  //set last view for next opening
+				      localStorage.setItem("lastView", "discover");			      
+				      
+    }, //END DISCOVER FUNCTION
+    Profile: function() {
+				      var ProfileView = require("views/pages/ProfileView");
+				      var ProfileModel = require("models/ProfileModel");
+				      // create a collection for the template engine
+				      var profileData = new ProfileModel()
+					  
+				      var page = new ProfileView({
+				        model: profileData
+				      });
+
+					  //render template
+				      this.changePage(page);
+				      //set player view into current view
+				      page.player = this.playerView;
+				      //set current view to player view
+    				  this.playerView.currentView = page;
+    				  //set current view to structure view
+    				  this.structureView.currentView = page;
+    				  //set current view in menu
+    				  this.structureView.setActive("goToProfile");
+    				  //set last view for next opening
+				      localStorage.setItem("lastView", "profile");			      
+				      
+    }, //END DISCOVER FUNCTION
     
     
     

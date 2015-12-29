@@ -1,0 +1,28 @@
+{{#if this.length}}
+
+{{#each this.models}}
+  <div class="item-single-track">
+		    {{#with attributes}}
+		    <li class="list__item list-track" scTrackId="{{id}}">
+		      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+		        <div class="cover-track-overlay">
+		          <div class="list-track-details">
+		            {{#with user}}
+		            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+		            {{/with}}
+		            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+		          </div>
+		        </div>
+		      </div>
+		    </li>
+		    {{/with}}
+  </div>
+{{/each}}
+{{else}}
+	{{#if track_count}}
+	
+	{{else}}
+		<p class="user-page-title">No track</p>
+	{{/if}}
+
+{{/if}}

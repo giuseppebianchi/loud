@@ -13,10 +13,16 @@ define({
     home: "templates/home.html",
     login: "templates/login.html",
     stream: "templates/stream.html",
+    streamlist: "templates/elements/streamlist.html",
+    discover: "templates/discover.html",
+    discoverlist: "templates/elements/discoverlist.html",
     player: "templates/player.html",
     user: "templates/user.html",
+    profile: "templates/profile.html",
+    playlist: "templates/playlist.html",
+    allPlaylist: "templates/allPlaylist.html",
+    morePlaylist: "templates/elements/playlists.html",
     carousel: "templates/elements/carousel.html",
     tracklist: "templates/elements/tracklist.html",
-    playlist: "templates/elements/playlist.html",
-    streamlist: "templates/elements/streamlist.html"
+    playlistTracklist: "templates/elements/playlistTracklist.html"
 });
