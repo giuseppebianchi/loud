@@ -4,30 +4,28 @@ define(function(require) {
   var Utils = require("utils");
   var CarouselView = require("views/elements/carousel");
   var TracklistView = require("views/elements/tracklist");
-  var FollowingView = require("views/elements/bullet");
   var UserView = require("views/pages/UserView");
-  var ProfileView = Utils.Page.extend({
+  var LikesView = Utils.Page.extend({
 
-    constructorName: "ProfileView",
+    constructorName: "LikesView",
     events:{
     	"touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
-      "tap .userOption": "showUserOption",
-       "tap .soundcloudPlaylist": "showPlaylist",
-       "tap .morePlaylists": "Playlists",
-       "tap .morePlaylists-title": "Playlists",
-       "tap .following-item": "showUser",
-       "tap #like-button": "showLikes",
-       "tap .following-button": "showFollowing"
-      //"tap .soundcloudArtist": "showUser"
+      "tap .back-button": "back",
+      //"tap .userOption": "showUserOption",
+       //"tap .soundcloudPlaylist": "showPlaylist",
+       //"tap .morePlaylists": "Playlists",
+       //"tap .morePlaylists-title": "Playlists"
+      "tap .soundcloudArtist": "showUser"
 	},
 
 	elasticImage: undefined,
 	
-    initialize: function() {
+    initialize: function(options) {
+	  this.total_likes = options.total_likes;
       // load the precompiled template
-      this.template = Utils.templates.profile;
+      this.template = Utils.templates.likes;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -39,23 +37,26 @@ define(function(require) {
       // by convention, all the inner views of a view must be stored in this.subViews
     },
 
-    id: "Profile",
+    id: "Likes",
     
-    className: "full-page",
+    className: "User full-page",
     
     parent: undefined,
     
 	loadingContents: false,
+	
+	total_likes: undefined,
 	
     render: function() {
 	   var that = this;
 	   
 	   //SET OFFLINE HTML TEMPLATE WHILE FETCHING DATA FROM SOUNDCLOUD
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
-	   this.model.fetch({
-		   success: function(data){
+	   			this.total_likes;
 			   
-			   that.$el.html(that.template(data.attributes));
+			    that.$el.html(that.template({
+				   total_likes: that.total_likes
+				}));
 			    //set options
 			      that.elasticImage = $(that.$el.find(".cover-user-view"));
 			      
@@ -66,6 +67,7 @@ define(function(require) {
 			            that.checkScroll(ev);
 			      });
 			    
+/*
 			    // CREATE CAROUSEL VIEW FOR PLAYLIST
 			    var UserPlaylistCollection = require("collections/UserPlaylistCollection");
 			    // create a collection for the template engine
@@ -76,44 +78,25 @@ define(function(require) {
 			    that.carousel = new CarouselView({
 				    collection: user_playlists
 			    })
+
 			    
 			    that.carousel.render();
 				that.$el.find(".UserCarousel").html(that.carousel.el);
-				
+*/				
 				
 				// CREATE LIST VIEW FOR TRACKS
-				var UserTrackCollection = require("collections/UserTrackCollection");
 			    // create a collection for the template engine
-			    var user_tracks = new UserTrackCollection({
-				    id: data.attributes.id,
-				    track_count: data.attributes.track_count,
-				    limit: 3
-				})  
+			    var LikesCollection = require("collections/LikesCollection")
+			    var likes = new LikesCollection({}); 
 			    that.tracklist = new TracklistView({
-				    collection: user_tracks
+				    collection: likes
 			    })
+			    
 			    that.tracklist.render()  
 				that.$el.find(".tracklist").html(that.tracklist.el);
 				
-				
-				// CREATE LIST VIEW FOR FOLLOWING
-				var FollowingCollection = require("collections/FollowingCollection");
-			    // create a collection for the template engine
-			    var user_following = new FollowingCollection({
-				    total: that.model.attributes.followings_count
-			    });  
-			    that.following = new FollowingView({
-				    collection: user_following,
-				    profile: true,
-				    id: data.attributes.id,
-			    })
-			    that.following.render()  
-				that.$el.find(".bullet-section").html(that.following.el);
-				
-				that.$el.addClass("active");
-				 
-		   }
-	   })
+				setTimeout(function(){that.$el.addClass("active")}, 100);
+
        
       return this;
     },
@@ -141,7 +124,7 @@ define(function(require) {
 				
 				
     			//$(this.el).css("overflow", "hidden");			
-    			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			this.elasticImage.css("height", (200 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
 
     	}else{
@@ -153,6 +136,12 @@ define(function(require) {
     //this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
+  back: function(e){
+    e.stopImmediatePropagation();
+    var self = this;
+    $(this.el).removeClass("active");
+    setTimeout(function(){self.hideUser()}, 200);
+  },
   showUserOption: function(){
       $("#showOption").addClass("visible");
       $("#main").addClass("blurred");
@@ -166,7 +155,32 @@ define(function(require) {
       }else{
          $(this.el.children[0]).removeClass("header-visible")
       }
+      if(!this.loadingContents && this.userScrollingView.scrollTop() > (this.contentList.height() - this.userScrollingView.height() - 20)) {
+	   this.loadingContents = true;
+       this.fetchData();
+      }
   },
+  fetchData: function(){
+	    var that = this;
+	    if(this.tracklist.collection.next){
+			this.tracklist.collection.fetch({
+		        success: function(more){
+			        
+			        that.tracklist.$el.append(that.tracklist.template(more));
+			        that.tracklist.bLazy.revalidate();
+			        that.loadingContents = false;
+			    }
+	        })
+        }else{
+	       this.loadingContents = true;
+	       this.$el.find(".tracks-loader").css("opacity", 0)
+        }
+        
+  },
+  hideUser: function(){ //fired from UserView
+      this.parent.delegateEvents();
+      this.close();
+    },
   showUser: function(e){
 	  e.stopImmediatePropagation();
       var UserModel = require("models/UserModel");
@@ -193,6 +207,9 @@ define(function(require) {
       
     },
     showPlaylist: function(e){
+	  if(this.carousel.active){
+		  return false;
+	  }
 	  e.stopImmediatePropagation();
       var PlaylistModel = require("models/PlaylistModel");
       var PlaylistView = require("views/pages/PlaylistView");
@@ -247,44 +264,10 @@ define(function(require) {
       //translate
       //$(self.userView.el).addClass("active");
       //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-    },
-    showLikes: function(e){
-	  e.stopImmediatePropagation();
-      var LikesView = require("views/pages/LikesView");
-      var self = this; 
-         
-      this.LikesView = new LikesView({
-	      total_likes: self.model.attributes.public_favorites_count
-      })
-      this.LikesView.parent = this;
-      // render the new view
-      this.LikesView.render();
-      //append in the current view
-	  this.$el.append(this.LikesView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-    },
-    showFollowing: function(e){
-	  e.stopImmediatePropagation();
-      var FollowingView = require("views/pages/FollowingView");
-      var self = this; 
-         
-      this.FollowingView = new FollowingView({
-	      total: self.model.attributes.followings_count
-      })
-      this.FollowingView.parent = this;
-      // render the new view
-      this.FollowingView.render();
-      //append in the current view
-	  this.$el.append(this.FollowingView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-    },
-  
+      
+
+      
+    }
 	
 		
 	
@@ -293,6 +276,6 @@ define(function(require) {
     
   });
 
-  return ProfileView;
+  return LikesView;
 
 });

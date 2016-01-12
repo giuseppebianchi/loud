@@ -33,6 +33,7 @@ define(function(require) {
 					//disable events and set empty (blurred)image on playlists container
 					if(!playlist.length){
 						that.undelegateEvents();
+						that.$el.addClass("carousel-empty")
 					}
 			  }
 		  })

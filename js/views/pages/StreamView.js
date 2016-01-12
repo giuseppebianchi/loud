@@ -12,8 +12,9 @@ define(function(require) {
     constructorName: "StreamView",
     
     events:{	
-      "tap .list-track": "playTrackStream",
-      "tap .soundcloudArtist": "showUser"
+      "tap .play-track": "playTrackStream",
+      "tap .soundcloudArtist": "showUser",
+      "tap .playlist-type": "showPlaylist"
     },
     
 	userView: undefined,
@@ -105,9 +106,9 @@ define(function(require) {
 */
       var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
       //GET THE INDEX AND THE OBJECT WHICH CONTAINS THE SELECTED TRACK
-      var result = this.findTrack(selectedTrack);
+      //var result = this.findTrack(selectedTrack);
 
-      this.player.playTrack(result[0], result[1]);
+      //this.player.playTrack(result[0], result[1]);
       
     },
     findTrack: function(id){
@@ -143,7 +144,32 @@ define(function(require) {
       
 
       
-    }
+    },
+    showPlaylist: function(e){
+	  e.stopImmediatePropagation();
+      var PlaylistModel = require("models/PlaylistModel");
+      var PlaylistView = require("views/pages/PlaylistView");
+      var self = this;
+      var playlistId = e.currentTarget.attributes["playlistid"].value;
+      var playlist = new PlaylistModel({
+	      id_playlist: playlistId
+      });
+      this.PlaylistView = new PlaylistView({
+            model: playlist
+      });
+      this.PlaylistView.parent = this;
+      // render the new view
+      this.PlaylistView.render();
+      //append in the current view
+	  this.$el.append(this.PlaylistView.el);
+      this.undelegateEvents();
+      //translate
+      //$(self.userView.el).addClass("active");
+      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+      
+
+      
+    },
     
     
     

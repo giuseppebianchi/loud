@@ -3,14 +3,23 @@ define(function(require) {
   var Backbone = require("backbone");
   var Utils = require("utils");
   var CarouselView = require("views/elements/carousel");
-  var TracklistView = require("views/elements/tracklist");
-  var FollowingView = require("views/elements/bullet");
-  var UserView = require("views/pages/UserView");
-  var ProfileView = Utils.Page.extend({
+  var LibraryTrackView = require("views/elements/square");
+  
+  var db = openDatabase('loud', '1.0', 'Loud Library', 2 * 1024 * 1024);
+	
+	db.transaction(function (tx) {
+	   tx.executeSql('SELECT DISTINCT artist FROM TRACKS', [], function (tx, results) {
+	      console.log(results)
+	    })
+	     
+	});
+	
+  var LibraryView = Utils.Page.extend({
 
-    constructorName: "ProfileView",
+    constructorName: "LibraryView",
+    
     events:{
-    	"touchstart": "startTouch",
+	    "touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
       "tap .userOption": "showUserOption",
@@ -19,7 +28,8 @@ define(function(require) {
        "tap .morePlaylists-title": "Playlists",
        "tap .following-item": "showUser",
        "tap #like-button": "showLikes",
-       "tap .following-button": "showFollowing"
+       "tap .following-button": "showFollowing",
+       "tap .select-library-button": "changeLibrary"
       //"tap .soundcloudArtist": "showUser"
 	},
 
@@ -27,7 +37,7 @@ define(function(require) {
 	
     initialize: function() {
       // load the precompiled template
-      this.template = Utils.templates.profile;
+      this.template = Utils.templates.library;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -39,7 +49,7 @@ define(function(require) {
       // by convention, all the inner views of a view must be stored in this.subViews
     },
 
-    id: "Profile",
+    id: "Library",
     
     className: "full-page",
     
@@ -81,31 +91,14 @@ define(function(require) {
 				that.$el.find(".UserCarousel").html(that.carousel.el);
 				
 				
-				// CREATE LIST VIEW FOR TRACKS
-				var UserTrackCollection = require("collections/UserTrackCollection");
-			    // create a collection for the template engine
-			    var user_tracks = new UserTrackCollection({
-				    id: data.attributes.id,
-				    track_count: data.attributes.track_count,
-				    limit: 3
-				})  
-			    that.tracklist = new TracklistView({
-				    collection: user_tracks
-			    })
-			    that.tracklist.render()  
-				that.$el.find(".tracklist").html(that.tracklist.el);
-				
-				
 				// CREATE LIST VIEW FOR FOLLOWING
-				var FollowingCollection = require("collections/FollowingCollection");
+				var LibraryTrackCollection = require("collections/FollowingCollection");
 			    // create a collection for the template engine
-			    var user_following = new FollowingCollection({
+			    var user_following = new LibraryTrackCollection({
 				    total: that.model.attributes.followings_count
 			    });  
-			    that.following = new FollowingView({
-				    collection: user_following,
-				    profile: true,
-				    id: data.attributes.id,
+			    that.following = new LibraryTrackView({
+				    collection: user_following
 			    })
 			    that.following.render()  
 				that.$el.find(".bullet-section").html(that.following.el);
@@ -117,7 +110,6 @@ define(function(require) {
        
       return this;
     },
-    
     enabledElastic: true,
     
     startTouch: function(e){
@@ -141,7 +133,7 @@ define(function(require) {
 				
 				
     			//$(this.el).css("overflow", "hidden");			
-    			this.elasticImage.css("height", (430 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			this.elasticImage.css("height", (130 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
 
     	}else{
@@ -161,37 +153,14 @@ define(function(require) {
       // this.detail.showOption.css({display: "block", opacity: 1})
   },
   checkScroll: function(e){
-      if(this.userScrollingView[0].scrollTop > 100){
-        $(this.el.children[0]).addClass("header-visible")
+      if(this.userScrollingView[0].scrollTop > 70){
+        $(this.el.children[0]).addClass("header-visible");
+        $(this.el.children[1]).addClass("header-visible");
       }else{
          $(this.el.children[0]).removeClass("header-visible")
+         $(this.el.children[1]).removeClass("header-visible")
       }
   },
-  showUser: function(e){
-	  e.stopImmediatePropagation();
-      var UserModel = require("models/UserModel");
-      var self = this;
-      var userId = e.currentTarget.attributes["scuserid"].value;
-      var user = new UserModel({
-	      id_user: userId
-      });
-      
-      this.userView = new UserView({
-            model: user
-      });
-      this.userView.parent = this;
-      // render the new view
-      this.userView.render();
-      //append in the current view
-	  this.$el.append(this.userView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-      
-
-      
-    },
     showPlaylist: function(e){
 	  e.stopImmediatePropagation();
       var PlaylistModel = require("models/PlaylistModel");
@@ -284,6 +253,9 @@ define(function(require) {
       //$(self.userView.el).addClass("active");
       //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
     },
+    changeLibrary: function(e){
+		$("#select-library-element").focus();
+    },
   
 	
 		
@@ -293,6 +265,6 @@ define(function(require) {
     
   });
 
-  return ProfileView;
+  return LibraryView;
 
 });

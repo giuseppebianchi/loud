@@ -1,0 +1,27 @@
+{{#each this.models}}
+  {{#with attributes}}
+  <div class="library-item following-item" scuserid="{{id}}">
+  	<div class="library-image square">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{avatar_url}}">
+	</div>
+    <div class="library-name">
+	    <p class="artist-track-library">{{username}}</p>
+	    <p class="title-track-library">{{city}}</p>
+	</div>
+  </div>
+  {{/with}}
+{{/each}}
+
+{{#each this.models}}
+  {{#with attributes}}
+  <div class="library-item following-item" scuserid="{{id}}">
+  	<div class="library-image square">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{avatar_url}}">
+	</div>
+    <div class="library-name">
+	    <p class="artist-track-library">{{username}}</p>
+	    <p class="title-track-library">{{city}}</p>
+	</div>
+  </div>
+  {{/with}}
+{{/each}}

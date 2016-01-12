@@ -206,8 +206,8 @@ img{
 	width: 100%;
 	overflow: auto;
 }
-.snapjs-left .scrolling-view{
-	pointer-events: none;
+.snapjs-left .scrolling-view, .snapjs-left .user-scrolling-view{
+	pointer-events: none !important;
 }
 .fadeEffect{
 	opacity: 0;
@@ -391,7 +391,7 @@ float: right;
 .navigation-bar--transparent{
 	/*background-color: rgba(255, 255, 255, 0.95);
 	background-color: rgba(0, 0, 0, 0.935);*/
-	background-color: rgba(255, 0, 60, 0.8);
+	background-color: rgba(255, 0, 60, 0.96);
 	background-image: none;
 	border:none; 
 	position:fixed;
@@ -729,8 +729,8 @@ input[type=email]:focus, input[type=password]:focus {
 .list-track .cover-track{
   height: 135px;
   width: 100%;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  background-image: url(../img/empty.png);
+  background-image: url(../img/eempty.jpg);
+  background-color: rgba(255, 255, 255, 0.1);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -786,6 +786,13 @@ input[type=email]:focus, input[type=password]:focus {
     opacity: 0.5;
     color: white;
 }
+.playlist-description{
+	color: #777;
+    font-size: 14px;
+    padding: 0 15px;
+    max-height: 55px;
+    overflow-y: hidden;
+}
 .d-playlist{
 	float: right;
 }
@@ -795,9 +802,15 @@ input[type=email]:focus, input[type=password]:focus {
 	background-position: center center;
 	background-size:cover;
 	height: 430px;
+	background-image: url(../img/blue.png);
+	-webkit-transition: background-image 0.5s;
+	transition: background-image 0.5s;
 }
 .cover-playlist-view{
 	height: 330px;
+}
+.cover-user-view.cover-likes-view{
+	height:200px;
 }
 .snapjs-left #content .scrolling-view .list, .snapjs-left #miniplayer{
   pointer-events: none;
@@ -1209,8 +1222,12 @@ input[type=email]:focus, input[type=password]:focus {
     width: 100%;
     top: 0;
     height: 100%;
+/*
     -webkit-transform: translate3d(375px, 0, 0);
     transform: translate3d(375px, 0, 0);
+*/
+	-webkit-transform: translate3d(415px, 0, 0);
+    transform: translate3d(415px, 0, 0);
     -webkit-transition: 0.3s;
     transition: 0.3s;
 
@@ -1224,19 +1241,21 @@ input[type=email]:focus, input[type=password]:focus {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-.User .user-header, .Playlist .playlist-header, #Profile .profile-header{
+
+#Library .library-header, .User .user-header, .Playlist .playlist-header, #Profile .profile-header{
   position: absolute;
   background: transparent;
   box-shadow: none;
+  -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
-.User .user-header.header-visible, .Playlist .playlist-header.header-visible, #Profile .profile-header.header-visible{
+#Library .library-header.header-visible, .User .user-header.header-visible, .Playlist .playlist-header.header-visible, #Profile .profile-header.header-visible{
   background: rgba(255, 0, 60, 0.95) 
 }
-#Profile .profile-header span, #Profile .profile-header span i, .User .user-header span, .User .user-header span i, .Playlist .playlist-header span, .Playlist .playlist-header span i{
+#Profile .profile-header span, #Profile .profile-header span i, #Library .library-header span, #Library .library-header span i, .User .user-header span, .User .user-header span i, .Playlist .playlist-header span, .Playlist .playlist-header span i{
   color: rgba(255, 0, 60, 0.9);
 }
-#Profile .profile-header .navigation-bar__center, .User .user-header .navigation-bar__center, .Playlist .playlist-header .navigation-bar__center{
+#Profile .profile-header .navigation-bar__center, #Library .library-header .navigation-bar__center, .User .user-header .navigation-bar__center, .Playlist .playlist-header .navigation-bar__center{
   text-transform: uppercase;
   color: transparent;
   overflow: hidden;
@@ -1245,11 +1264,12 @@ input[type=email]:focus, input[type=password]:focus {
   font-size: 14px;
 }
 #Profile .profile-header.header-visible span, #Profile .profile-header.header-visible span i, #Profile .profile-header.header-visible .navigation-bar__center,
+#Library .library-header.header-visible span, #Library .library-header.header-visible span i, #Library .library-header.header-visible .navigation-bar__center,
 .User .user-header.header-visible span, .User .user-header.header-visible span i, .User .user-header.header-visible .navigation-bar__center,
 .Playlist .playlist-header.header-visible span, .Playlist .playlist-header.header-visible span i, .Playlist .playlist-header.header-visible .navigation-bar__center{
   color: white;
 }
-.User .user-page-title, .Playlist .user-page-title, #Profile .user-page-title{
+.User .user-page-title, .Playlist .user-page-title, #Profile .user-page-title, #Library .user-page-title{
 	padding: 10px 0 5px;
     margin: 0 15px;
     text-transform: uppercase;
@@ -1269,6 +1289,7 @@ input[type=email]:focus, input[type=password]:focus {
 .User .user-page-title > span, .Playlist .user-page-title > span{
 	font-weight: 500;	
 }
+
 .overlay-cover-user-view, .overlay-cover-playlist-view{
   position: relative;
   width: 100%;
@@ -1276,12 +1297,17 @@ input[type=email]:focus, input[type=password]:focus {
   /*background: -webkit-linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
   background: linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
   */
-  background: linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
+  background: linear-gradient(rgba(0, 0, 0, 0.5), transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
+  background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), #00000A);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 .overlay-cover-playlist-view{
-  background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
+    background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.95));
+    background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), #00000A);
+}
+.overlay-cover-library-view{
+    background: linear-gradient(transparent, #00000A);
 }
 .overlay-cover-user-view.hidden, .overlay-cover-playlist-view.hidden{
   opacity: 0;
@@ -1296,7 +1322,7 @@ input[type=email]:focus, input[type=password]:focus {
   margin: 0px;
   color: white;
   font-weight: 200;
-  font-size: 35px;
+  font-size: 28px;
   padding-bottom: 0px;
   /*border-top: 2px solid #ff003c;*/
 }
@@ -1305,11 +1331,14 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .overlay-cover-user-view-details > span, .overlay-cover-playlist-view-details > span{
     color: rgba(255, 255, 255, 0.4);
-    font-size: 14px;
-    padding-left: 3px;
+    font-size: 12px;
     font-weight: 500;
     margin-top: 5px;
     display: inline-block;
+}
+.overlay-cover-user-view-details > span{
+	padding-left: 3px;
+	font-size: 14px;
 }
 .overlay-cover-playlist-view-details > span > strong{
 	color: #ff003c;
@@ -1361,7 +1390,6 @@ input[type=email]:focus, input[type=password]:focus {
     background-size: cover;
     width: 130px;
     height:130px;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 .carousel-item-title{
     margin: 0;
@@ -1375,13 +1403,16 @@ input[type=email]:focus, input[type=password]:focus {
     color: white;
     
 }
+.carousel-empty{
+	height: 50px;
+}
 .bullet-section{
 	margin: 20px 0;
 }
 .bullet-item{
 	padding: 15px 5px;
 	width: 90%;
-	margin: 0 5%;
+	margin: 0 15px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1)
 }
 .bullet-item:after, .bullet-item:before{
@@ -1392,13 +1423,18 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .bullet-image{
 	width: 18%;
-	margin: 0 5%;
+	margin: 0 5% 0 0;
     overflow: hidden;
     position:relative;
     float: left;
 }
 .bullet-image > img{
 	border-radius: 50%;
+	opacity: 0.05;
+	transition: 0.5s;
+}
+.bullet-image > img.b-lazy.b-loaded{
+	opacity: 1;
 }
 .bullet-name{
 	position:relative;
@@ -1408,13 +1444,124 @@ input[type=email]:focus, input[type=password]:focus {
 }
 .bullet-name > h4{
 	color: #777;
-    font-size: 18px;
+    font-size: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 8% 0 0;
-    font-weight: 200;
+    font-weight: 400;
+}
+.more-button{
+	width: 100%;
+    margin: 0;
+    padding:20px 0;
+}
+.more-button > h4{
+	font-weight: 200;
+	color: #ff003c;
+	text-align: center;
+	margin: 0;
+	position: relative;	
+}
+#like-button{
+	font-weight: 200;
+	color: #ff003c;
+	text-align: center;
+	margin: 0;
+	position: relative;
+	top: 25px;
 }
 
+#Library{}
+
+.library-cover{
+    height: 130px;
+    background-image: url("../img/login.jpg");
+}
+
+#library-header{
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 6px 0;
+    -webkit-transform: translateY(-44px);
+    transform: translateY(-44px);
+    background: rgba(255, 255, 255, 0.95);
+    position: absolute;
+    color: #ff003c;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    z-index: 4;
+    opacity: 0.1;
+}
+
+#library-select{
+	text-align: center;
+    width: 100%;
+    font-size: 18px;
+    color: #ff003c;
+    padding-top: 3px;
+    font-weight: 200;
+}
+#library-header.header-visible{
+	-webkit-transform: translateY(44px);
+	transform: translateY(44px);
+	opacity: 1;
+}
+.library-section{
+	margin: 20px 0;
+}
+.library-item{
+	padding: 5px 5px 0;
+	width: 90%;
+	margin: 0 5px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.07)
+}
+.library-item:after, .bullet-item:before{
+	display:table;
+	clear: both;
+	content: "";
+	line-height: 0;
+}
+.library-image{
+	width: 18%;
+	margin: 0 5% 0 0;
+    overflow: hidden;
+    position:relative;
+    float: left;
+}
+.library-image > img{
+	border-radius: 50%;
+	opacity: 0.05;
+	transition: 0.5s;
+}
+.library-image.square > img{
+	border-radius: 0;
+}
+.library-image > img.b-lazy.b-loaded{
+	opacity: 1;
+}
+.library-name{
+	position:relative;
+    width: 66%;
+    margin: 0 3% 0 0;
+    float: left;
+}
+.library-name > .artist-track-library{
+	color: #666;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 5% 0 0;
+    font-weight: 400;
+}
+.library-name > .title-track-library{
+	color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 2% 0 0;
+    font-weight: 400;
+}
 
 
 #pauseButton{

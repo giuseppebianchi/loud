@@ -9,6 +9,9 @@ define(function(require) {
 		initialize: function(options){
 			this.user_id = options.id;
 			this.track_count = options.track_count;
+			if(options.limit){
+				this.limit = options.limit;
+			}
 		},
 		limit: 15,
 		user_id: null,

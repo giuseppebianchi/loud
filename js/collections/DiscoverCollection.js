@@ -13,7 +13,7 @@ define(function(require) {
 		pagination: false,
 		url: function(){
 				if(this.pagination){
-					return this.next;
+					return this.next + "&client_id=2aca68b7dc8b51ec1b20fda09b59bc9a";
 				}else{
 					return 'http://api.soundcloud.com/tracks/238399268/related?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a&limit=15&linked_partitioning=1';
 				}

@@ -17,7 +17,8 @@ define(function(require) {
       "start": "showStructure",
       "stream": "Stream",
       "discover": "Discover",
-      "profile": "Profile"
+      "profile": "Profile",
+      "library": "Library"
     },
 
     firstView: "HomeFunction",
@@ -217,6 +218,31 @@ define(function(require) {
     				  this.structureView.setActive("goToProfile");
     				  //set last view for next opening
 				      localStorage.setItem("lastView", "profile");			      
+				      
+    }, //END DISCOVER FUNCTION
+    Library: function() {
+				      var LibraryView = require("views/pages/LibraryView");
+				      
+				      var LibraryModel = require("models/LibraryModel");
+				      // create a collection for the template engine
+				      var LibraryData = new LibraryModel()
+					  
+				      var page = new LibraryView({
+				        model: LibraryData
+				      });
+
+					  //render template
+				      this.changePage(page);
+				      //set player view into current view
+				      page.player = this.playerView;
+				      //set current view to player view
+    				  this.playerView.currentView = page;
+    				  //set current view to structure view
+    				  this.structureView.currentView = page;
+    				  //set current view in menu
+    				  this.structureView.setActive("goToLibrary");
+    				  //set last view for next opening
+				      localStorage.setItem("lastView", "library");			      
 				      
     }, //END DISCOVER FUNCTION
     

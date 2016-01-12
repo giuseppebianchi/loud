@@ -51,7 +51,6 @@ define(function(require) {
 		var that = this;
 		  this.collection.fetch({
 			  success: function(activities){
-				  	console.log(activities)
 				  	//set received data into template
 					that.$el.html(that.template(activities.models));
 					
@@ -93,6 +92,9 @@ define(function(require) {
 			        that.scrollingView.children(".list").append(that.templateList(more));
 			        that.bLazy.revalidate();
 			        that.loadingContents = false;
+			    },
+			    error: function(a){
+				    
 			    }
 	        })
 	    }else{
@@ -109,9 +111,9 @@ define(function(require) {
 */
       var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
       //GET THE INDEX AND THE OBJECT WHICH CONTAINS THE SELECTED TRACK
-      var result = this.findTrack(selectedTrack);
+      //var result = this.findTrack(selectedTrack);
 
-      this.player.playTrack(result[0], result[1]);
+      //this.player.playTrack(result[0], result[1]);
       
     },
     findTrack: function(id){

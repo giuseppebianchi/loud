@@ -12,7 +12,7 @@ define(function(require) {
     events:{	
       "tap .back-button": "back",
        "tap .playlist-type": "showPlaylist",
-       "tap .soundcloudArtist": "showUser"
+//        "tap .soundcloudArtist": "showUser"
     },
     
 	userView: undefined,

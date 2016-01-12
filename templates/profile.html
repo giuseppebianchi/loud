@@ -1,6 +1,6 @@
 <header class="navigation-bar navigation-bar--transparent profile-header">
   <div class="navigation-bar__left">
-    <span class="toolbar-button--quiet navigation-bar__line-height">
+    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
       <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
     </span>
   </div>
@@ -15,7 +15,7 @@
 <div class="user-content-view">
 	
 	
-<div class="cover-user-view" style="background-image:url({{subString avatar_url 't500x500'}})">
+<div class="cover-user-view b-lazy" data-src="{{subString avatar_url 't500x500'}}">
   <div class="overlay-cover-user-view">
     <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
     
@@ -61,38 +61,47 @@
 
   </div>
 </div>
-
-<p class="user-page-title morePlaylist-title">Playlists <!-- <span>({{playlist_count}})</span> --></p>
+<p class="playlist-description">{{description}}</p>
+<p class="user-page-title morePlaylist-title">Playlists <span style="color: #777">{{playlist_count}}</span></p>
 <div class="UserCarousel"><div class="cssload-loader">
   <div class="cssload-ball"></div>
   </div></div>
-<p class="user-page-title">Tracks <!-- <span>({{track_count}})</span> --></p>
-<div class="tracklist">
-  <div class="cssload-loader tracks-loader">
-  	<div class="cssload-ball"></div>
-  </div>
-</div>
+{{#cond track_count 3}}
+	<p class="user-page-title moreTrack-button">Tracks <span style="color: #777">{{track_count}}</span></p>
+	<div class="tracklist">
+	  <div class="cssload-loader tracks-loader">
+	  	<div class="cssload-ball"></div>
+	  </div>
+	</div>
+	<div class="bullet-item more-button more-user-track"><h4>View All</h4></div>
+{{else}}
+	<p class="user-page-title">Tracks <span style="color: #777">{{track_count}}</span></p>
+	<div class="tracklist">
+	  <div class="cssload-loader tracks-loader">
+	  	<div class="cssload-ball"></div>
+	  </div>
+	</div>
+{{/cond}}
 
 <div class="item-single-track" style="margin: 40px 0">
 	<li class="list__item list-track" scTrackId="{{id}}" style="padding: 0">
       <div class="cover-track" style="background-image: url(img/turn.jpg); height: 100px;">
         <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.78)">
-            <h3 style="font-weight: 200;color: #ff003c;text-align: center; margin: 0; position: relative; top: 25px;">LIKES</h3>
+            <h3 id="like-button">LIKES</h3>
         </div>
       </div>
 </li>
 </div>
 
-<p class="user-page-title">FOLLOWING <!-- <span>({{track_count}})</span> --></p>
+<p class="user-page-title {{#cond followings_count 5}}following-button{{/cond}}">FOLLOWING <span style="color: #777">{{followings_count}}</span></p>
 <div class="bullet-section">
-<div class="bullet-item">
-  <div class="bullet-image"><img src="{{avatar_url}}"></div><div class="bullet-name"><h4>{{username}}</h4></div>
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+  	</div>
 </div>
-<div class="bullet-item">
-  <div class="bullet-image"><img src="{{avatar_url}}"></div><div class="bullet-name"><h4>{{username}}</h4></div>
-</div>
-</div>
-
+<br>
+<br>
+<h4 style=" font-weight: 200;color: white; background: #E71D36; text-align: center; margin: 0; position: relative; padding: 15px; text-transform: uppercase; font-size: 18px;">Setting</h4>
 
  
 </div>

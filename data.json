@@ -1,0 +1,79 @@
+{
+  "artists": [
+    {
+      "name": "Led Zeppelin",
+      "albums":[
+        {
+          "name": "Led Zeppelin I",
+          "tracks": [
+            {
+            "name": "Black Dog"
+            },
+            {
+            "name": "Whole Lotta Love"
+            }
+          ]
+        },
+        {
+          "name": "Led Zeppelin II",
+          "tracks": [{
+            "name": "Kashmir"
+            },
+            {
+            "name": "Rock n Roll"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Guns And Roses",
+      "albums":[
+        {
+          "title": "Appetite For Destruction",
+          "tracks": [
+            {
+            "title": "Sweet Child of Mine"
+            },
+            {
+            "title": "Paradise City"
+            }
+          ]
+        },
+        {
+          "name": "Appetite For Destruction II",
+          "tracks": [{
+            "title": "Don't Cry"
+            },
+            {
+            "title": "November Rain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tINI",
+      "albums":[
+        {
+          "title": "Tessa",
+          "tracks": [
+            {
+            "title": "Medusa"
+            },
+            {
+            "title": "Fail Better"
+            }
+          ]
+        },
+        {
+          "title": "X-Sample",
+          "tracks": [{
+            "title": "That's Right"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
