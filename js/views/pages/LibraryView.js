@@ -4,15 +4,6 @@ define(function(require) {
   var Utils = require("utils");
   var CarouselView = require("views/elements/carousel");
   var LibraryTrackView = require("views/elements/square");
-  
-  var db = openDatabase('loud', '1.0', 'Loud Library', 2 * 1024 * 1024);
-	
-	db.transaction(function (tx) {
-	   tx.executeSql('SELECT DISTINCT artist FROM TRACKS', [], function (tx, results) {
-	      console.log(results)
-	    })
-	     
-	});
 	
   var LibraryView = Utils.Page.extend({
 
@@ -133,7 +124,7 @@ define(function(require) {
 				
 				
     			//$(this.el).css("overflow", "hidden");			
-    			this.elasticImage.css("height", (130 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			this.elasticImage.css("height", (160 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
     			e.preventDefault();
 
     	}else{
@@ -155,10 +146,10 @@ define(function(require) {
   checkScroll: function(e){
       if(this.userScrollingView[0].scrollTop > 70){
         $(this.el.children[0]).addClass("header-visible");
-        $(this.el.children[1]).addClass("header-visible");
+        //$(this.el.children[1]).addClass("header-visible");
       }else{
          $(this.el.children[0]).removeClass("header-visible")
-         $(this.el.children[1]).removeClass("header-visible")
+         //$(this.el.children[1]).removeClass("header-visible")
       }
   },
     showPlaylist: function(e){

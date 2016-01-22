@@ -35,6 +35,27 @@ require.config({
   }
 });
 
+
+//FUNCTION HANDLER FOR URL SCHEME
+if(!localStorage.getItem("accessToken")){
+	function getUrlVars(data) {
+	  var vars = {};
+	  var parts = data.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+	    vars[key] = value;
+	  });
+	  return vars;
+	}
+	
+	function handleOpenURL(response) {
+	  //console.log(url);
+	  var url = getUrlVars(response)
+	  localStorage.setItem("accessToken", url["#access_token"]);
+	  location.reload();
+	  // Dispatch/Trigger/Fire the event
+	  //document.dispatchEvent(auth_event);
+	
+	}
+}
 // We launch the App
 require(['backbone', 'utils'], function(Backbone, Utils) {
   require(['preloader', 'router'], function(PreLoader, AppRouter) {
@@ -69,7 +90,7 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
           
 		  var SCoptions = {
 	          client_id: '2aca68b7dc8b51ec1b20fda09b59bc9a',
-			  redirect_uri: 'http://giuseppebianchi.github.io/loud/index.html',
+			  redirect_uri: 'loudapp://soundcloud',
 			  scope: 'non-expiring',
           }
           
@@ -79,16 +100,12 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
 		  
 		  if(accessToken){
 			  SCoptions.access_token = accessToken;
+          }else{
+	          localStorage.setItem("shuffle", 0)
+	          localStorage.setItem("repeat", 0)
           }
           
           SC.initialize(SCoptions);
-			    
-          document.getElementById("closeModal").addEventListener("click", function(){
-            document.getElementById("main").className = "fadeEffect";
-            document.getElementById("main-overlay").className = "";
-            document.getElementById("showOption").className = "";
-           
-          });
 
 			
         }

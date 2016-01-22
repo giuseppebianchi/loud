@@ -54,7 +54,6 @@ define(function(require) {
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
 	   this.model.fetch({
 		   success: function(data){
-			   
 			   that.$el.html(that.template(data.attributes));
 			    //set options
 			      that.elasticImage = $(that.$el.find(".cover-user-view"));
@@ -90,7 +89,8 @@ define(function(require) {
 				    limit: 3
 				})  
 			    that.tracklist = new TracklistView({
-				    collection: user_tracks
+				    collection: user_tracks,
+				    parent: that
 			    })
 			    that.tracklist.render()  
 				that.$el.find(".tracklist").html(that.tracklist.el);
@@ -177,7 +177,8 @@ define(function(require) {
       });
       
       this.userView = new UserView({
-            model: user
+            model: user,
+            player: self.player
       });
       this.userView.parent = this;
       // render the new view
@@ -203,9 +204,9 @@ define(function(require) {
 	      id_playlist: playlistId,
 	      image: playlistImage
       });
-      
       this.PlaylistView = new PlaylistView({
-            model: playlist
+            model: playlist,
+            player: self.player
       });
       this.PlaylistView.parent = this;
       // render the new view
@@ -236,7 +237,8 @@ define(function(require) {
 	  })  
       
       this.AllPlaylistView = new AllPlaylistView({
-            collection: user_playlists
+            collection: user_playlists,
+            player: self.player
       });
       this.AllPlaylistView.parent = this;
       // render the new view
@@ -254,7 +256,8 @@ define(function(require) {
       var self = this; 
          
       this.LikesView = new LikesView({
-	      total_likes: self.model.attributes.public_favorites_count
+	      total_likes: self.model.attributes.public_favorites_count,
+	      player: self.player
       })
       this.LikesView.parent = this;
       // render the new view
@@ -272,7 +275,8 @@ define(function(require) {
       var self = this; 
          
       this.FollowingView = new FollowingView({
-	      total: self.model.attributes.followings_count
+	      total: self.model.attributes.followings_count,
+	      player: self.player
       })
       this.FollowingView.parent = this;
       // render the new view

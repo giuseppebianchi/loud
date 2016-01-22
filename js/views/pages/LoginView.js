@@ -33,16 +33,17 @@ define(function(require) {
     },
     
     SCconnect: function(){
+      ref = cordova.InAppBrowser.open('https://soundcloud.com/connect?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a&redirect_uri=loudapp://soundcloud&response_type=token&scope=non-expiring', '_system', 'location=yes');
 	    // initiate auth popup
-		SC.connect(function() {
-		  SC.get('/me', function(me) {
-			console.log(me);
-			localStorage.setItem("accessToken", SC.accessToken());
-		    localStorage.setItem("account", JSON.stringify(me));
-		    Backbone.history.navigate("start", {trigger: true});
-		  });
+		// SC.connect(function() {
+		//   SC.get('/me', function(me) {
+		// 	console.log(me);
+		// 	localStorage.setItem("accessToken", SC.accessToken());
+		//     localStorage.setItem("account", JSON.stringify(me));
+		//     Backbone.history.navigate("start", {trigger: true});
+		//   });
 		  
-		});
+		// });
 		
     }
     // rendered: function(e) {

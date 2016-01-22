@@ -1,5 +1,5 @@
 
-<header class="navigation-bar navigation-bar--transparent">
+<header class="navigation-bar navigation-bar--transparent library-header">
   <div class="navigation-bar__left">
     <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
       <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
@@ -13,7 +13,14 @@
   </div>
 </header>
 <div id="stream-scrolling-view" class="scrolling-view">
-<ul class="list">
+	
+<div class="cover-user-view library-cover" style="background-image: url(img/turn.jpg);">
+	<div class="overlay-cover-user-view overlay-cover-library-view">
+		<div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">STREAM</h4></div>
+	</div>
+</div>
+<p class="playlist-description" style="text-align: center">Find out what your following are posting</p>	
+<ul class="list" style="padding: 10px 0">
 
 <!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
   {{#each this}}
@@ -54,7 +61,11 @@
 		  	{{#compare attributes.type "playlist"}}
 			    {{#with attributes.origin}}
 			    <li class="list__item list-track playlist-type" playlistid="{{id}}">
+			    {{#if artwork_url}}
 			      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+				{{else}}
+				  <div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+				{{/if}}
 			        <div class="cover-track-overlay">
 			          <div class="list-track-details">
 			            {{#with user}}
@@ -72,7 +83,11 @@
 				<span class="repost"><i class="fa fa-retweet"></i></span>
 				    {{#with attributes.origin}}
 				    <li class="list__item list-track playlist-type" playlistid="{{id}}">
+				    {{#if artwork_url}}
 				      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+					{{else}}
+					  <div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+					{{/if}}
 				        <div class="cover-track-overlay">
 				          <div class="list-track-details">
 				            {{#with user}}

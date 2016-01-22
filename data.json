@@ -4,7 +4,7 @@
       "name": "Led Zeppelin",
       "albums":[
         {
-          "name": "Led Zeppelin I",
+          "title_album": "name1",
           "tracks": [
             {
             "name": "Black Dog"
@@ -15,8 +15,9 @@
           ]
         },
         {
-          "name": "Led Zeppelin II",
-          "tracks": [{
+          "title_album": "name2",
+          "tracks": [
+            {
             "name": "Kashmir"
             },
             {
@@ -27,10 +28,10 @@
       ]
     },
     {
-      "name": "Guns And Roses",
+      "name": "The Beatles",
       "albums":[
         {
-          "title": "Appetite For Destruction",
+          "title_album": "name3",
           "tracks": [
             {
             "title": "Sweet Child of Mine"
@@ -39,37 +40,20 @@
             "title": "Paradise City"
             }
           ]
-        },
-        {
-          "name": "Appetite For Destruction II",
-          "tracks": [{
-            "title": "Don't Cry"
-            },
-            {
-            "title": "November Rain"
-            }
-          ]
         }
       ]
     },
     {
-      "name": "tINI",
+      "name": "Rolling Stones",
       "albums":[
         {
-          "title": "Tessa",
+          "title_album": "name4",
           "tracks": [
-            {
+          	{
             "title": "Medusa"
             },
-            {
+          	{
             "title": "Fail Better"
-            }
-          ]
-        },
-        {
-          "title": "X-Sample",
-          "tracks": [{
-            "title": "That's Right"
             }
           ]
         }
@@ -77,3 +61,56 @@
     }
   ]
 }
+
+
+
+
+
+/* RESULT 
+
+[
+	{
+	  "title_album": "name1",
+	  "tracks": [
+	    {
+	    "name": "Black Dog"
+	    },
+	    {
+	    "name": "Whole Lotta Love"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name2",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name3",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name4",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	}
+]*/

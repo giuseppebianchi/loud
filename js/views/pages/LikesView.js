@@ -2,7 +2,7 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
-  var CarouselView = require("views/elements/carousel");
+  var CarouselView = require("views/elements/likesCarousel");
   var TracklistView = require("views/elements/tracklist");
   var UserView = require("views/pages/UserView");
   var LikesView = Utils.Page.extend({
@@ -13,11 +13,12 @@ define(function(require) {
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
       "tap .back-button": "back",
-      //"tap .userOption": "showUserOption",
-       //"tap .soundcloudPlaylist": "showPlaylist",
-       //"tap .morePlaylists": "Playlists",
-       //"tap .morePlaylists-title": "Playlists"
-      "tap .soundcloudArtist": "showUser"
+       "tap .soundcloudPlaylist": "showPlaylist",
+       "tap .morePlaylists": "Playlists",
+       "tap .morePlaylists-title": "Playlists",
+      "tap .soundcloudArtist": "showUser",
+      "tap .play-track": "playTrack",
+      "tap .play-all-tracks": "playAllTracks"
 	},
 
 	elasticImage: undefined,
@@ -26,6 +27,9 @@ define(function(require) {
 	  this.total_likes = options.total_likes;
       // load the precompiled template
       this.template = Utils.templates.likes;
+      
+      this.player = options.player;
+      
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -45,14 +49,14 @@ define(function(require) {
     
 	loadingContents: false,
 	
+	playerCollection: [],
+	
 	total_likes: undefined,
 	
     render: function() {
 	   var that = this;
-	   
 	   //SET OFFLINE HTML TEMPLATE WHILE FETCHING DATA FROM SOUNDCLOUD
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
-	   			this.total_likes;
 			   
 			    that.$el.html(that.template({
 				   total_likes: that.total_likes
@@ -67,35 +71,33 @@ define(function(require) {
 			            that.checkScroll(ev);
 			      });
 			    
-/*
 			    // CREATE CAROUSEL VIEW FOR PLAYLIST
-			    var UserPlaylistCollection = require("collections/UserPlaylistCollection");
+			    var UserPlaylistCollection = require("collections/LikedPlaylistCollection");
 			    // create a collection for the template engine
 			    var user_playlists = new UserPlaylistCollection({
-				    id: data.attributes.id,
-				    total: data.attributes.playlist_count
-				})  
+				    all: false
+			    })
 			    that.carousel = new CarouselView({
 				    collection: user_playlists
 			    })
 
 			    
 			    that.carousel.render();
-				that.$el.find(".UserCarousel").html(that.carousel.el);
-*/				
+				that.$el.find(".UserCarousel").html(that.carousel.el);		
 				
 				// CREATE LIST VIEW FOR TRACKS
 			    // create a collection for the template engine
 			    var LikesCollection = require("collections/LikesCollection")
 			    var likes = new LikesCollection({}); 
 			    that.tracklist = new TracklistView({
-				    collection: likes
+				    collection: likes,
+				    parent: that
 			    })
 			    
-			    that.tracklist.render()  
+			    that.tracklist.render();
 				that.$el.find(".tracklist").html(that.tracklist.el);
 				
-				setTimeout(function(){that.$el.addClass("active")}, 100);
+				setTimeout(function(){that.$el.addClass("active"); that.parent.$el.addClass("onback")}, 100);
 
        
       return this;
@@ -140,6 +142,7 @@ define(function(require) {
     e.stopImmediatePropagation();
     var self = this;
     $(this.el).removeClass("active");
+    this.parent.$el.removeClass("onback");
     setTimeout(function(){self.hideUser()}, 200);
   },
   showUserOption: function(){
@@ -164,9 +167,14 @@ define(function(require) {
 	    var that = this;
 	    if(this.tracklist.collection.next){
 			this.tracklist.collection.fetch({
-		        success: function(more){
-			        
-			        that.tracklist.$el.append(that.tracklist.template(more));
+		        success: function(collection, more){
+			        if(that.player.playingView === that){
+				        that.player.collection = that.player.collection.concat(more.collection);
+				        that.player.renderSlides(more.collection);
+			        }else{
+				        that.playerCollection = that.playerCollection.concat(more.collection);
+				    }
+			        that.tracklist.$el.append(that.tracklist.template(collection));
 			        that.tracklist.bLazy.revalidate();
 			        that.loadingContents = false;
 			    }
@@ -177,9 +185,33 @@ define(function(require) {
         }
         
   },
+  playTrack: function(e){
+	  e.stopImmediatePropagation();
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(e.currentTarget.attributes["sctrackid"].value, this); /* 1 means that is the stream view */
+    },
+  playAllTracks: function(e){
+	  e.stopImmediatePropagation();
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(this.tracklist.collection.models[0].attributes.id, this);
+    },
   hideUser: function(){ //fired from UserView
       this.parent.delegateEvents();
-      this.close();
+      if(this !== this.player.playingView){
+	      this.close();
+      }else{
+	      this.remove()
+      }
     },
   showUser: function(e){
 	  e.stopImmediatePropagation();
@@ -191,7 +223,8 @@ define(function(require) {
       });
       
       this.userView = new UserView({
-            model: user
+            model: user,
+            player: self.player
       });
       this.userView.parent = this;
       // render the new view
@@ -222,7 +255,8 @@ define(function(require) {
       });
       
       this.PlaylistView = new PlaylistView({
-            model: playlist
+            model: playlist,
+            player: self.player
       });
       this.PlaylistView.parent = this;
       // render the new view
@@ -243,7 +277,7 @@ define(function(require) {
       var AllPlaylistView = require("views/pages/AllPlaylistView");
       var self = this;
 
-      var UserPlaylistCollection = require("collections/UserPlaylistCollection");
+      var UserPlaylistCollection = require("collections/LikedPlaylistCollection");
 		    // create a collection for the template engine
 	  var user_playlists = new UserPlaylistCollection({
 		id: self.model.id,

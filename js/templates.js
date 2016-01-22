@@ -12,11 +12,14 @@ define({
     structure: "templates/structure.html",
     home: "templates/home.html",
     login: "templates/login.html",
+    welcome: "templates/welcome.html",
+    sync: "templates/sync.html",
     stream: "templates/stream.html",
     streamlist: "templates/elements/streamlist.html",
     discover: "templates/discover.html",
     discoverlist: "templates/elements/discoverlist.html",
     player: "templates/player.html",
+    slides: "templates/elements/slides.html",
     user: "templates/user.html",
     profile: "templates/profile.html",
     library: "templates/library.html",
@@ -29,6 +32,9 @@ define({
     allPlaylist: "templates/allPlaylist.html",
     morePlaylist: "templates/elements/playlists.html",
     carousel: "templates/elements/carousel.html",
+    likesCarousel: "templates/elements/likesCarousel.html",
     tracklist: "templates/elements/tracklist.html",
-    playlistTracklist: "templates/elements/playlistTracklist.html"
+    playlistTracklist: "templates/elements/playlistTracklist.html",
+    bulletTracks: "templates/elements/bulletTracks.html",
+    options: "templates/elements/options.html"
 });

@@ -1,72 +1,36 @@
 
 <!-- 	<span id="chiudiplayer" class="button"><i class="fa fa-angle-down"></i></span> -->
-	       
+		
 		<div class="swiper-container">
+		<div id="pauseButton"><h6><i class="ion-play"></i></h6><h5>PAUSE</h5></div>
 	    <!-- Additional required wrapper -->
-	    <div id="pauseButton"><h6><i class="fa fa-play"></i></h6><h5>PAUSE</h5></div>
-
-	    <div class="swiper-wrapper">
+			<div class="swiper-wrapper">
 	        <!-- Slides -->
-	        {{#each this}}
-	        {{#with origin}}
-	        <div class="swiper-slide" sctrackid="{{id}}">
-	        	
-	        	<div class="coverTrackPlayer" style="background-image: url('{{subString artwork_url 't500x500'}}')"></div>
-	        	<div class="detailTrackPlayer">
-<!-- 	    			<div class="separator"></div> -->
-		    			<div class="detail-overlay">
-		        			{{#with user}}
-		        			<h6 data-swiper-parallax="-50"><span scuserid="{{id}}" class="soundcloudArtist">{{username}}</span></h6>
-		        			{{/with}}
-							<h6 data-swiper-parallax="-100">{{title}}</h6>
-							<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
-							    <i class="fa fa-play"></i>{{kFormatter playback_count}}
-							</span>
-							<span class="toolbar-button--quiet navigation-bar__line-height">
-							    <i class="fa fa-heart"></i>{{kFormatter favoritings_count}}
-							</span>
-						</div>
-						
-						<div class="contentPlayer">
-							<div class="detail-overlay-bottom">
-				    			<div class="bottom-bar__line-height" style="text-align:center">
-				 
-							  		<div class="navigation-bar__left">
-							    		<!-- <span class="toolbar-button--quiet navigation-bar__line-height">
-									      <i class="ion-shuffle"></i>
-									    </span> -->
-									    <span class="toolbar-button--quiet navigation-bar__line-height">
-									      <i class="fa fa-heart"></i>
-									    </span>
-							  		</div>
-								    <div class="navigation-bar__center"></div>
-								  	<div class="navigation-bar__right">
-								  		<span data-play="{{kFormatter playback_count}}" data-like="{{kFormatter favoritings_count}}" data-artist="{{user.username}}" data-title="{{title}}" data-code="{{id}}" class="trackOption toolbar-button--quiet navigation-bar__line-height" style="font-size: 28px;">
-								  			•••
-									      <!-- <i class="fa fa-ellipsis-h"></i> -->
-									    </span>
-								  		<!-- <span class="toolbar-button--quiet navigation-bar__line-height control">
-									      <i class="fa fa-refresh"></i>
-									    </span> -->
-								  	</div>
-								  	<div class="bottom-player">
-								    	<div class="currentTimeTrack">00:00</div>
-										<div class="totalDuration">{{getMinutes duration}}</div>
-										<input type="range" class="progressBarPlayer range scrubbing" min="0" max="{{duration}}" value="0">
-				    				</div>
-								  	
-								  	
-								</div>
-				
-							</div>
-						</div>
-						
-				</div>
-	        	
-	         </div>	
-	         {{/with}}
-	         {{/each}}
-	        
-
-	    	</div>
+	       
+	        </div>
 	    </div>
+	    
+		<div class="tab-bar tab-bar--top tab-bar--top-border" style="z-index:21">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+            <button id="shuffle-button" class="tab-bar__button tab-bar--top-border__button center {{#compare shuffle '1'}}active-button{{/compare}}">
+              <span class="tab-name"><i class="fa fa-random"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button id="repeat-button"  class="tab-bar__button tab-bar--top-border__button center {{#compare repeat '1'}} active-button{{/compare}}">
+              <span class="tab-name"><i class="fa fa-refresh"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button id="player-like-button" class="tab-bar__button tab-bar--top-border__button center">
+              
+              <span class="tab-name"><i class="fa fa-heart"></i></span>
+            </button>
+          </label>
+          
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button id="show-player-option" class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">•••</span>
+            </button>
+          </label>
+		</div>

@@ -19,7 +19,7 @@ define(function(require) {
 				}
 				
 		},
-		parse: function(data){
+		parse: function(data, i){
 			this.pagination = true;
 			this.next = data.next_href;
 			this.future = data.future_href;

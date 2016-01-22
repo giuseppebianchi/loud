@@ -5,8 +5,17 @@ define(function(require) {
 		constructorName: "PlaylistModel",
 		
 		initialize: function(a) {
+			var that = this;
 			this.id_playlist = a.id_playlist;
 			this.image = a.image;
+			var playlists = JSON.parse(sessionStorage.getItem("likedPlaylists"));
+			//I SEARCH ID INTO FOLLOWING TO SET STYLE OF FOLLOWING BUTTON
+			_.find(playlists, function(t){
+				if(t.playlist.id == a.id_playlist){
+					that.favorited = 1;
+					return true;
+				}
+			})
 		},
 		
 		url: function(){

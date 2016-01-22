@@ -2,6 +2,7 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
+  var _ = require("underscore");
   var CarouselView = require("views/elements/carousel");
   var TracklistView = require("views/elements/tracklist");
   var UserView = Utils.Page.extend({
@@ -14,16 +15,23 @@ define(function(require) {
       "tap .back-button": "back",
       "tap .userOption": "showUserOption",
        "tap .soundcloudPlaylist": "showPlaylist",
+       "tap .play-track": "playTrack",
        "tap .morePlaylists": "Playlists",
-       "tap .morePlaylists-title": "Playlists"
+       "tap .morePlaylists-title": "Playlists",
+       "tap .start-follow": "setFollow",
+       "tap .following": "removeFollow",
+       "tap .play-all-tracks": "playAllTracks",
+       "tap .show-options": "showOptions"
       //"tap .soundcloudArtist": "showUser"
 	},
 
 	elasticImage: undefined,
 	
-    initialize: function() {
+    initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.user;
+      
+      this.player = options.player;
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -50,8 +58,7 @@ define(function(require) {
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
 	   this.model.fetch({
 		   success: function(data){
-			   
-			   that.$el.html(that.template(data.attributes));
+			   that.$el.html(that.template(data));
 			    //set options
 			      that.elasticImage = $(that.$el.find(".cover-user-view"));
 			      
@@ -61,7 +68,10 @@ define(function(require) {
 			      that.userScrollingView.bind('scroll', function (ev) {
 			            that.checkScroll(ev);
 			      });
-			    
+			      
+			    that.$el.addClass("active");
+				that.parent.$el.addClass("onback");
+				
 			    // CREATE CAROUSEL VIEW FOR PLAYLIST
 			    var UserPlaylistCollection = require("collections/UserPlaylistCollection");
 			    // create a collection for the template engine
@@ -85,12 +95,11 @@ define(function(require) {
 				    track_count: data.attributes.track_count
 				})  
 			    that.tracklist = new TracklistView({
-				    collection: user_tracks
+				    collection: user_tracks,
+				    parent: that
 			    })
 			    that.tracklist.render()  
 				that.$el.find(".tracklist").html(that.tracklist.el);
-				
-				that.$el.addClass("active");
 				 
 		   }
 	   })
@@ -137,6 +146,7 @@ define(function(require) {
     e.stopImmediatePropagation();
     var self = this;
     $(this.el).removeClass("active");
+    this.parent.$el.removeClass("onback");
     setTimeout(function(){self.hideUser()}, 200);
   },
   showUserOption: function(){
@@ -161,22 +171,32 @@ define(function(require) {
 	    var that = this;
 	    if(this.tracklist.collection.next){
 			this.tracklist.collection.fetch({
-		        success: function(more){
-			        
-			        that.tracklist.$el.append(that.tracklist.template(more));
+		        success: function(collection, more){
+			        if(that.player.playingView === that){
+				        that.player.collection = that.player.collection.concat(more.collection);
+				        that.player.renderSlides(more.collection);
+			        }else{
+				        that.playerCollection = that.playerCollection.concat(more.collection);
+				    }
+			        that.tracklist.$el.append(that.tracklist.template(collection));
 			        that.tracklist.bLazy.revalidate();
 			        that.loadingContents = false;
 			    }
 	        })
         }else{
 	       this.loadingContents = true;
-	       this.$el.find(".tracks-loader").css("opacity", 0)
+	       this.$el.find(".tracks-loader").css("opacity", 0);
         }
         
   },
   hideUser: function(){ //fired from UserView
       this.parent.delegateEvents();
-      this.close();
+      if(this !== this.player.playingView){
+	      this.close();
+      }else{
+	      this.remove()
+      }
+      
     },
   showUser: function(e){
 	  e.stopImmediatePropagation();
@@ -188,7 +208,8 @@ define(function(require) {
       });
       
       this.userView = new UserView({
-            model: user
+            model: user,
+            player: self.player
       });
       this.userView.parent = this;
       // render the new view
@@ -219,7 +240,8 @@ define(function(require) {
       });
       
       this.PlaylistView = new PlaylistView({
-            model: playlist
+            model: playlist,
+            player: self.player
       });
       this.PlaylistView.parent = this;
       // render the new view
@@ -250,7 +272,8 @@ define(function(require) {
 	  })  
       
       this.AllPlaylistView = new AllPlaylistView({
-            collection: user_playlists
+            collection: user_playlists,
+            player: self.player
       });
       this.AllPlaylistView.parent = this;
       // render the new view
@@ -261,9 +284,77 @@ define(function(require) {
       //translate
       //$(self.userView.el).addClass("active");
       //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-      
-
-      
+    },
+    playTrack: function(e){
+	  e.stopImmediatePropagation();
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(e.currentTarget.attributes["sctrackid"].value, this);
+    },
+    playAllTracks: function(e){
+	  e.stopImmediatePropagation();
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(this.tracklist.collection.models[0].attributes.id, this);
+    },
+    setFollow: function(e){
+	    var id = $(e.currentTarget).data("code");
+	    var following = JSON.parse(sessionStorage.getItem("following"))
+	    $.ajax({
+		    type: "PUT",
+		    url: "http://api.soundcloud.com/me/followings/" + id + "?oauth_token=" + localStorage.getItem("accessToken"),
+		    success: function(data){
+			    //console.log(data)
+			    following.push(data);
+			    $(e.currentTarget).addClass("following").removeClass("start-follow").text("FOLLOWING")
+			    sessionStorage.setItem("following", JSON.stringify(following))
+		    },
+		    error: function(err){
+			    console.log(err)
+		    }
+	    })
+    },
+    removeFollow: function(e){
+	    var id = $(e.currentTarget).data("code");
+		var following = JSON.parse(sessionStorage.getItem("following"))
+	    $.ajax({
+		    type: "DELETE",
+		    url: "http://api.soundcloud.com/me/followings/" + id + "?oauth_token=" + localStorage.getItem("accessToken"),
+		    success: function(data){
+			    _.find(following, function(item, index){
+				    if(item.id == id){
+					    following.splice(index, 1);
+					    return true;
+					}
+				})
+			    $(e.currentTarget).removeClass("following").addClass("start-follow").text("FOLLOW")
+			    sessionStorage.setItem("following", JSON.stringify(following))
+		    },
+		    error: function(err){
+			    console.log(err)
+		    }
+	    })
+    },
+    showOptions: function(e){
+	  var OptionsView = require("views/elements/options");
+	  e.stopImmediatePropagation();
+      this.OptionsView = new OptionsView({
+            model: this.model.attributes
+      });
+      this.OptionsView.parent = this;
+      // render the new view
+      this.OptionsView.render();
+      //append in the current view
+	  document.body.appendChild(this.OptionsView.el);
+      this.undelegateEvents();
     }
 	
 		

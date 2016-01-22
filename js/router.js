@@ -14,6 +14,8 @@ define(function(require) {
     routes: {
       // the default is Login
       "": "LoginFunction",
+      "welcome": "Welcome",
+      "sync": "Sync",
       "start": "showStructure",
       "stream": "Stream",
       "discover": "Discover",
@@ -27,7 +29,48 @@ define(function(require) {
       this.currentView = undefined;
       
     },
-    
+    // SHOW SYNC VIEW
+    Sync: function() {
+						var SyncView = require("views/pages/SyncView");
+				        // put the el element of the structure view into the DOM
+				        var self = this;
+				        init();
+				        
+				        function init(){
+					        self.SyncView = new SyncView();
+					        if(self.LoginView.$el){
+					        	self.LoginView.$el.css("opacity", 0);
+					        }else{
+						        self.WelcomeView.$el.css("opacity", 0);
+					        }
+					        nextStep();
+					         
+				        }
+				        
+				        function nextStep(){
+					        setTimeout(function(){
+								        document.body.appendChild(self.SyncView.render().el);
+								        if(self.LoginView.el){
+								        	self.LoginView.close();
+										}else{
+											self.WelcomeView.close();
+										}
+										finish();
+							}, 700);
+				        }
+				        
+				        function finish(){
+				        	
+				        	self.SyncView.trigger("inTheDOM");
+					        setTimeout(function(){$("#sync").css("opacity", 1)}, 200);
+					        self.SyncView.getData();
+							
+				        }
+				        
+				        
+      
+      
+    }, //END SYNC FUNCTION
     // load the structure view
     showStructure: function() {
 
@@ -39,7 +82,7 @@ define(function(require) {
 				        
 				        function init(){
 					        self.structureView = new StructureView();
-					        $("#LoginView").css("opacity", 0);
+					        self.SyncView.$el.css("opacity", 0);
 					        nextStep();
 					         
 				        }
@@ -48,7 +91,7 @@ define(function(require) {
 					        setTimeout(function(){
 								        document.body.appendChild(self.structureView.render().el);
 								        
-								        $("#LoginView").remove();
+								        self.SyncView.close();
 										
 										finish();
 							}, 700);
@@ -72,7 +115,8 @@ define(function(require) {
 
 				        // put the el element of the structure view into the DOM
 				        var self = this;
-				        self.playerView = new PlayerView();
+				        this.playerView = new PlayerView();
+				        
 				        initPlayer();
 				        
 				        function initPlayer(){
@@ -86,18 +130,22 @@ define(function(require) {
 				        }
 				        
 				        function finishPlayer(){
-
-				        	self.playerView.trigger("inTheDOM");
-
-							self.playerView.initializeSliderPlayer();
-
+							
+							// notify the new view that it is now in the DOM
+						    //self.currentView.trigger("inTheDOM");  
+						    
+						    self.playerView.initializeSliderPlayer();
+							
 					        self.structureView.player = self.playerView;
 					        
 					        var details = {
+						        miniplayer: $("#miniplayer"),
 								miniplayerImg: $("#miniplayerImg"),
 								miniplayerTitle: $("#miniplayerTitle"),
 								miniplayerArtist: $("#miniplayerArtist"),
 								progressBarMini: $("#progressBar"),
+								iosplay: $("#ios-play"),
+								equalizer: $("#equalizer"),
 								showOption: $("#showOption")
 					        }
 					        self.playerView.details = details;
@@ -122,29 +170,71 @@ define(function(require) {
     }, //END PLAYER FUNCTION
 
 	LoginFunction: function() {
+					var LoginView = require("views/pages/LoginView");
+				    var that = this;
+					// create the view
+					this.LoginView = new LoginView();
 				      if(!localStorage.getItem("accessToken")){
 				      
-					      var LoginView = require("views/pages/LoginView");
-				      
-						  // create the view
-					      var loginPage = new LoginView();
-					      document.body.appendChild(loginPage.render().el);
+					      document.body.appendChild(this.LoginView.render().el);
 					      
 					      // show the view
-					      if(loginPage){
-						  	loginPage.trigger("inTheDOM");
-						  	setTimeout(function(){$("#LoginView").css("opacity", 1)}, 100);
+					      if(this.LoginView){
+						  	this.LoginView.trigger("inTheDOM");
+						  	setTimeout(function(){that.LoginView.$el.css("opacity", 1)}, 100);
 						  	
 						  }
 				    
 					     
 					  }else{
-					  
-					      this.navigate("start", {trigger: true});
-					      
+						if(localStorage.getItem("account")){
+					  		this.navigate("sync", {trigger: true});
+					  	}else{
+					      this.navigate("welcome", {trigger: true});
+					    }
 				      }
       
-    }, // END LOGIN FUNCTION
+    }, // END LOGIN
+    
+    Welcome: function() {
+
+						var WelcomeView = require("views/pages/WelcomeView");
+				        // put the el element of the structure view into the DOM
+				        var ProfileModel = require("models/ProfileModel");
+						var profileData = new ProfileModel()
+						
+				        var self = this;
+				        
+				        init();
+				        
+				        function init(){
+					        self.WelcomeView = new WelcomeView({
+								model: profileData
+				      		});
+					        self.WelcomeView.$el.css("opacity", 0);
+					        nextStep();
+					         
+				        }
+				        
+				        function nextStep(){
+					        setTimeout(function(){
+								        document.body.appendChild(self.WelcomeView.render().el);
+								        self.LoginView.close();
+										
+										finish();
+							}, 700);
+				        }
+				        
+				        function finish(){
+				        	self.WelcomeView.trigger("inTheDOM");
+					        setTimeout(function(){$("#Welcome").css("opacity", 1)}, 200);
+							
+				        }
+				        
+				        
+      
+      
+    }, //END WELCOME
 
     Stream: function() {
 				      var StreamView = require("views/pages/StreamView");
@@ -157,12 +247,13 @@ define(function(require) {
 				      var page = new StreamView({
 				        collection: activities
 				      });
-
+					  
 					  //render template
 				      this.changePage(page);
 				      //set player view into current view
 				      page.player = this.playerView;
 				      //set current view to player view
+				      
     				  this.playerView.currentView = page;
     				  //set current view to structure view
     				  this.structureView.currentView = page;
@@ -176,7 +267,10 @@ define(function(require) {
 				      var DiscoverView = require("views/pages/DiscoverView");
 				      var DiscoverCollection = require("collections/DiscoverCollection");
 				      // create a collection for the template engine
-				      var activities = new DiscoverCollection()
+				      var track = JSON.parse(localStorage.getItem("discover"));
+				      var activities = new DiscoverCollection({
+					      selected_track: track
+				      })
 					  
 				      var page = new DiscoverView({
 				        collection: activities

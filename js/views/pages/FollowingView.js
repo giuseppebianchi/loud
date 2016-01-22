@@ -19,6 +19,7 @@ define(function(require) {
 	
     initialize: function(options) {
 	  this.total_following = options.total;
+	  this.player = options.player;
       // load the precompiled template
       this.template = Utils.templates.allFollowing;
       // here we can register to inTheDOM or removing events
@@ -75,7 +76,7 @@ define(function(require) {
 			    that.BulletsView.render()  
 				that.$el.find(".bullet-section").html(that.BulletsView.el);
 				
-				setTimeout(function(){that.$el.addClass("active")}, 100);
+				setTimeout(function(){that.$el.addClass("active"), that.parent.$el.addClass("onback")}, 100);
 
        
       return this;
@@ -120,6 +121,7 @@ define(function(require) {
     e.stopImmediatePropagation();
     var self = this;
     $(this.el).removeClass("active");
+    this.parent.$el.removeClass("onback");
     setTimeout(function(){self.hideUser()}, 200);
   },
   showUserOption: function(){
@@ -171,7 +173,8 @@ define(function(require) {
       });
       
       this.userView = new UserView({
-            model: user
+            model: user,
+            player: self.player
       });
       this.userView.parent = this;
       // render the new view

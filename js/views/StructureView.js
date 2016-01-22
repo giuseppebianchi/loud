@@ -119,10 +119,11 @@ define(function(require) {
 	    Backbone.history.navigate(page, {trigger:true});
 	    this.snapper.close("left")
     },
-    openPlayer: function(){
+    openPlayer: function(e){
+	    e.stopImmediatePropagation();
 	    this.currentView.undelegateEvents();
-	    this.currentView.$el.addClass("hidden-fade");
-		this.player.$el.removeClass("hidden-fade");
+	    //this.currentView.$el.addClass("hidden-fade");
+		this.player.$el.addClass("visible-player");
 		this.player.delegateEvents();
 		/*
 		this.player.animate({

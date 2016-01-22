@@ -1,8 +1,8 @@
 {{#each this}}
   <div class="item-single-track">
-    {{#compare attributes.type "track-repost"}}
+    {{#compare type "track-repost"}}
       <span class="repost"><i class="fa fa-retweet"></i></span>
-      {{#with attributes.origin}}
+      {{#with origin}}
         <li class="list__item list-track play-track" scTrackId="{{id}}">
           <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
             <div class="cover-track-overlay">
@@ -17,8 +17,8 @@
         </li>
       {{/with}}
     {{else}}
-		{{#compare attributes.type "track"}}
-		    {{#with attributes.origin}}
+		{{#compare type "track"}}
+		    {{#with origin}}
 		    <li class="list__item list-track play-track" scTrackId="{{id}}">
 		      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
 		        <div class="cover-track-overlay">
@@ -33,10 +33,14 @@
 		    </li>
 		    {{/with}}
 		{{else}}
-		  	{{#compare attributes.type "playlist"}}
-			    {{#with attributes.origin}}
+		  	{{#compare type "playlist"}}
+			    {{#with origin}}
 			    <li class="list__item list-track playlist-type" playlistid="{{id}}">
-			      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+			      	{{#if artwork_url}}
+			      		<div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+					{{else}}
+					  	<div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+					{{/if}}
 			        <div class="cover-track-overlay">
 			          <div class="list-track-details">
 			            {{#with user}}
@@ -50,11 +54,15 @@
 			    </li>
 			    {{/with}}
 			{{else}}
-				{{#compare attributes.type "playlist-repost"}}
+				{{#compare type "playlist-repost"}}
 				<span class="repost"><i class="fa fa-retweet"></i></span>
-				    {{#with attributes.origin}}
+				    {{#with origin}}
 				    <li class="list__item list-track playlist-type" playlistid="{{id}}">
-				      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+				      {{#if artwork_url}}
+					      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+						{{else}}
+						  <div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+						{{/if}}
 				        <div class="cover-track-overlay">
 				          <div class="list-track-details">
 				            {{#with user}}

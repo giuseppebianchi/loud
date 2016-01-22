@@ -17,11 +17,12 @@ define(function(require) {
     
 	userView: undefined,
 	
-    initialize: function() {
+    initialize: function(options) {
       // load the precompiled template
       this.template = Utils.templates.allPlaylist;
       this.templateMore = Utils.templates.morePlaylist;
       
+      this.player = options.player;
       
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
@@ -56,6 +57,9 @@ define(function(require) {
 					
 					that.contentList = $(that.$el.find(".list").get(0));
 					
+					that.$el.addClass("active");
+					that.parent.$el.addClass("onback");
+					
 					that.scrollingView.bind('scroll', function (ev) {
 			            that.checkScroll(ev);
 			      	});
@@ -64,9 +68,6 @@ define(function(require) {
 					that.bLazy = new Blazy({ 
 						container: '#allPlaylist-scrolling-view-' + playlists.user_id
 					});
-					
-					
-					that.$el.addClass("active");
 					
 			  }
 		  })
@@ -101,6 +102,7 @@ define(function(require) {
 	    e.stopImmediatePropagation();
 	    var self = this;
 	    $(this.el).removeClass("active");
+	    this.parent.$el.removeClass("onback")
 	    setTimeout(function(){self.hideUser()}, 200);
   	},
   	hideUser: function(){ //fired from UserView
@@ -120,7 +122,8 @@ define(function(require) {
       });
       
       this.PlaylistView = new PlaylistView({
-            model: playlist
+            model: playlist,
+            player: self.player
       });
       this.PlaylistView.parent = this;
       // render the new view

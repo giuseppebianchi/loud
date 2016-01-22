@@ -8,7 +8,7 @@
   <div class="navigation-bar__center">{{title}}</div>
   
 <div class="navigation-bar__right">
-    <span class="toolbar-button--quiet navigation-bar__line-height userOption" data-code="{{id}}" data-username="{{user.username}}" style="line-height: 45px;">•••</span>
+    <span class="toolbar-button--quiet navigation-bar__line-height playlistOption" style="line-height: 45px;">•••</span>
 </div>
 </header>
 
@@ -24,24 +24,34 @@
      <div class="overlay-cover-playlist-view-details">
       
        <h4 class="name">{{title}}</h4>
-        <span>PLAYLIST by <strong>{{user.username}}</strong></span></br>
+        <span>Playlist by <strong>{{user.username}}</strong></span></br>
 <!--         <span>{{getMinutes duration}}</span> -->
         
      </div>
 
      <div class="tab-bar tab-bar--top tab-bar--top-border">
 	     <label class="tab-bar__item tab-bar--top-border__item">
-		 <input type="checkbox" name="top-tab-bar-b">
-            <button class="tab-bar__button tab-bar--top-border__button center">
-              <span class="tab-name"><i class="fa fa-play"></i></span>
+	      {{#if tracks.length}}
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks" trackid="{{tracks.0.id}}">
+            <span class="tab-name"><i class="fa fa-play"></i></span>
             </button>
+          {{else}}
+          	<button class="tab-bar__button tab-bar--top-border__button center">
+          	<span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{/if}}
           </label>
+          {{/with}} 
           <label class="tab-bar__item tab-bar--top-border__item">
-		 <input type="checkbox" name="top-tab-bar-b">
-            <button class="tab-bar__button tab-bar--top-border__button center">
+          {{#if favorited}}
+            <button class="tab-bar__button tab-bar--top-border__button center like-playlist active-button" data-code="{{attributes.id}}">
+            {{else}}
+            <button class="tab-bar__button tab-bar--top-border__button center like-playlist" data-code="{{attributes.id}}">
+          {{/if}}
               <span class="tab-name"><i class="fa fa-heart"></i></span>
             </button>
           </label>
+          {{#with attributes}}  
           <label class="tab-bar__item tab-bar--top-border__item">
 <!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
             <button class="tab-bar__button tab-bar--top-border__button center">

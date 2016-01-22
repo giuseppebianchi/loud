@@ -11,9 +11,14 @@ define(function(require) {
 
     constructorName: "DiscoverView",
     
-    events:{	
+    events:{
+	    "tap #discover-empty": "gotostream",
+	    "touchstart": "startTouch",
+	    "touchmove": "elastic",
+	    "touchend": "resetHeight",	
       "tap .list-track": "playTrackStream",
-      "tap .soundcloudArtist": "showUser"
+      "tap .soundcloudArtist": "showUser",
+      "tap .play-track": "playTrack",
     },
     
 	userView: undefined,
@@ -35,7 +40,7 @@ define(function(require) {
       // by convention, all the inner views of a view must be stored in this.subViews
     },
 
-    id: "Stream",
+    id: "Discover",
     
     className: "full-page",
 
@@ -49,33 +54,79 @@ define(function(require) {
 	
     render: function() {
 		var that = this;
-		  this.collection.fetch({
-			  success: function(activities){
-				  	//set received data into template
-					that.$el.html(that.template(activities.models));
-					
-					//set element that gets scroll event - to reload new data
-					that.scrollingView = $("#discover-scrolling-view");
-					that.contentList = $(that.$el.find(".list").get(0));
-						  
-					//set event listener to scroll
-					that.scrollingView.bind('scroll', function (ev) {
-						that.checkScroll(ev);
-					});
-					//initialize lazy loading library
-					that.bLazy = new Blazy({ 
-						container: '#discover-scrolling-view'
-					});
-					
-			  }
-		  })
-
+		if(this.collection.selected_track){
+				this.collection.fetch({
+				  success: function(activities, more){
+					  	//set received data into template
+						that.$el.html(that.template(activities));
+						
+						that.playerCollection = more.collection;
+						
+						that.elasticImage = $(that.$el.find(".cover-user-view"));
+						//set element that gets scroll event - to reload new data
+						that.scrollingView = $("#discover-scrolling-view");
+						that.contentList = $(that.$el.find(".list").get(0));
+							  
+						//set event listener to scroll
+						that.scrollingView.bind('scroll', function (ev) {
+							that.checkScroll(ev);
+						});
+						//initialize lazy loading library
+						that.bLazy = new Blazy({ 
+							container: '#discover-scrolling-view'
+						});
+						
+				  }
+				})
+		}else{
+			this.$el.html(that.template());
+			this.enabledElastic = false;
+		}
       
 
       return this;
     },
+    enabledElastic: true,
     
+    startTouch: function(e){
+        this.elasticImage.css("transition", "");
+        this.firstTouch = e.touches[0].pageY;
+     },
+    
+	  elastic: function(e){
+  		if(this.enabledElastic && 
+              ((e.touches[0].pageY - this.firstTouch) > 0) 
+                  && this.scrollingView[0].scrollTop == 0){
+
+    			//var altezza = this.elasticImage.height();
+    			
+    			//hidden content cover
+    			/*
+		        if(this.elasticImage.height() == 430){
+		            this.elasticImage.children().addClass("hidden"); 
+		        }
+				*/
+				
+				
+    			//$(this.el).css("overflow", "hidden");			
+    			this.elasticImage.css("height", (160 + ((e.touches[0].pageY - this.firstTouch)/3)) + "px");
+    			e.preventDefault();
+
+    	}else{
+    			//$(this.el).css("overflow", "");
+      }
+	},
+	resetHeight: function(e){
+	//reset content
+    //this.elasticImage.children().removeClass("hidden"); 
+		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
+	},
     checkScroll: function(){
+	  if(this.scrollingView[0].scrollTop > 70){
+        	$(this.el.children[0]).addClass("header-visible");
+		}else{
+			$(this.el.children[0]).removeClass("header-visible")
+	  }
       if(!this.loadingContents && 
       		this.scrollingView.scrollTop() > 
       			(this.contentList.height() - this.scrollingView.height() - 20)) {
@@ -88,8 +139,15 @@ define(function(require) {
 	    var that = this;
 	    if(this.collection.next){
 			this.collection.fetch({
-		        success: function(more){
-			        that.scrollingView.children(".list").append(that.templateList(more));
+		        success: function(collection, more){
+			        if(that.player.playingView === that){
+				        that.player.collection = that.player.collection.concat(more.collection);
+				        that.player.renderSlides(more.collection);
+			        }else{
+				        that.playerCollection = that.playerCollection.concat(more.collection);
+				    }
+			        
+			        that.scrollingView.children(".list").append(that.templateList(collection));
 			        that.bLazy.revalidate();
 			        that.loadingContents = false;
 			    },
@@ -103,26 +161,15 @@ define(function(require) {
 	    }
         
     },
-    playTrackStream: function(e){
-/*
-		$.getJSON('https://api.soundcloud.com/me?oauth_token=' + localStorage.getItem("accessToken"), function(me) {
-		    console.log(me);
-		});
-*/
-      var selectedTrack = e.currentTarget.attributes["sctrackid"].value;
-      //GET THE INDEX AND THE OBJECT WHICH CONTAINS THE SELECTED TRACK
-      //var result = this.findTrack(selectedTrack);
-
-      //this.player.playTrack(result[0], result[1]);
-      
-    },
-    findTrack: function(id){
-      for(var i = 0; this.activities.collection.length; i++){
-        if(this.activities.collection[i].origin.id == id){
-          return [this.activities.collection[i].origin, i];
-          //return i;
-        }
-      }
+    playTrack: function(e){
+	  e.stopImmediatePropagation();
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(e.currentTarget.attributes["sctrackid"].value); /* 1 means that is the stream view */
     },
     
     showUser: function(e){
@@ -135,7 +182,8 @@ define(function(require) {
       });
       
       this.userView = new UserView({
-            model: user
+            model: user,
+            player: self.player
       });
       this.userView.parent = this;
       // render the new view
@@ -149,6 +197,9 @@ define(function(require) {
       
 
       
+    },
+    gotostream: function(){
+	    Backbone.history.navigate("stream", {trigger:true});
     }
     
     

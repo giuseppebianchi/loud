@@ -1,11 +1,11 @@
 define(function(require) {
 
 	var Backbone = require("backbone");
-	var Playlist = require("models/PlaylistModel");
+	//var Playlist = require("models/PlaylistModel");
 	
 	var UserPlaylistCollection = Backbone.Collection.extend({
 		constructorName: "UserPlaylistCollection",
-		model: Playlist,
+		//model: Playlist,
 		initialize: function(options){
 			this.user_id = options.id;
 			this.total = options.total;

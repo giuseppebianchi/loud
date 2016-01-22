@@ -9,7 +9,7 @@
 <span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-search" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span>
 </div>
 </header>
-<div id="library-header"><span class="select-library-button">Tracks <i class="fa fa-angle-down"></i></span></div>
+<!-- <div id="library-header"><span class="select-library-button">Tracks <i class="fa fa-angle-down"></i></span></div> -->
 
 
 <div id="user-scrolling-view-library" class="user-scrolling-view">
@@ -17,18 +17,46 @@
 	
 <div class="cover-user-view library-cover">
   <div class="overlay-cover-user-view overlay-cover-library-view">
-	  <div id="library-select" style="position: absolute;bottom: -10px;"><span>Tracks <i class="fa fa-angle-down"></i></span>
+	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">Library</h4></div>
+	  	<div class="tab-bar tab-bar--top tab-bar--top-border" style="-webkit-transform: translateY(20px); transform: translateY(20px);">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+	      {{#if tracks.length}}
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks" trackid="{{tracks.0.id}}">
+            <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{else}}
+          	<button class="tab-bar__button tab-bar--top-border__button center">
+          	<span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{/if}}
+              
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name"><span style="color: #ff003c;font-weight: 400;font-size: 14px;">TRACKS </span><i class="fa fa-angle-down"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">...</span>
+            </button>
+          </label>
+		</div>
+<!--
+		<div id="library-select" style="position: absolute;bottom: -10px;"><span>Tracks <i class="fa fa-angle-down"></i></span>
 		  <select id="select-library-element" style="opacity: 0;position: absolute;left: 41%;">
 			  	<option value="tracks">Tracks</option>
 			    <option value="artists">Artists</option>
 			    <option value="albums">Albums</option>
 		  </select>
 	  </div>
+-->
   </div>
 </div>
 
 
-<p class="user-page-title morePlaylist-title" style="margin-top: 20px;">Recent Added</p>
+<p class="user-page-title" style="margin-top: 20px;">Recent Added</p>
 <div class="UserCarousel">
 	<div class="cssload-loader">
 		<div class="cssload-ball"></div>

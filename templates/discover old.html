@@ -14,10 +14,7 @@
 <div id="discover-scrolling-view" class="scrolling-view">
 <div class="cover-user-view discover-cover" style="background-image: url(img/login3.jpg)">
   <div class="overlay-cover-user-view overlay-cover-library-view">
-	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">DISCOVER</h4></div>
-  </div>
-</div>
-<div id="selected-discover-track">
+	  <div id="selected-discover-track">
 		  
 			  <div id="selected-discover-track-img" class="b-lazy" data-src="{{selected_track.artwork_url}}"></div>
 			  <div id="selected-discover-track-title">
@@ -32,8 +29,10 @@
 		  	
 		  
 	  </div>
+  </div>
+</div>
 {{#if selected_track}}
-<p class="playlist-description" style="text-align: center;">Discover many more sounds related to this track</p>
+<p class="playlist-description" style="margin-top: 70px; text-align: center;">Discover many more sounds related to this track</p>
 <ul class="list" style="padding: 10px 0">
 <!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
   {{#each this.models}}
