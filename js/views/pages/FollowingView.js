@@ -45,14 +45,13 @@ define(function(require) {
 	
     render: function() {
 	   var that = this;
-	   
 	   //SET OFFLINE HTML TEMPLATE WHILE FETCHING DATA FROM SOUNDCLOUD
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
 			    that.$el.html(that.template({
 				   total_following: that.total_following
 				}));
 			    //set options
-			      that.elasticImage = $(that.$el.find(".cover-user-view"));
+			      that.elasticImage = $(that.$el.find(".cover-user-view-background"));
 			      
 			      that.userScrollingView = $(that.$el.find(".user-scrolling-view").get(0));
 				  that.contentList = $(that.$el.find(".user-content-view").get(0));
@@ -92,7 +91,7 @@ define(function(require) {
 	  elastic: function(e){
   		if(this.enabledElastic && 
               ((e.touches[0].pageY - this.firstTouch) > 0) 
-                  && this.userScrollingView[0].scrollTop == 0){
+                  && this.userScrollingView[0].scrollTop <= 0){
 
     			//var altezza = this.elasticImage.height();
     			

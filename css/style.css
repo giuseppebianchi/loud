@@ -106,7 +106,14 @@ Rosso: #E71D36
   -webkit-animation: cssload-motion 1s ease infinite;
 
 }
-
+.status-bar{
+position:relative;
+height:20px;
+width:100%;
+background: #ff003c;
+z-index:230;
+opacity:0.96
+}
 
 
 /*
@@ -983,32 +990,41 @@ button i{
 .playlist-description{
 	color: #777;
     font-size: 14px;
-    padding: 0 15px;
+    padding: 10px 15px;
     max-height: 50px;
     overflow-y: hidden;
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin:0;
 }
 .d-playlist{
 	float: right;
 }
 .cover-user-view, .cover-playlist-view{
-  background-color: #111;
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size:cover;
+  	background: transparent;
 	height: 430px;
-	background-image: url(../img/blue.png);
-	-webkit-transition: background-image 0.5s;
-	transition: background-image 0.5s;
 }
 .cover-playlist-view{
 	height: 330px;
 }
 .cover-user-view.cover-likes-view{
 	height:200px;
+}
+.cover-user-view-background{
+	background-image: url(../img/blue.png);
+	-webkit-transition: background-image 0.5s;
+	transition: background-image 0.5s;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size:cover;
+	position: absolute;
+	width: 100%;
+}
+.list-back{
+	background: #00000A;
+	position:relative;
 }
 .snapjs-left #content .scrolling-view .list, .snapjs-left #miniplayer{
   pointer-events: none;
@@ -1260,7 +1276,7 @@ button i{
   margin: 0;
   font-size: 12px;
   line-height: 18px;
-  font-weight: 500;
+  font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -1383,8 +1399,8 @@ button i{
   -webkit-transform: translateY(627px);
   transform: translateY(627px);
   transition: 0.4s;
-  background: rgba(0, 0, 10, 0.7);
-/*   background: rgba(0, 0, 10, 0.96); */
+  /*background: rgba(0, 0, 10, 0.7);*/
+  background: rgba(0, 0, 10, 0.96);
 }
 .options-modal.visible{
   -webkit-transform: translateY(0px);
@@ -1577,8 +1593,8 @@ button i{
 	transform: translateY(-135px);
 }
 .vanish-first #add-to-your-playlists{
-	-webkit-transform: translateY(-75px);
-	transform: translateY(-75px);
+	-webkit-transform: translateY(-80px);
+	transform: translateY(-80px);
 }
 .vanish-first #add-track-to-library, .vanish-first #add-album-to-library, .vanish-first #add-track-to-podcast{
 	-webkit-transform: translateY(-300px);
@@ -1748,14 +1764,20 @@ button i{
   /*background: -webkit-linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
   background: linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
   */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
   background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), #00000A);
+  background: linear-gradient(transparent,rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9), #00000A);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+
 .overlay-cover-playlist-view{
     background: linear-gradient(transparent,rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.95));
-    background: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9), #00000A)
+    background: linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9), #00000A)
+}
+
+.overlay-cover-background{
+    background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), transparent, transparent, transparent);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), transparent, transparent, transparent);
 }
 /*
 .overlay-cover-library-view{
@@ -1932,10 +1954,11 @@ button i{
 
 .library-cover{
     height: 160px;
-    background-image: url("../img/login.jpg");
 }
 .discover-cover{
     height: 160px;
+}
+.discover-cover.cover-user-view-background{
     background-image: url("../img/blue.png");
 }
 

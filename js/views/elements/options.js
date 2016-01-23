@@ -43,8 +43,8 @@ define(function(require) {
 		    this.model.myPlaylists = JSON.parse(sessionStorage.getItem("playlists"));
 		    this.$el.html(this.template(this.model));
 	    }
-	    this.main = $("#main")
-		this.main.addClass("blurred")
+	    //this.main = $("#main")
+		//this.main.addClass("blurred")
 		this.alertBox = $("#alert-box")
 		setTimeout(function(){that.$el.addClass("visible");}, 200);
 
@@ -52,7 +52,7 @@ define(function(require) {
     },
     hide: function(){
 	    var self = this;
-	    this.main.removeClass("blurred")
+	    //this.main.removeClass("blurred")
 	    $(this.el).removeClass("visible");
 	    setTimeout(function(){self.hidePage()}, 200);
   	},
@@ -73,6 +73,7 @@ define(function(require) {
 	    this.showAlert("Copied to your <span>Clipboard</span>");
     },
     tweet: function(){
+	    //alert("tweet")
 	    window.plugins.socialsharing.shareViaTwitter(this.model.attributes.title, this.model.attributes.artwork_url, this.model.permalink_url)
     },
     addTrackToPlaylist: function(e){

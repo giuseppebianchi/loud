@@ -4,20 +4,27 @@
       <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
     </span>
   </div>
-  {{#with attributes}}
-  <div class="navigation-bar__center">{{title}}</div>
+  <div class="navigation-bar__center">{{attributes.title}}</div>
   
 <div class="navigation-bar__right">
     <span class="toolbar-button--quiet navigation-bar__line-height playlistOption" style="line-height: 45px;">•••</span>
 </div>
 </header>
-
-
-<div id="playlist-scrolling-view-{{id}}" class="playlist-scrolling-view">
-<div class="playlist-content-view">
-{{/with}}	
+{{#if image}}
+<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString image 't500x500'}}">
+{{else}}
+	{{#if attributes.artwork_url}}
+	<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString attributes.artwork_url 't500x500'}}">
+	{{else}}
+	<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString attributes.tracks.0.artwork_url 't500x500'}}">
+	{{/if}}
+{{/if}}
+<div class="overlay-cover-playlist-view overlay-cover-background"></div>
+</div>
+<div id="playlist-scrolling-view-{{attributes.id}}" class="playlist-scrolling-view">
+<div class="playlist-content-view">	
 	
-<div class="cover-playlist-view b-lazy" data-src="{{subString image 't500x500'}}">
+<div class="cover-playlist-view">
   <div class="overlay-cover-playlist-view">
     <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
   {{#with attributes}}   
@@ -77,10 +84,11 @@
 
   </div>
 </div>
+<div class="list-back">
 <p class="playlist-description">{{description}}</p>
 {{/with}}
 <div class="tracklist"></div>
 
- 
+</div>
 </div>
 </div>

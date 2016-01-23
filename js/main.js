@@ -103,6 +103,7 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
           }else{
 	          localStorage.setItem("shuffle", 0)
 	          localStorage.setItem("repeat", 0)
+	          localStorage.setItem("sortLikes", 0)
           }
           
           SC.initialize(SCoptions);

@@ -62,10 +62,10 @@ define(function(require) {
 						
 						that.playerCollection = more.collection;
 						
-						that.elasticImage = $(that.$el.find(".cover-user-view"));
+						that.elasticImage = $(that.$el.find(".cover-user-view-background"));
 						//set element that gets scroll event - to reload new data
 						that.scrollingView = $("#discover-scrolling-view");
-						that.contentList = $(that.$el.find(".list").get(0));
+						that.contentList = that.scrollingView.children(".content-scrolling-view")
 							  
 						//set event listener to scroll
 						that.scrollingView.bind('scroll', function (ev) {
@@ -96,7 +96,7 @@ define(function(require) {
 	  elastic: function(e){
   		if(this.enabledElastic && 
               ((e.touches[0].pageY - this.firstTouch) > 0) 
-                  && this.scrollingView[0].scrollTop == 0){
+                  && this.scrollingView[0].scrollTop <= 0){
 
     			//var altezza = this.elasticImage.height();
     			
@@ -147,7 +147,7 @@ define(function(require) {
 				        that.playerCollection = that.playerCollection.concat(more.collection);
 				    }
 			        
-			        that.scrollingView.children(".list").append(that.templateList(collection));
+			        that.contentList.children(".list-back").children(".list").append(that.templateList(collection));
 			        that.bLazy.revalidate();
 			        that.loadingContents = false;
 			    },

@@ -11,12 +11,15 @@
 <!--     <span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-plus" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span> -->
   </div>
 </header>
+<div class="cover-user-view discover-cover cover-user-view-background" style="background-image: url(img/login3.jpg)"></div>
 <div id="discover-scrolling-view" class="scrolling-view">
-<div class="cover-user-view discover-cover" style="background-image: url(img/login3.jpg)">
+<div class="content-scrolling-view">
+<div class="cover-user-view discover-cover">
   <div class="overlay-cover-user-view overlay-cover-library-view">
 	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">DISCOVER</h4></div>
   </div>
 </div>
+<div class="list-back">
 <div id="selected-discover-track">
 		  
 			  <div id="selected-discover-track-img" class="b-lazy" data-src="{{selected_track.artwork_url}}"></div>
@@ -33,6 +36,7 @@
 		  
 	  </div>
 {{#if selected_track}}
+
 <p class="playlist-description" style="text-align: center;">Discover many more sounds related to this track</p>
 <ul class="list" style="padding: 10px 0">
 <!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
@@ -59,4 +63,6 @@
   <div class="cssload-ball"></div>
 </div>
 {{/if}}
+</div>
+</div>
 </div>

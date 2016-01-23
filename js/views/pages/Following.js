@@ -49,7 +49,7 @@ define(function(require) {
 	
     render: function() {
 	   var that = this;
-	   
+	   debugger;
 	   //SET OFFLINE HTML TEMPLATE WHILE FETCHING DATA FROM SOUNDCLOUD
 	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
 	   			this.total_likes;

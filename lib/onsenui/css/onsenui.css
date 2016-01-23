@@ -45,9 +45,9 @@ ons-page, ons-navigator, ons-tabbar, ons-sliding-menu, ons-split-view {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
 }
 
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
   display: none;
-}
+}*/
 
 input, textarea {
   -webkit-user-select: auto;

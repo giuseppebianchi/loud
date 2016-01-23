@@ -58,13 +58,13 @@ define(function(require) {
 				  	//set received data into template
 					that.$el.html(that.template(activities.models));
 					
-					that.elasticImage = $(that.$el.find(".cover-user-view"));
+					that.elasticImage = $(that.$el.find(".cover-user-view-background"));
 
 					that.playerCollection = that.filterCollection(more.collection);
 					
 					//set element that gets scroll event - to reload new data
 					that.scrollingView = $("#stream-scrolling-view");
-					that.contentList = $("#stream-scrolling-view .list");
+					that.contentList = that.scrollingView.children(".content-scrolling-view");
 						  
 					//set event listener to scroll
 					that.scrollingView.bind('scroll', function (ev) {
@@ -95,7 +95,7 @@ define(function(require) {
 	  elastic: function(e){
   		if(this.enabledElastic && 
               ((e.touches[0].pageY - this.firstTouch) > 0) 
-                  && this.scrollingView[0].scrollTop == 0){
+                  && this.scrollingView[0].scrollTop <= 0){
 
     			//var altezza = this.elasticImage.height();
     			
@@ -144,7 +144,7 @@ define(function(require) {
 				        that.playerCollection = that.playerCollection.concat(temp);
 				    }
 				    
-			        that.scrollingView.children(".list").append(that.templateList(more.collection));
+			        that.contentList.children(".list-back").children(".list").append(that.templateList(more.collection));
 			        that.bLazy.revalidate();
 			        that.loadingContents = false;
 			    }
