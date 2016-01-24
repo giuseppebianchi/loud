@@ -73,10 +73,19 @@ define(function(require) {
 	    this.showAlert("Copied to your <span>Clipboard</span>");
     },
     tweet: function(){
-	    //alert("tweet")
-	    window.plugins.socialsharing.shareViaTwitter(this.model.attributes.title, this.model.attributes.artwork_url, this.model.permalink_url)
+	    var title = "I'm listening to ";
+	    if(this.model.username){
+		    title += this.model.username;
+	    }else{
+		    title += this.model.title;
+	    }
+	    title += " via @LOUD_app";
+	    window.plugins.socialsharing.shareViaTwitter(title, null, this.model.permalink_url)
     },
     addTrackToPlaylist: function(e){
+	    //this.currentTarget = $(e.currentTarget)
+	    //var pixels = this.$el.find(".bullet-section").scrollTop() - 140;
+        //$(e.currentTarget).css({"-webkit-transform": "translateY(" + pixels + "px)"});
 	    this.$el.addClass("vanish-first");
     },
     addPlaylistToPlaylists: function(e){
@@ -107,6 +116,7 @@ define(function(require) {
 		});
     },
     removeVanishFirst: function(){
+	    //this.currentTarget.attr("style", "");
 	    this.$el.removeClass("vanish-first").removeClass("new-playlist-view");
     },
     newPlaylist: function(){

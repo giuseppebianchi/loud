@@ -6,6 +6,10 @@ Rosso Chiaro: #FF003C / rgba(255, 0, 60, 0.5)
 Rosso: #E71D36
 */
 
+#audioPlayer{
+	display: none;
+}
+
 @-webkit-keyframes 'MovingBack' {
 	from {
 	  -webkit-transform: translate3d(0px, 0px, 0px);
@@ -1190,6 +1194,10 @@ button i{
 .bottom-player.loading-animation > .range {
 	width: 0;
 }
+.bottom-player.loading-animation-after {
+	pointer-events: none;
+	-webkit-animation: loadingAnimation 1s linear infinite;
+}
 .bottom-player .currentTimeTrack {
     float: left;
     padding: 0;
@@ -1493,6 +1501,9 @@ button i{
     z-index: 45;
     font-weight: 400;
     opacity: 0;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     -webkit-transform: translateY(-50px);
     transform: translateY(-50px);
 }

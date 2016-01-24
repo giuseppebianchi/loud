@@ -10,16 +10,18 @@
 				<h6 data-swiper-parallax="-50"><span scuserid="{{id}}" class="soundcloudArtist">{{username}}</span></h6>
 				{{/with}}
 				<h6 data-swiper-parallax="-100">{{title}}</h6>
-				{{#if playback_count}}
+				{{#compare playback_count "undefined"}}
+				{{else}}
 				<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
 				    <i class="fa fa-play"></i>{{kFormatter playback_count}}
 				</span>
-				{{/if}}
-				{{#if favoritings_count}}
+				{{/compare}}
+				{{#compare favoritings_count "undefined"}}
+				{{else}}
 				<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
 				    <i class="fa fa-heart"></i>{{kFormatter favoritings_count}}
 				</span>
-				{{/if}}
+				{{/compare}}
 			</div>
 			
 			<div class="contentPlayer">

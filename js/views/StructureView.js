@@ -137,14 +137,11 @@ define(function(require) {
     },
     playControl: function(e){
       e.stopImmediatePropagation();
-      currentPlayingTrack.togglePause();
-      /*if(currentPlayingTrack.paused) {
-        $("#ios-play").css("display", "none");
-        $("#equalizer").css("display", "block");
+      if(audio.paused == false){
+	      audio.pause();
       }else{
-        $("#ios-play").css("display", "block");
-        $("#equalizer").css("display", "none");
-      }*/
+	      audio.play();
+      }
       
     },
     
