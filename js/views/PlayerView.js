@@ -6,7 +6,7 @@ define(function(require) {
   var Utils = require("utils");
   var Swiper = require("swiper");
 
-  var StreamView = Utils.Page.extend({
+  var PlayerView = Utils.Page.extend({
 
     constructorName: "player",
     
@@ -77,6 +77,7 @@ define(function(require) {
 		        })
 		        .bind('loadeddata', function() {
 		            that.details.bottomPlayer.removeClass("loading-animation");
+		            that.updateControlCenter()
 		        })
 		        /*.bind('progress', function() {
 		            //console.log("progress")
@@ -97,12 +98,38 @@ define(function(require) {
 		            }
 		            
 		        })
+		        .bind('playing', function(){
+			        console.log("playing")
+			        that.details.bottomPlayer.removeClass("loading-animation-after");
+		        })
 		        .bind('seeked', function() {
 		            console.log("seeked")
 		            that.isScrolling = false;
 		            that.details.bottomPlayer.removeClass("loading-animation-after");
 		        })
-		        .get(0)
+		        .get(0);
+		audio.title = "LOUD";
+				
+		document.addEventListener("remote-event", function(e) {
+           e.preventDefault();
+           e.stopImmediatePropagation();
+           switch(e.remoteEvent.subtype){
+           case "play":
+           that.updateControlCenter();
+           console.log("play");
+                        break;
+           case "pause":
+           audio.pause();
+           console.log("pause");
+           break;
+           case "nextTrack": that.coverPlayer.slideNext();
+           console.log("nextTrack");
+                            break;
+           case "prevTrack": that.coverPlayer.slidePrev();
+           console.log("prevTrack");
+                                break;
+        	}
+        })
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -122,7 +149,13 @@ define(function(require) {
 
     details: null,
     
-    currentPlayingTrack: null,
+    currentPlayingTrack: {
+	 	id: null,
+	 	title: null,
+	 	username: null,
+	 	artwork: null,
+	 	stream: null
+	},
     
     playingView: undefined,
 
@@ -193,7 +226,7 @@ define(function(require) {
               longSwipesRatio: 0.3,
               spaceBetween: 1,
               onSlideChangeEnd: function(e){
-	              if(that.currentPlayingTrack){
+	              if(that.currentPlayingTrack.id !== null){
 	              	that.details.progressBarPlayer.val(0);
 				  	that.details.time.text("00:00");
 				  }
@@ -212,7 +245,6 @@ define(function(require) {
 		          }
               }
         });
-        coverSlide = this.coverPlayer;
         
     },
     getMinutes: function (duration) {//for soundcloud track duration
@@ -280,9 +312,20 @@ define(function(require) {
 	      audio.play();
       }
     },
+    updateControlCenter: function(){
+     var params = [this.currentPlayingTrack.username, this.currentPlayingTrack.title, "LOUD", this.currentPlayingTrack.artwork.replace("large", "t300x300"), audio.duration, audio.currentTime];
+     window.remoteControls.updateMetas(
+     							function(success){
+                                    console.log(success);
+                                }, 
+                                function(fail){
+                                    console.log(fail);
+                                },
+     params);
+     
+     },
     prepareTrack: function(id, view){
-	    
-	    if(view === this.playingView && id == this.currentPlayingTrack){
+	    if(view === this.playingView && id == this.currentPlayingTrack.id){
 				this.openPlayer();
 				return false;
 			}else{
@@ -322,26 +365,26 @@ define(function(require) {
     },
     playTrack: function(id, index, view){
 	    this.index = index;
-	    var that = this, title, username, artwork, stream;
+	    var that = this;
 		if(this.playingView.el.id != "Stream"){
-			title = this.collection[index].title;
-			username = this.collection[index].user.username;
-			artwork = this.collection[index].artwork_url;
-			stream = this.collection[index].stream_url
+			this.currentPlayingTrack.title = this.collection[index].title;
+			this.currentPlayingTrack.username = this.collection[index].user.username;
+			this.currentPlayingTrack.artwork = this.collection[index].artwork_url;
+			this.currentPlayingTrack.stream = this.collection[index].stream_url
 		}else{
-			title = this.collection[index].origin.title;
-			username = this.collection[index].origin.user.username;
-			artwork = this.collection[index].origin.artwork_url;
-			stream = this.collection[index].origin.stream_url
+			this.currentPlayingTrack.title = this.collection[index].origin.title;
+			this.currentPlayingTrack.username = this.collection[index].origin.user.username;
+			this.currentPlayingTrack.artwork = this.collection[index].origin.artwork_url;
+			this.currentPlayingTrack.stream = this.collection[index].origin.stream_url
 		}
-		if(stream){ //some tracks can't be played
-			audio.src = stream + "?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a";
+		if(this.currentPlayingTrack.stream){ //some tracks can't be played
+			audio.src = this.currentPlayingTrack.stream + "?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a";
 		}else{
 			alert("No stream available")
 			//alertbox
-			return false;
+			this.coverPlayer.slideNext();
 		}
-		if (this.currentPlayingTrack === null) {
+		if (this.currentPlayingTrack.id === null) {
 			this.details.miniplayer.addClass("opened");
 		}
 		//this.details.progressBarPlayer = $(this.coverPlayer.slides[index][0]).find(".progressBarPlayer");
@@ -353,17 +396,17 @@ define(function(require) {
 		this.details.bottomPlayer.addClass("loading-animation");
 		
 		/* SET MINIPLAYER DATA */
-		this.details.miniplayerTitle.text(title);
-		this.details.miniplayerArtist.text(username);
-		if(artwork){
-			this.details.miniplayerImg.attr("src", artwork);
+		this.details.miniplayerTitle.text(this.currentPlayingTrack.title);
+		this.details.miniplayerArtist.text(this.currentPlayingTrack.username);
+		if(this.currentPlayingTrack.artwork){
+			this.details.miniplayerImg.attr("src", this.currentPlayingTrack.artwork);
 		}else{
 			this.details.miniplayerImg.attr("src", "img/blue.png");
 		}
 		// .css("background-image", "url(" + result.artwork_url.replace("large", "t500x500")+ ")");
 		
 		audio.play();
-		this.currentPlayingTrack = id;
+		this.currentPlayingTrack.id = id;
       /*SC.stream("/tracks/" + id, {
         autoPlay: true,
         onbufferchange: function() {
@@ -480,6 +523,6 @@ define(function(require) {
 
   });
 
-  return StreamView;
+  return PlayerView;
 
 });

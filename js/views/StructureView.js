@@ -52,7 +52,11 @@ define(function(require) {
       Handlebars.registerHelper('kFormatter', function(num) {
         var result;
         if(num > 999){
-         result = (num/1000).toFixed(1) + 'k';
+	     if(num > 999999){
+         	result = (num/1000000).toFixed(1) + 'M';
+         }else{
+	        result = (num/1000).toFixed(1) + 'K'; 
+         }
         }else{
           result = num;
         }
