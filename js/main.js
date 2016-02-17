@@ -13,7 +13,9 @@ require.config({
     utils: '../lib/utils/utils',
     snap: '../lib/snap/snap',
     blazy: '../lib/blazy/blazy',
-    swiper: '../lib/swiper/swiper'
+    swiper: '../lib/swiper/swiper',
+    pouchdb: '../lib/pouchdb/pouchdb',
+    pouchdbCollate: '../lib/pouchdb/pouchdb-collate'
   },
   shim: {
     'jquery': {
@@ -57,16 +59,76 @@ if(!localStorage.getItem("accessToken")){
 	}
 }
 // We launch the App
-require(['backbone', 'utils'], function(Backbone, Utils) {
+require(['backbone', 'utils', 'pouchdb'], function(Backbone, Utils, PouchDB) {
   require(['preloader', 'router'], function(PreLoader, AppRouter) {
 	 
 
     //document.addEventListener("deviceready", run, false);
     run();
     
-    
-    
     function run() {
+	    //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+	    //PREPARE DATABASE NOSQL
+	  dbTracks = new PouchDB('loud-tracks')
+	  // create a design doc
+		var doc = {
+		  _id: '_design/loud',
+		  views: {
+		    tracks: {
+		      map: function (doc) {
+		        emit([doc.title, doc.artist, doc.albumTitle, doc.content])
+		      }.toString()
+		    },
+		    artists: {
+		      map: function (doc) {
+		        emit(doc.artist, doc.content.artwork_url)
+		      }.toString(),
+		      reduce: function (keys, value){
+			      return value;
+		      }.toString()
+		    },
+		    artistAlbums: {
+		      map: function (doc) {
+		        emit([doc.artist, doc.albumTitle], doc)
+		      }.toString(),
+		      reduce: function (keys, value){
+			      return value;
+		      }.toString()
+		    },
+		    albums: {
+		      map: function (doc) {
+		        emit([doc.albumTitle, doc.artist, doc.album], doc.content.artwork_url)
+		      }.toString(),
+		      reduce: function (keys, value){
+			      return value;
+		      }.toString()
+		    },
+		    albumTracks: {
+		      map: function (doc) {
+		        emit([doc.title, doc.artist, doc.albumTitle, doc.content], doc.album)
+		      }.toString()
+		    },
+		  }
+		}
+		
+		// save the design doc
+		dbTracks.put(doc).catch(function (err) {
+		  if (err.status !== 409) {
+		    throw err;
+		  }
+		  // ignore if doc already exists
+		})
+	  
+/*
+		dbTracks.destroy().then(function (response) {
+		  // success
+		}).catch(function (err) {
+		  console.log(err);
+		});
+*/
+		
+	  dbPodcasts = new PouchDB('loud-podcasts')
+	  
 		
       // Here we precompile ALL the templates so that the app will be quickier when switching views
       // see utils.js
@@ -101,9 +163,12 @@ require(['backbone', 'utils'], function(Backbone, Utils) {
 		  if(accessToken){
 			  SCoptions.access_token = accessToken;
           }else{
-	          localStorage.setItem("shuffle", 0)
-	          localStorage.setItem("repeat", 0)
-	          localStorage.setItem("sortLikes", 0)
+	          localStorage.setItem("shuffle", 0);
+	          localStorage.setItem("repeat", 0);
+	          localStorage.setItem("sortLikes", 0);
+	          localStorage.setItem("SaveLastArtist", 1);
+	          localStorage.setItem("SaveLastAlbum", 1);
+	          localStorage.setItem("selectLibrary", "tracks");
           }
           
           SC.initialize(SCoptions);

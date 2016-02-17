@@ -132,6 +132,14 @@ define(function(require) {
     this.parent.$el.removeClass("onback");
     setTimeout(function(){self.hidePage()}, 200);
   },
+  hidePage: function(){ //fired from UserView
+      this.parent.delegateEvents();
+      if(this !== this.player.playingView){
+	      this.close();
+      }else{
+	      this.remove()
+      }
+    },
   checkScroll: function(e){
       if(this.playlistScrollingView[0].scrollTop > 100){
         $(this.el.children[0]).addClass("header-visible")
@@ -166,14 +174,7 @@ define(function(require) {
         }
         
   },
-  hidePage: function(){ //fired from UserView
-      this.parent.delegateEvents();
-      if(this !== this.player.playingView){
-	      this.close();
-      }else{
-	      this.remove()
-      }
-    },
+  
   showUser: function(e){
 	  var UserView = require("views/pages/UserView");
 	  e.stopImmediatePropagation();

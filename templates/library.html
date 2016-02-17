@@ -11,7 +11,7 @@
 </header>
 <!-- <div id="library-header"><span class="select-library-button">Tracks <i class="fa fa-angle-down"></i></span></div> -->
 
-<div class="cover-user-view library-cover cover-user-view-background" style="background-image: url(img/login.jpg);"></div>
+<div class="cover-user-view library-cover cover-user-view-background" style="background-image: url(img/turn.jpg);"></div>
 <div id="user-scrolling-view-library" class="user-scrolling-view">
 <div class="user-content-view">
 	
@@ -19,64 +19,49 @@
   <div class="overlay-cover-user-view overlay-cover-library-view">
 	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">Library</h4></div>
 	  	<div class="tab-bar tab-bar--top tab-bar--top-border" style="-webkit-transform: translateY(15px); transform: translateY(15px);">
+		  	
 	     <label class="tab-bar__item tab-bar--top-border__item">
-	      {{#if tracks.length}}
-            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks" trackid="{{tracks.0.id}}">
+            <button class="tab-bar__button tab-bar--top-border__button center library-button {{#compare view 'tracks'}}{{else}}hidden{{/compare}}" data-action="play">
             <span class="tab-name"><i class="fa fa-play"></i></span>
             </button>
-          {{else}}
-          	<button class="tab-bar__button tab-bar--top-border__button center">
-          	<span class="tab-name"><i class="fa fa-play"></i></span>
-            </button>
-          {{/if}}
-              
+          
           </label>
           <label class="tab-bar__item tab-bar--top-border__item">
-            <button class="tab-bar__button tab-bar--top-border__button center">
-              <span class="tab-name"><span style="color: #ff003c;font-weight: 400;font-size: 14px;">TRACKS </span><i class="fa fa-angle-down"></i></span>
+            <button class="tab-bar__button tab-bar--top-border__button center" id="library-select" data-library="{{view}}">
+              <span class="tab-name">
+              {{#compare view "tracks"}}
+              	<span id="title-library-cat">TRACKS </span> <i class="fa fa-angle-down"></i>
+              {{else}}
+              	{{#compare view "artists"}}
+              		<span id="title-library-cat">ARTISTS </span><i class="fa fa-angle-down"></i>
+              	{{else}}
+              		<span id="title-library-cat">ALBUMS </span><i class="fa fa-angle-down"></i>
+              	{{/compare}}
+              {{/compare}}
             </button>
           </label>
           <label class="tab-bar__item tab-bar--top-border__item">
-<!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
-            <button class="tab-bar__button tab-bar--top-border__button center">
-              <span class="tab-name">...</span>
+            <button class="tab-bar__button tab-bar--top-border__button center library-button {{#compare view 'tracks'}}{{else}}hidden{{/compare}}" data-action="shuffle">
+              <span class="tab-name"><i class="fa fa-random"></i></span>
             </button>
           </label>
 		</div>
-<!--
-		<div id="library-select" style="position: absolute;bottom: -10px;"><span>Tracks <i class="fa fa-angle-down"></i></span>
-		  <select id="select-library-element" style="opacity: 0;position: absolute;left: 41%;">
-			  	<option value="tracks">Tracks</option>
-			    <option value="artists">Artists</option>
-			    <option value="albums">Albums</option>
-		  </select>
-	  </div>
--->
+
   </div>
 </div>
-<div class="list-back">
 
-<p class="user-page-title" style="padding-top: 20px;">Recent Added</p>
+<div class="list-back" style="padding-bottom: 70px;">
+
+<p class="user-page-title" style="padding-top: 20px;"> </p>
+<!--
 <div class="UserCarousel">
 	<div class="cssload-loader">
 		<div class="cssload-ball"></div>
 	</div>
 </div>	
-
-
-<!--
-
-<div class="item-single-track" style="margin: 15px 0">
-	<li class="list__item list-track" scTrackId="{{id}}" style="padding: 0">
-      <div class="cover-track" style="background-image: url(img/turn.jpg); height: 50px;">
-        <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.78)">
-            <div id="library-select">Tracks <i class="fa fa-angle-down"></i></div>
-        </div>
-      </div>
-</li>
-</div>
 -->
-<p class="user-page-title morePlaylist-title">A</p>
+
+
 <div class="bullet-section" style="margin: 0">
 	<div class="cssload-loader">
 		<div class="cssload-ball"></div>

@@ -19,7 +19,7 @@ define(function(require) {
        "tap .morePlaylists": "Playlists",
        "tap .morePlaylists-title": "Playlists",
        "tap .start-follow": "setFollow",
-       "tap .following": "removeFollow",
+       "tap .following": "alertRemoveFollow",
        "tap .play-all-tracks": "playAllTracks",
        "tap .show-options": "showOptions"
       //"tap .soundcloudArtist": "showUser"
@@ -151,13 +151,15 @@ define(function(require) {
     this.parent.$el.removeClass("onback");
     setTimeout(function(){self.hideUser()}, 200);
   },
-  showUserOption: function(){
-      $("#showOption").addClass("visible");
-      $("#main").addClass("blurred");
-      $("#main-overlay").addClass("visible");
-      // $("#main").addClass("blurred");
-      // this.detail.showOption.css({display: "block", opacity: 1})
-  },
+  hideUser: function(){ //fired from UserView
+      this.parent.delegateEvents();
+      if(this !== this.player.playingView){
+	      this.close();
+      }else{
+	      this.remove()
+      }
+      
+    },
   checkScroll: function(e){
       if(this.userScrollingView[0].scrollTop > 100){
         $(this.el.children[0]).addClass("header-visible")
@@ -191,15 +193,7 @@ define(function(require) {
         }
         
   },
-  hideUser: function(){ //fired from UserView
-      this.parent.delegateEvents();
-      if(this !== this.player.playingView){
-	      this.close();
-      }else{
-	      this.remove()
-      }
-      
-    },
+  
   showUser: function(e){
 	  e.stopImmediatePropagation();
       var UserModel = require("models/UserModel");
@@ -324,8 +318,23 @@ define(function(require) {
 		    }
 	    })
     },
-    removeFollow: function(e){
-	    var id = $(e.currentTarget).data("code");
+    alertRemoveFollow: function(e){
+       window.plugins.actionsheet.temp = {
+           element: $(e.currentTarget),
+           id: this.model.id
+       }
+	    window.plugins.actionsheet.show({
+		    'title': this.model.username,
+			'addCancelButtonWithLabel': 'Cancel',
+			'addDestructiveButtonWithLabel' : 'Unfollow',
+	    }, this.removeFollow);
+    },
+    removeFollow: function(buttonIndex){
+       if(buttonIndex != 1){
+            return false;
+       }
+        var obj = window.plugins.actionsheet.temp;
+	    var id = obj["id"]
 		var following = JSON.parse(sessionStorage.getItem("following"))
 	    $.ajax({
 		    type: "DELETE",
@@ -337,8 +346,9 @@ define(function(require) {
 					    return true;
 					}
 				})
-			    $(e.currentTarget).removeClass("following").addClass("start-follow").text("FOLLOW")
+			    obj["element"].removeClass("following").addClass("start-follow").text("FOLLOW")
 			    sessionStorage.setItem("following", JSON.stringify(following))
+			    window.plugins.actionsheet.temp = null;
 		    },
 		    error: function(err){
 			    console.log(err)

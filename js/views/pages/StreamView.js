@@ -74,7 +74,7 @@ define(function(require) {
 					that.bLazy = new Blazy({ 
 						container: '#stream-scrolling-view'
 					});
-					
+					that.$el.addClass("visible");
 					
 					
 					
@@ -160,7 +160,7 @@ define(function(require) {
 		var list = [];
 			_.find(collection, function(t, i){ 
 			  if(t.type != "playlist" && t.type != "playlist-repost"){
-				  list.push(t)
+				  list.push(t.origin)
 			  }
 			});
 		return list;

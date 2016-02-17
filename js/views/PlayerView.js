@@ -76,8 +76,9 @@ define(function(require) {
 					}
 		        })
 		        .bind('loadeddata', function() {
+			        console.log("load");
 		            that.details.bottomPlayer.removeClass("loading-animation");
-		            that.updateControlCenter()
+		            
 		        })
 		        /*.bind('progress', function() {
 		            //console.log("progress")
@@ -93,9 +94,8 @@ define(function(require) {
 		        })
 		        .bind('waiting', function() {
 		            console.log("waiting")
-		            if(!that.details.bottomPlayer.hasClass("loading-animation")){
-			            that.details.bottomPlayer.addClass("loading-animation-after");
-		            }
+		            that.details.bottomPlayer.addClass("loading-animation-after")
+			            
 		            
 		        })
 		        .bind('playing', function(){
@@ -105,7 +105,7 @@ define(function(require) {
 		        .bind('seeked', function() {
 		            console.log("seeked")
 		            that.isScrolling = false;
-		            that.details.bottomPlayer.removeClass("loading-animation-after");
+		            //that.details.bottomPlayer.removeClass("loading-animation-after");
 		        })
 		        .get(0);
 		audio.title = "LOUD";
@@ -114,22 +114,18 @@ define(function(require) {
            e.preventDefault();
            e.stopImmediatePropagation();
            switch(e.remoteEvent.subtype){
-           case "play":
-           that.updateControlCenter();
-           console.log("play");
-                        break;
-           case "pause":
-           audio.pause();
-           console.log("pause");
+	       case "play": that.updateControlCenter();
            break;
-           case "nextTrack": that.coverPlayer.slideNext();
+           case "nextTrack": that.coverPlayer.slideNext(true, 0);
            console.log("nextTrack");
                             break;
-           case "prevTrack": that.coverPlayer.slidePrev();
+           case "prevTrack": that.coverPlayer.slidePrev(true, 0);
            console.log("prevTrack");
                                 break;
         	}
         })
+       
+      this.alertBox = $("#alert-box")
       // here we can register to inTheDOM or removing events
       // this.listenTo(this, "inTheDOM", function() {
       //   $('#content').on("swipe", function(data){
@@ -183,8 +179,8 @@ define(function(require) {
 		
     },
     setShuffle: function(){
-	    console.log("tap")
-		this.removeTrackFromPlayer(this.coverPlayer.activeIndex + 1, this.collection.length);
+	    this.showAlert("<span>Sorry!</span> This features will be available soon")
+		//this.removeTrackFromPlayer(this.coverPlayer.activeIndex + 1, this.collection.length);
 	},
 	setRepeat: function(e){
 		if(this.repeat == 1){
@@ -238,7 +234,7 @@ define(function(require) {
 		             return;
 	              }
 */
-	              if(typeof that.playingView !== 'undefined'){
+	              if(typeof that.playingView !== 'undefined' && that.playingView.fetchData){
 			              that.playingView.loadingContents = true;
 			              that.playingView.fetchData();
 			              that.rendered = false;
@@ -328,18 +324,19 @@ define(function(require) {
 	    if(view === this.playingView && id == this.currentPlayingTrack.id){
 				this.openPlayer();
 				return false;
-			}else{
-				this.details.miniplayerImg.attr("src", "");
-				this.details.progressBarMini.css("width", 0);
-		}
+			}
 	    
 	    /* FIND INDEX IN PLAYER COLLECTION FOR SLIDER */
 	    
 		var that = this;
 		
-	    if(this.playingView.el.id != "Stream"){
-			_.find(this.collection, function(t, i){ 
+			_.find(this.collection, function(t, i){
 				if(t.id == id){
+					if(!t.stream_url){ //some tracks can't be played
+						that.showAlert("<span>No stream</span> available for this <span>track</span>")
+						//alertbox
+						return false;
+					}
 					if(i == 0){
 						that.coverPlayer.slideNext(false, 0)
 					}
@@ -348,45 +345,32 @@ define(function(require) {
 					return true
 				}
 			});
-		}else{
-			_.find(this.collection, function(t, i){ 
-				if(t.origin.id == id){
-					if(i == 0){
-						that.coverPlayer.slideNext(false, 0)
-					}
-					that.coverPlayer.slideTo(i, 0, false); /* false value disable the OnSlideChangeEnd Callback */
-					that.playTrack(id, i, view)
-					return true
-				}
-			});
-		}
 		
 		
     },
     playTrack: function(id, index, view){
 	    this.index = index;
 	    var that = this;
-		if(this.playingView.el.id != "Stream"){
-			this.currentPlayingTrack.title = this.collection[index].title;
-			this.currentPlayingTrack.username = this.collection[index].user.username;
-			this.currentPlayingTrack.artwork = this.collection[index].artwork_url;
-			this.currentPlayingTrack.stream = this.collection[index].stream_url
-		}else{
-			this.currentPlayingTrack.title = this.collection[index].origin.title;
-			this.currentPlayingTrack.username = this.collection[index].origin.user.username;
-			this.currentPlayingTrack.artwork = this.collection[index].origin.artwork_url;
-			this.currentPlayingTrack.stream = this.collection[index].origin.stream_url
-		}
+
+		this.currentPlayingTrack.stream = this.collection[index].stream_url
+		
 		if(this.currentPlayingTrack.stream){ //some tracks can't be played
 			audio.src = this.currentPlayingTrack.stream + "?client_id=2aca68b7dc8b51ec1b20fda09b59bc9a";
 		}else{
-			alert("No stream available")
+			this.showAlert("<span>No stream</span> available for this <span>track</span>")
 			//alertbox
 			this.coverPlayer.slideNext();
+			return false;
 		}
+		
+		this.currentPlayingTrack.title = this.collection[index].title;
+		this.currentPlayingTrack.username = this.collection[index].user.username;
+		this.currentPlayingTrack.artwork = this.collection[index].artwork_url;
+			
 		if (this.currentPlayingTrack.id === null) {
-			this.details.miniplayer.addClass("opened");
+			this.details.miniplayer.addClass("open");
 		}
+		this.details.progressBarMini.css("width", 0);
 		//this.details.progressBarPlayer = $(this.coverPlayer.slides[index][0]).find(".progressBarPlayer");
 		//this.details.time = $(this.coverPlayer.slides[index]).find(".currentTimeTrack");
 		//this.details.bottomPlayer = $(this.coverPlayer.slides[index]).find(".bottom-player");
@@ -404,67 +388,10 @@ define(function(require) {
 			this.details.miniplayerImg.attr("src", "img/blue.png");
 		}
 		// .css("background-image", "url(" + result.artwork_url.replace("large", "t500x500")+ ")");
-		
+
 		audio.play();
 		this.currentPlayingTrack.id = id;
-      /*SC.stream("/tracks/" + id, {
-        autoPlay: true,
-        onbufferchange: function() {
-	        counter ++;
-	        if(counter > 3){
-	      		that.details.bottomPlayer.removeClass("loading-animation");
-	      		counter = 0;
-	      	}
-        },
-        whileplaying: function(){
-          if(!that.isScrolling){
-            that.details.progressBarMini.css("width", ((this.position/this.durationEstimate)*100) + '%');
-			//that.details.progressBarPlayer.val((this.position/this.durationEstimate)*100);
-			that.details.progressBarPlayer.val(this.position);
-			that.details.time.text((that.getMinutes(this.position)));
-          }
-        },
-        whileloading: function() {
-		   //console.log(': loading ' + this.bytesLoaded + ' / ' + this.bytesTotal);
-		},
-		onfinish: function(){
-			if((index+1) == that.collection.length){
-				if(that.repeat == 1){
-					that.coverPlayer.slideTo(0, 500)
-				}else{
-					that.pauseButton.addClass("active");
-					that.details.iosplay.css("display", "block");
-					that.details.equalizer.css("display", "none");
-				}
-				console.log("end tracks")
-				//o carica altri risultati se ci sono
-			}
-			else{
-				that.coverPlayer.slideNext()
-			}
-		},
-        onpause: function(){
-          that.details.iosplay.css("display", "block");
-          that.details.equalizer.css("display", "none");
-          that.pauseButton.addClass("active");
-          //$(".coverTrackPlayer").addClass("blurred");
-
-        },
-        onplay: function(){
-          that.details.iosplay.css("display", "none");
-          that.details.equalizer.css("display", "block");
-          that.pauseButton.removeClass("active");
-          //$(".coverTrackPlayer").removeClass("blurred");
-        },
-        ondataerror: function(err){
-	        console.log("streaming error")
-        }
-
-      },
-      function(sound){
-       currentPlayingTrack = sound;
-       currentPlayingTrack.loudId = id;
-      });*/
+      
     },
     setLike: function(e){
 	    var id = $(e.currentTarget).data("code");
@@ -517,7 +444,14 @@ define(function(require) {
       //append in the current view
 	  document.body.appendChild(this.OptionsView.el);
       this.undelegateEvents();
-    }
+    },
+    showAlert: function(msg){
+	    var that = this;
+	    this.alertBox.html(msg).addClass("visible");
+	    this.alertBox.one('webkitAnimationEnd animationend', function(e) {
+			that.alertBox.removeClass('visible');
+    	});
+    },
     
 	
 

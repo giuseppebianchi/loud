@@ -1,17 +1,14 @@
 define(function(require) {
 
 	var Backbone = require("backbone");
-	var ProfileModel = Backbone.Model.extend({
-		constructorName: "ProfileModel",
+	var LibraryModel = Backbone.Model.extend({
+		constructorName: "LibraryModel",
 		
 		initialize: function() {
-			
+			this.view = localStorage.getItem("selectLibrary")
 		},
-		
-		url: function(){
-			return 'http://api.soundcloud.com/me/?oauth_token=' + localStorage.getItem("accessToken");
-		}
 	});
+	LibraryModel.prototype.fetch = function() { return this; };
 
-	return ProfileModel;
+	return LibraryModel;
 });

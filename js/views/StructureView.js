@@ -63,7 +63,7 @@ define(function(require) {
         return new Handlebars.SafeString(result)
       });
 
-					
+				
       //this.on("inTheDOM", this.rendered);
       // bind the back event to the goBack function
       //document.getElementById("back").addEventListener("back", this.goBack(), false);
@@ -84,19 +84,13 @@ define(function(require) {
     
     openMenu: function(){
 	    this.snapper.open("left");
-	    
-    },
-    /*setActive: function(e){
-    	alert();
-    	var ciao = document.getElementsByClassName("active");
-    	if(ciao.length > 0){
-	    	ciao[0].classList.remove("active");
-    	}
-	    e.currentTarget.classList.add("active");
-    },*/
+	},
     setActive: function(elementId){
         try{
-          document.getElementsByClassName("active")[0].classList.remove("active");
+          this.$el.find(".active")[0].classList.remove("active");
+        }
+        catch(err){
+	        console.log(err)
         }
         finally{
           document.getElementById(elementId).classList.add("active");
@@ -119,6 +113,7 @@ define(function(require) {
 			});
     },
     changePage: function(e){
+	    
 	    var page = e.currentTarget.dataset.page;
 	    Backbone.history.navigate(page, {trigger:true});
 	    this.snapper.close("left")
@@ -148,6 +143,7 @@ define(function(require) {
       }
       
     },
+    
     
     
     

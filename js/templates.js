@@ -23,11 +23,15 @@ define({
     user: "templates/user.html",
     profile: "templates/profile.html",
     library: "templates/library.html",
+    libraryArtist: "templates/libraryArtist.html",
+    podcasts: "templates/podcasts.html",
     likes: "templates/likes.html",
+    sorted_likes: "templates/sorted_likes.html",
     following_profile: "templates/elements/following_profile.html",
     allFollowing: "templates/allFollowing.html",
     following: "templates/elements/bullets.html",
     square: "templates/elements/square.html",
+    artists: "templates/elements/artists.html",
     playlist: "templates/playlist.html",
     allPlaylist: "templates/allPlaylist.html",
     morePlaylist: "templates/elements/playlists.html",
@@ -36,5 +40,6 @@ define({
     tracklist: "templates/elements/tracklist.html",
     playlistTracklist: "templates/elements/playlistTracklist.html",
     bulletTracks: "templates/elements/bulletTracks.html",
-    options: "templates/elements/options.html"
+    options: "templates/elements/options.html",
+    settings: "templates/settings.html"
 });

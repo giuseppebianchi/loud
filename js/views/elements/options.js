@@ -3,6 +3,7 @@ define(function(require) {
   var Backbone = require("backbone");
   var _ = require("underscore");
   var Utils = require("utils");
+  var pouchCollate = require('pouchdbCollate');
   var OptionsView = Utils.Page.extend({
 
     constructorName: "OptionsView",
@@ -13,6 +14,7 @@ define(function(require) {
 	    "tap #tweet": "tweet",
 	    "tap #add-track-to-playlist": "addTrackToPlaylist",
 	    "tap #remove-vanish-first": "removeVanishFirst",
+	    "tap #remove-vanish-second": "removeVanishSecond",
 	    "tap #new-playlist": "newPlaylist",
 	    "tap #create-playlist": "createPlaylist",
 	    "tap #remove-new-playlist-view": "removePlaylistView",
@@ -20,12 +22,17 @@ define(function(require) {
 	    "tap #set-discover-track": "setDiscoverTrack",
 	    "tap #add-to-your-playlists": "addPlaylistToPlaylists",
 	    "tap #create-playlist-from-playlist": "createFromPlaylist",
+	    "tap #add-track-to-library-form": "addToLibraryForm",
+	    "tap #add-track-to-library": "addToLibrary",
+	    "submit #new-track-form": "hideKeyboard"
 	    
 	},
 	
     initialize: function(options) {
 	    // load the precompiled template
 		this.template = Utils.templates.options;
+		this.model.LastArtist = sessionStorage.getItem("LastArtist");
+		this.model.LastAlbum = sessionStorage.getItem("LastAlbum")
     },
     
     tagName: "div",
@@ -36,13 +43,8 @@ define(function(require) {
 
     render: function() {
 	    var that = this;
-	    if(this.model.origin){
-		    this.model.origin.myPlaylists = JSON.parse(sessionStorage.getItem("playlists"));
-		    this.$el.html(this.template(this.model.origin));
-	    }else{
-		    this.model.myPlaylists = JSON.parse(sessionStorage.getItem("playlists"));
-		    this.$el.html(this.template(this.model));
-	    }
+	    this.model.myPlaylists = JSON.parse(sessionStorage.getItem("playlists"));
+	    this.$el.html(this.template(this.model));
 	    //this.main = $("#main")
 		//this.main.addClass("blurred")
 		this.alertBox = $("#alert-box")
@@ -59,6 +61,10 @@ define(function(require) {
   	hidePage: function(){ //fired from UserView
       this.parent.delegateEvents();
       this.close();
+    },
+    hideKeyboard: function(e){
+	    e.preventDefault();
+	    cordova.plugins.Keyboard.close();
     },
     showAlert: function(msg){
 	    var that = this;
@@ -119,6 +125,10 @@ define(function(require) {
 	    //this.currentTarget.attr("style", "");
 	    this.$el.removeClass("vanish-first").removeClass("new-playlist-view");
     },
+    removeVanishSecond: function(){
+	    //this.currentTarget.attr("style", "");
+	    this.$el.removeClass("vanish-second");
+    },
     newPlaylist: function(){
 	    this.$el.addClass("new-playlist-view")
     },
@@ -166,6 +176,74 @@ define(function(require) {
     setDiscoverTrack: function(){
 	    localStorage.setItem("discover", JSON.stringify(this.model));
 	    this.showAlert('Track was set as <span>Discover</span> track');
+    },
+    addToLibraryForm: function(){
+	    this.$el.addClass("vanish-second");
+	},
+	addToLibrary: function(){
+		cordova.plugins.Keyboard.close();
+		var that = this;
+	    var form = $('#new-track-form input');
+	    
+	    //controllo se è stato inserito il titolo
+	    if(form[0].value.length == 0){
+		    this.showAlert('Please insert a <span>Title</span>');
+		    return false;
+	    }
+	    
+	    var titleLoud = form[0].value;
+		var idLoud = new Date().getTime() + '';
+	    
+	    var artistLoud;
+	    
+	    if(form[1].value.length > 0){
+	    	artistLoud = form[1].value;
+	    }else{
+		    artistLoud = "Unknown";
+	    }
+		    
+	    
+	    var albumLoud;
+	    if(form[2].value.length > 0){
+	    	albumLoud = form[2].value;
+	    }else{
+		    albumLoud = "Unknown";
+	    }
+	    
+	    if(localStorage.getItem("SaveLastArtist") == 1){
+		    sessionStorage.setItem("LastArtist", form[1].value)
+	    }
+	    if(localStorage.getItem("SaveLastAlbum") == 1){
+		    sessionStorage.setItem("LastAlbum", form[2].value)
+	    }
+	    
+	    //var labelLoud = "Desolat";
+		var idAlbum = "" + pouchCollate.toIndexableString(artistLoud) + "" + pouchCollate.toIndexableString(albumLoud);
+		
+		var content = this.model;
+		
+		delete content.myPlaylists;
+		
+	    var track = {
+		    "_id": idLoud,
+		    "title": titleLoud,
+		    "artist": artistLoud,
+		    "album": idAlbum,
+		    "albumTitle": albumLoud,
+		    "label": "",
+		    "content": content
+	    };
+	    
+	    dbTracks.put(track).then(function (response) {
+		  // handle response
+		  that.showAlert('<span>Track</span> has been added');
+		  that.removeVanishSecond();
+		}).catch(function (err) {
+		  that.showAlert('<span>Ops! Something went wrong</span> ');
+		});
+	    
+
+	    
     }
  });
 

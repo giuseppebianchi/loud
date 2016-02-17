@@ -13,13 +13,13 @@ define(function(require) {
     	"touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
-      "tap .userOption": "showUserOption",
        "tap .soundcloudPlaylist": "showPlaylist",
        "tap .morePlaylists": "Playlists",
        "tap .morePlaylists-title": "Playlists",
        "tap .following-item": "showUser",
        "tap #like-button": "showLikes",
-       "tap .following-button": "showFollowing"
+       "tap .following-button": "showFollowing",
+       "tap #settings-button": "showSetting"
       //"tap .soundcloudArtist": "showUser"
 	},
 
@@ -110,7 +110,7 @@ define(function(require) {
 			    that.following.render()  
 				that.$el.find(".bullet-section").html(that.following.el);
 				
-				that.$el.addClass("active");
+				that.$el.addClass("visible");
 				 
 		   }
 	   })
@@ -153,13 +153,6 @@ define(function(require) {
     //this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
-  showUserOption: function(){
-      $("#showOption").addClass("visible");
-      $("#main").addClass("blurred");
-      $("#main-overlay").addClass("visible");
-      // $("#main").addClass("blurred");
-      // this.detail.showOption.css({display: "block", opacity: 1})
-  },
   checkScroll: function(e){
       if(this.userScrollingView[0].scrollTop > 100){
         $(this.el.children[0]).addClass("header-visible")
@@ -186,9 +179,6 @@ define(function(require) {
       //append in the current view
 	  this.$el.append(this.userView.el);
       this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
       
 
       
@@ -214,9 +204,6 @@ define(function(require) {
       //append in the current view
 	  this.$el.append(this.PlaylistView.el);
       this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
       
 
       
@@ -246,13 +233,16 @@ define(function(require) {
       //append in the current view
 	  this.$el.append(this.AllPlaylistView.el);
       this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
     },
     showLikes: function(e){
 	  e.stopImmediatePropagation();
-      var LikesView = require("views/pages/LikesView");
+	  var sort = localStorage.getItem("sortLikes");
+	  var LikesView;
+	  if(sort == 0){
+		LikesView = require("views/pages/LikesView");  
+	  }else{
+		LikesView = require("views/pages/SortedLikesView");
+	  }
       var self = this; 
          
       this.LikesView = new LikesView({
@@ -265,9 +255,7 @@ define(function(require) {
       //append in the current view
 	  this.$el.append(this.LikesView.el);
       this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+
     },
     showFollowing: function(e){
 	  e.stopImmediatePropagation();
@@ -284,9 +272,19 @@ define(function(require) {
       //append in the current view
 	  this.$el.append(this.FollowingView.el);
       this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+    },
+    showSetting: function(e){
+	  e.stopImmediatePropagation();
+      var SettingView = require("views/pages/SettingView");
+      var self = this; 
+         
+      this.SettingView = new SettingView()
+      this.SettingView.parent = this;
+      // render the new view
+      this.SettingView.render();
+      //append in the current view
+	  this.$el.append(this.SettingView.el);
+      this.undelegateEvents();
     },
   
 	

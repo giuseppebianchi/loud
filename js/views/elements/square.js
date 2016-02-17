@@ -13,7 +13,11 @@ define(function(require) {
 	
     initialize: function(options) {
 	    // load the precompiled template
-		    this.template = Utils.templates.square;
+	    	this.parent = options.parent;
+	    	this.parentview = options.view;
+	    	this.template = Utils.templates.artists;
+	    	this.templateSquare = Utils.templates.square;
+		    
     },
     
     tagName: "div",
@@ -25,17 +29,22 @@ define(function(require) {
     render: function() {
 		var that = this;
 		  this.collection.fetch({
-			  success: function(tracks){
+			  success: function(data, more){
+				  //console.log(data)
 				  	//set received data into template
-					that.$el.html(that.template(tracks));
-					//disable events and set empty (blurred)image on playlists container
-					if(!tracks.length){
-						that.undelegateEvents();
+					if(that.parentview == "tracks"){
+						that.$el.html(that.templateSquare(data));
+						that.parent.playerCollection = that.parent.filterCollection(more);
 					}else{
+						if(that.parentview == "albums"){
+							that.$el.html(that.templateSquare(data));
+						}else{
+							that.$el.html(that.template(data));
+						}
+					}
 						that.bLazy = new Blazy({ 
 							container: "#user-scrolling-view-library"
 						});
-					}
 			  }
 		  })
 

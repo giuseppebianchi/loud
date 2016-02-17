@@ -12,7 +12,6 @@ define(function(require) {
     constructorName: "DiscoverView",
     
     events:{
-	    "tap #discover-empty": "gotostream",
 	    "touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",	
@@ -75,12 +74,14 @@ define(function(require) {
 						that.bLazy = new Blazy({ 
 							container: '#discover-scrolling-view'
 						});
+						that.$el.addClass("visible");
 						
 				  }
 				})
 		}else{
 			this.$el.html(that.template());
 			this.enabledElastic = false;
+			this.$el.addClass("visible");
 		}
       
 

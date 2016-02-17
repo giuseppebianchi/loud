@@ -20,7 +20,8 @@ define(function(require) {
       "stream": "Stream",
       "discover": "Discover",
       "profile": "Profile",
-      "library": "Library"
+      "library": "Library",
+      "podcasts": "Podcasts"
     },
 
     firstView: "HomeFunction",
@@ -31,6 +32,7 @@ define(function(require) {
     },
     // SHOW SYNC VIEW
     Sync: function() {
+	    			//navigator.splashscreen.hide();
 						var SyncView = require("views/pages/SyncView");
 				        // put the el element of the structure view into the DOM
 				        var self = this;
@@ -64,7 +66,6 @@ define(function(require) {
 				        	self.SyncView.trigger("inTheDOM");
 					        setTimeout(function(){$("#sync").css("opacity", 1)}, 200);
 					        self.SyncView.getData();
-							
 				        }
 				        
 				        
@@ -170,6 +171,7 @@ define(function(require) {
     }, //END PLAYER FUNCTION
 
 	LoginFunction: function() {
+                                         
 					var LoginView = require("views/pages/LoginView");
 				    var that = this;
 					// create the view
@@ -181,6 +183,7 @@ define(function(require) {
 					      // show the view
 					      if(this.LoginView){
 						  	this.LoginView.trigger("inTheDOM");
+                                        // navigator.splashscreen.hide();
 						  	setTimeout(function(){that.LoginView.$el.css("opacity", 1)}, 100);
 						  	
 						  }
@@ -197,7 +200,7 @@ define(function(require) {
     }, // END LOGIN
     
     Welcome: function() {
-
+                        
 						var WelcomeView = require("views/pages/WelcomeView");
 				        // put the el element of the structure view into the DOM
 				        var ProfileModel = require("models/ProfileModel");
@@ -219,6 +222,7 @@ define(function(require) {
 				        function nextStep(){
 					        setTimeout(function(){
 								        document.body.appendChild(self.WelcomeView.render().el);
+                                       //navigator.splashscreen.hide();
 								        self.LoginView.close();
 										
 										finish();
@@ -316,8 +320,8 @@ define(function(require) {
     }, //END DISCOVER FUNCTION
     Library: function() {
 				      var LibraryView = require("views/pages/LibraryView");
-				      
 				      var LibraryModel = require("models/LibraryModel");
+				      
 				      // create a collection for the template engine
 				      var LibraryData = new LibraryModel()
 					  
@@ -337,6 +341,31 @@ define(function(require) {
     				  this.structureView.setActive("goToLibrary");
     				  //set last view for next opening
 				      localStorage.setItem("lastView", "library");			      
+				      
+    }, //END DISCOVER FUNCTION
+    Podcasts: function() {
+				      var PodcastsView = require("views/pages/PodcastsView");
+				      var PodcastsModel = require("models/PodcastsModel");
+				      
+				      // create a collection for the template engine
+				      var PodcastsData = new PodcastsModel()
+					  
+				      var page = new PodcastsView({
+				        model: PodcastsData
+				      });
+
+					  //render template
+				      this.changePage(page);
+				      //set player view into current view
+				      page.player = this.playerView;
+				      //set current view to player view
+    				  this.playerView.currentView = page;
+    				  //set current view to structure view
+    				  this.structureView.currentView = page;
+    				  //set current view in menu
+    				  this.structureView.setActive("goToPodcasts");
+    				  //set last view for next opening
+				      localStorage.setItem("lastView", "podcasts");			      
 				      
     }, //END DISCOVER FUNCTION
     

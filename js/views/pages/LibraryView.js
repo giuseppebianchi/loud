@@ -2,9 +2,13 @@ define(function(require) {
   var $ = require("jquery");
   var Backbone = require("backbone");
   var Utils = require("utils");
+  var Handlebars = require("handlebars");
   var CarouselView = require("views/elements/carousel");
   var LibraryTrackView = require("views/elements/square");
-	
+  var LibraryTrackCollection = require("collections/LibraryTrackCollection")
+  var LibraryArtistCollection = require("collections/LibraryArtistCollection")
+  var LibraryAlbumCollection = require("collections/LibraryAlbumCollection")
+  //var LibraryTrackViewCircle = require("views/elements/bullet");
   var LibraryView = Utils.Page.extend({
 
     constructorName: "LibraryView",
@@ -13,15 +17,13 @@ define(function(require) {
 	    "touchstart": "startTouch",
 	    "touchmove": "elastic",
 	    "touchend": "resetHeight",
-      "tap .userOption": "showUserOption",
-       "tap .soundcloudPlaylist": "showPlaylist",
-       "tap .morePlaylists": "Playlists",
-       "tap .morePlaylists-title": "Playlists",
-       "tap .following-item": "showUser",
-       "tap #like-button": "showLikes",
-       "tap .following-button": "showFollowing",
-       "tap .select-library-button": "changeLibrary"
-      //"tap .soundcloudArtist": "showUser"
+       "tap #library-select": "changeLibrary",
+       "tap .library-artist": "showArtistLibrary",
+       "tap .play-track": "playTrack",
+      "tap .play-all-tracks": "playAllTracks",
+      //"tap prolungato .loud-artist": "actionsheet cancella o modifica artista"
+      //"tap prolungato .loud-track": "actionsheet cancella o modifica traccia"
+      //"tap prolungato .loud-album": "actionsheet cancella o modifica album"
 	},
 
 	elasticImage: undefined,
@@ -36,7 +38,13 @@ define(function(require) {
       //   });
       // });
       // this.listenTo(this, "removing", functionName);
+	  Handlebars.registerHelper('getData', function(v1, v2) {
+		  if(v2 == "length"){
+			  return v1.length;
+		  }
+		  return v1[v2]
 
+      });
       // by convention, all the inner views of a view must be stored in this.subViews
     },
 
@@ -51,53 +59,47 @@ define(function(require) {
     render: function() {
 	   var that = this;
 	   
-	   //SET OFFLINE HTML TEMPLATE WHILE FETCHING DATA FROM SOUNDCLOUD
-	   //that.$el.html(that.template_offline({nameuser: "clicked user"}));
-	   this.model.fetch({
-		   success: function(data){
-			   
-			   that.$el.html(that.template(data.attributes));
-			    //set options
-			      that.elasticImage = $(that.$el.find(".cover-user-view-background"));
-			      
-			      that.userScrollingView = $(that.$el.find(".user-scrolling-view").get(0));
-				  that.contentList = $(that.$el.find(".user-content-view").get(0));
-				  
-			      that.userScrollingView.bind('scroll', function (ev) {
-			            that.checkScroll(ev);
-			      });
-			    
-			    // CREATE CAROUSEL VIEW FOR PLAYLIST
-			    var UserPlaylistCollection = require("collections/UserPlaylistCollection");
-			    // create a collection for the template engine
-			    var user_playlists = new UserPlaylistCollection({
-				    id: data.attributes.id,
-				    total: data.attributes.playlist_count
-				})  
-			    that.carousel = new CarouselView({
-				    collection: user_playlists
-			    })
-			    
-			    that.carousel.render();
-				that.$el.find(".UserCarousel").html(that.carousel.el);
-				
-				
-				// CREATE LIST VIEW FOR FOLLOWING
-				var LibraryTrackCollection = require("collections/FollowingCollection");
-			    // create a collection for the template engine
-			    var user_following = new LibraryTrackCollection({
-				    total: that.model.attributes.followings_count
-			    });  
-			    that.following = new LibraryTrackView({
-				    collection: user_following
-			    })
-			    that.following.render()  
-				that.$el.find(".bullet-section").html(that.following.el);
-				
-				that.$el.addClass("active");
-				 
-		   }
-	   })
+	   that.$el.html(that.template(this.model));
+	    //set options
+	      that.elasticImage = $(that.$el.find(".cover-user-view-background"));
+	      
+	      that.userScrollingView = $(that.$el.find(".user-scrolling-view").get(0));
+		  that.contentList = $(that.$el.find(".user-content-view").get(0));
+		  
+	      that.userScrollingView.bind('scroll', function (ev) {
+	            that.checkScroll(ev);
+	      });
+	    
+	    
+	    var LibraryCollection;
+	    switch(this.model.view){
+		    case "tracks": LibraryCollection = LibraryTrackCollection; break;
+		    case "artists": LibraryCollection = LibraryArtistCollection; break;
+		    case "albums": LibraryCollection = LibraryAlbumCollection; break;
+	    }
+	    var data = new LibraryCollection({}) 
+	    // CREATE CAROUSEL VIEW FOR RECENT ADDED TRACKS
+	    // create a collection for the template engine 
+/*
+	    that.carousel = new CarouselView({
+		    collection: data
+	    })
+	    
+	    that.carousel.render();
+		that.$el.find(".UserCarousel").html(that.carousel.el);
+*/
+		
+		
+		// CREATE LIST VIEW FOR FOLLOWING
+	    // create a collection for the template engine
+	    that.tracklist = new LibraryTrackView({
+		    collection: data,
+		    parent: that,
+		    view: this.model.view
+	    })
+	    that.tracklist.render()  
+		that.$el.find(".bullet-section").html(that.tracklist.el);
+		that.$el.addClass("visible");
        
       return this;
     },
@@ -136,13 +138,6 @@ define(function(require) {
     //this.elasticImage.children().removeClass("hidden"); 
 		this.elasticImage.css({transition: "height 0.2s ease-out", height: ""});
 	},
-  showUserOption: function(){
-      $("#showOption").addClass("visible");
-      $("#main").addClass("blurred");
-      $("#main-overlay").addClass("visible");
-      // $("#main").addClass("blurred");
-      // this.detail.showOption.css({display: "block", opacity: 1})
-  },
   checkScroll: function(e){
       if(this.userScrollingView[0].scrollTop > 70){
         $(this.el.children[0]).addClass("header-visible");
@@ -152,102 +147,120 @@ define(function(require) {
          //$(this.el.children[1]).removeClass("header-visible")
       }
   },
-    showPlaylist: function(e){
-	  e.stopImmediatePropagation();
-      var PlaylistModel = require("models/PlaylistModel");
-      var PlaylistView = require("views/pages/PlaylistView");
-      var self = this;
-      var playlistId = e.currentTarget.attributes["playlistid"].value;
-      var playlistImage = e.currentTarget.attributes["artwork_playlist"].value;
-      var playlist = new PlaylistModel({
-	      id_playlist: playlistId,
-	      image: playlistImage
-      });
-      
-      this.PlaylistView = new PlaylistView({
-            model: playlist
-      });
-      this.PlaylistView.parent = this;
-      // render the new view
-      this.PlaylistView.render();
-      //append in the current view
-	  this.$el.append(this.PlaylistView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
-      
-
-      
+   filterCollection: function(collection){
+	    /*prepare collection for player*/
+		var list = [];
+		var track;
+		collection.forEach(function(obj){
+			track = obj.doc.content;
+			track.loud_title = obj.doc.title;
+			track.loud_artist = obj.doc.artist;
+			track.loud_album = obj.doc.albumTitle;
+			list.push(track)
+		})
+		return list;
     },
-    Playlists: function(e){
-	  e.stopImmediatePropagation();
-	  
-      var AllPlaylistView = require("views/pages/AllPlaylistView");
-      var self = this;
-
-      var UserPlaylistCollection = require("collections/UserPlaylistCollection");
-		    // create a collection for the template engine
-	  var user_playlists = new UserPlaylistCollection({
-		id: self.model.id,
-		total: self.model.attributes.playlist_count,
-		name: self.model.attributes.username,
-		all: true
-	  })  
-      
-      this.AllPlaylistView = new AllPlaylistView({
-            collection: user_playlists
-      });
-      this.AllPlaylistView.parent = this;
-      // render the new view
-      this.AllPlaylistView.render();
-      //append in the current view
-	  this.$el.append(this.AllPlaylistView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+     update: function(view){
+	    // view = "artists"
+	    var category = $("#title-library-cat");
+	 	var LibraryCollection;
+	    switch(view){
+		    case "tracks": LibraryCollection = LibraryTrackCollection; break;
+		    case "artists": LibraryCollection = LibraryArtistCollection; break;
+		    case "albums": LibraryCollection = LibraryAlbumCollection; break;
+	    }
+	    var data = new LibraryCollection({}) 
+	    // CREATE CAROUSEL VIEW FOR RECENT ADDED TRACKS
+	    // create a collection for the template engine 
+/*
+	    that.carousel = new CarouselView({
+		    collection: data
+	    })
+	    
+	    that.carousel.render();
+		that.$el.find(".UserCarousel").html(that.carousel.el);
+*/
+		
+		// CREATE LIST VIEW FOR FOLLOWING
+	    // create a collection for the template engine
+	    this.tracklist.collection = data;
+		this.tracklist.parentview = view;
+		
+	    this.tracklist.render()  
+		this.$el.find(".bullet-section").html(this.tracklist.el);
+		category.animate({
+            opacity: 0
+            }, 500, function(){
+            category.text(view)
+            if(view == "tracks"){
+	            $(".library-button").removeClass("hidden")
+            }else{
+	           $(".library-button").addClass("hidden") 
+            }
+            category.css("opacity", 1)
+        })
+		
     },
-    showLikes: function(e){
+    showArtistLibrary: function(e){
+	 //   debugger;
 	  e.stopImmediatePropagation();
-      var LikesView = require("views/pages/LikesView");
+      var LibraryArtistView = require("views/pages/LibraryArtistView");
       var self = this; 
-         
-      this.LikesView = new LikesView({
-	      total_likes: self.model.attributes.public_favorites_count
-      })
-      this.LikesView.parent = this;
+       var LibraryArtistAlbumsCollection = require("collections/LibraryArtistAlbumsCollection");
+       var artist_albums = new LibraryArtistAlbumsCollection({
+	     id: $(e.currentTarget).attr("username")
+       })
+      this.LibraryArtistView = new LibraryArtistView({
+	      collection: artist_albums,
+          player: self.player
+      });
+      this.LibraryArtistView.parent = this;
       // render the new view
-      this.LikesView.render();
+      this.LibraryArtistView.render();
       //append in the current view
-	  this.$el.append(this.LikesView.el);
+	  this.$el.append(this.LibraryArtistView.el);
       this.undelegateEvents();
       //translate
       //$(self.userView.el).addClass("active");
       //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
     },
-    showFollowing: function(e){
+    
+    callbackActionSheet: function(buttonIndex) {
+	    var view = window.plugins.actionsheet.temp;
+	    var current = localStorage.getItem("selectLibrary");
+	    var temp;
+	    switch(buttonIndex){
+		    case 1: temp = "tracks"; break;
+		    case 2: temp = "artists"; break;
+		    case 3: temp = "albums"; break;
+	    }
+	    if(temp != current){
+		    view.update(temp);
+		    localStorage.setItem("selectLibrary", temp)
+	    }
+	    window.plugins.actionsheet.temp = null;
+	},
+	optionsActionSheet: {
+        //'title': '',
+        'buttonLabels': ['Tracks', 'Artists', 'Albums'],
+        'addCancelButtonWithLabel': 'Cancel',
+        //'addDestructiveButtonWithLabel' : 'Delete it',
+    },
+    changeLibrary: function(){
+	    window.plugins.actionsheet.temp = this;
+	    window.plugins.actionsheet.show(this.optionsActionSheet, this.callbackActionSheet);
+    },
+	playTrack: function(e){
+	console.log(this)
 	  e.stopImmediatePropagation();
-      var FollowingView = require("views/pages/FollowingView");
-      var self = this; 
-         
-      this.FollowingView = new FollowingView({
-	      total: self.model.attributes.followings_count
-      })
-      this.FollowingView.parent = this;
-      // render the new view
-      this.FollowingView.render();
-      //append in the current view
-	  this.$el.append(this.FollowingView.el);
-      this.undelegateEvents();
-      //translate
-      //$(self.userView.el).addClass("active");
-      //$(self.userView.el).css("transform", "translate3d(0, 0, 0)")
+	  if(this.player.playingView !== this){
+		this.player.coverPlayer.removeAllSlides();
+		this.player.playingView = this;
+	  	this.player.collection = this.playerCollection;
+	  	this.player.renderSlides(this.playerCollection)
+	  }
+	  this.player.prepareTrack(e.currentTarget.attributes["sctrackid"].value, this);
     },
-    changeLibrary: function(e){
-		$("#select-library-element").focus();
-    },
-  
 	
 		
 	

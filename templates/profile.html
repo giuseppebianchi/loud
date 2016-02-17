@@ -10,7 +10,7 @@
 </div>
 </header>
 
-<div class="cover-user-view cover-user-view-background b-lazy" data-src="{{subString avatar_url 't500x500'}}"><div class="overlay-cover-playlist-view overlay-cover-background"></div></div>
+<div class="cover-user-view cover-user-view-background b-lazy" data-src="{{subString avatar_url 't500x500'}}"></div>
 <div id="user-scrolling-view-{{id}}" class="user-scrolling-view">
 <div class="user-content-view">
 	
@@ -65,7 +65,7 @@
 
   </div>
 </div>
-<div class="list-back">
+<div class="list-back" style="padding-bottom: 70px;">
 <p class="playlist-description">{{description}}</p>
 <p class="user-page-title morePlaylist-title">Playlists <span style="color: #777">{{playlist_count}}</span></p>
 <div class="UserCarousel"><div class="cssload-loader">
@@ -90,9 +90,9 @@
 
 <div class="item-single-track" style="margin: 40px 0">
 	<li class="list__item list-track" scTrackId="{{id}}" style="padding: 0">
-      <div class="cover-track" style="background-image: url(img/turn.jpg); height: 100px;">
-        <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.78)">
-            <h3 id="like-button">LIKES</h3>
+      <div class="cover-track" style="background-image: url(img/likes_profile.jpg); height: 100px; background-position: center 100%;">
+        <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.05);">
+            <h3 id="like-button" style="color: #fff">LIKES</h3>
         </div>
       </div>
 </li>
@@ -106,7 +106,7 @@
 </div>
 <br>
 <br>
-<button class="button" style="font-weight: 200; padding: 15px; text-transform: uppercase; font-size: 18px;">Setting</button>
+<button id="settings-button" class="button">Settings</button>
 
 <!-- <h4 style=" font-weight: 200;color: white; background: #E71D36; text-align: center; margin: 0; position: relative; padding: 15px; text-transform: uppercase; font-size: 18px;">Setting</h4> -->
 
