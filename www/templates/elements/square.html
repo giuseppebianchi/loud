@@ -1,0 +1,28 @@
+{{#each this.models}}
+  {{#with attributes}}
+  {{#if doc}}
+  	{{#with doc}}
+	  <div class="library-item play-track" idloud="{{id}}" sctrackid="{{content.id}}">
+	  	<div class="library-image square">
+		  	<img class="b-lazy" src="img/white.png" data-src="{{content.artwork_url}}">
+		</div>
+	    <div class="library-name">
+		    <p class="artist-track-library">{{artist}}</p>
+		    <p class="title-track-library">{{title}}</p>
+		</div>
+	  </div>
+	   {{/with}}
+	{{else}}
+	  	<div class="library-item" albumid="{{getData key 2}}">
+	  	<div class="library-image square">
+		  	<img class="b-lazy" src="img/white.png" data-src="{{getData value 0}}">
+		</div>
+	    <div class="library-name">
+		    <p class="artist-track-library album-library">{{getData key 1}}</p>
+		    <p class="title-track-library">{{getData key 0}}</p>
+		    <p class="count-tracks-library-album">{{getData value "length"}} Tracks</p>
+		</div>
+	  </div>	  
+  {{/if}}
+  {{/with}}
+{{/each}}

@@ -1,0 +1,10 @@
+{{#each this.models}}
+  {{#with attributes}}
+  <div class="bullet-item following-item" scuserid="{{id}}">
+  	<div class="bullet-image">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{avatar_url}}">
+	</div>
+    <div class="bullet-name"><h4>{{username}}</h4></div>
+  </div>
+  {{/with}}
+{{/each}}

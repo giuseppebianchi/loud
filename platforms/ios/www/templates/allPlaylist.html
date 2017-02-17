@@ -1,0 +1,45 @@
+
+<header class="navigation-bar navigation-bar--transparent">
+  <div class="navigation-bar__left">
+    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
+      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">
+    {{username}}'s Playlists
+  </div>
+<div class="navigation-bar__right">
+   <span class="toolbar-button--quiet navigation-bar__line-height userOption" data-code="{{user_id}}" data-username="{{username}}" style="line-height: 45px;"></span>
+  </div>
+</header>
+<div id="allPlaylist-scrolling-view-{{user_id}}" class="scrolling-view">
+<ul class="list">
+
+{{#each this.models}}
+  <div class="item-single-track">
+    {{#with attributes}}
+    
+    {{#if artwork_url}}
+    <li class="list__item list-track playlist-type" playlistId="{{id}}" artwork_playlist="{{artwork_url}}">
+      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+	{{else}}
+	<li class="list__item list-track playlist-type" playlistId="{{id}}" artwork_playlist="{{ tracks.0.artwork_url }}" >
+	  <div class="cover-track b-lazy" data-src="{{subString tracks.0.artwork_url 't300x300'}}">
+	{{/if}}
+        <div class="cover-track-overlay">
+          <div class="list-track-details">
+            {{#with user}}
+            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+            {{/with}}
+            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+          </div>
+        </div>
+      </div>
+      <p class="detail-playlist-type"><span class="n-playlist">{{track_count}}</span> Tracks<span class="d-playlist">{{getMinutes duration}}</span></p>
+    </li>
+    {{/with}}
+  </div>
+{{/each}}
+</ul>
+
+</div>

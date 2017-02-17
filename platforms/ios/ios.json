@@ -1,0 +1,199 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/widget": [],
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ActionSheet\"><param name=\"ios-package\" value=\"ActionSheet\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundAudio\"><param name=\"ios-package\" onload=\"true\" value=\"BackgroundAudio\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"RemoteControls\"><param name=\"ios-package\" value=\"RemoteControls\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Clipboard\"><param name=\"ios-package\" value=\"CDVClipboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "CFBundleURLTypes": [
+                        {
+                            "xml": "<array><dict><key>CFBundleURLSchemes</key><array><string>loudapp</string></array></dict></array>",
+                            "count": 1
+                        }
+                    ],
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>audio</string></array>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "loudapp",
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "nl.kingsquare.cordova.background-audio": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "com.rd11.remote-controls": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "com.verso.cordova.clipboard": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/cordova-plugin-customurlscheme/www/ios/LaunchMyApp.js",
+            "id": "cordova-plugin-customurlscheme.LaunchMyApp",
+            "pluginId": "cordova-plugin-customurlscheme",
+            "clobbers": [
+                "window.plugins.launchmyapp"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "pluginId": "cordova-plugin-inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+            "id": "cordova-plugin-x-socialsharing.SocialSharing",
+            "pluginId": "cordova-plugin-x-socialsharing",
+            "clobbers": [
+                "window.plugins.socialsharing"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+            "id": "cordova-plugin-actionsheet.ActionSheet",
+            "pluginId": "cordova-plugin-actionsheet",
+            "clobbers": [
+                "window.plugins.actionsheet"
+            ]
+        },
+        {
+            "file": "plugins/com.rd11.remote-controls/www/RemoteControls.js",
+            "id": "com.rd11.remote-controls.RemoteControls",
+            "pluginId": "com.rd11.remote-controls",
+            "clobbers": [
+                "window.remoteControls"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+            "id": "cordova-plugin-statusbar.statusbar",
+            "pluginId": "cordova-plugin-statusbar",
+            "clobbers": [
+                "window.StatusBar"
+            ]
+        },
+        {
+            "file": "plugins/com.verso.cordova.clipboard/www/clipboard.js",
+            "id": "com.verso.cordova.clipboard.Clipboard",
+            "pluginId": "com.verso.cordova.clipboard",
+            "clobbers": [
+                "cordova.plugins.clipboard"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "id": "cordova-plugin-splashscreen.SplashScreen",
+            "pluginId": "cordova-plugin-splashscreen",
+            "clobbers": [
+                "navigator.splashscreen"
+            ]
+        },
+        {
+            "file": "plugins/ionic-plugin-keyboard/www/ios/keyboard.js",
+            "id": "ionic-plugin-keyboard.keyboard",
+            "pluginId": "ionic-plugin-keyboard",
+            "clobbers": [
+                "cordova.plugins.Keyboard"
+            ],
+            "runs": true
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-customurlscheme": "4.1.2",
+        "cordova-plugin-inappbrowser": "1.2.0",
+        "cordova-plugin-x-socialsharing": "5.0.9",
+        "cordova-plugin-actionsheet": "2.2.0",
+        "nl.kingsquare.cordova.background-audio": "1.0.1",
+        "com.rd11.remote-controls": "1.0.0",
+        "cordova-plugin-statusbar": "2.1.1",
+        "com.verso.cordova.clipboard": "0.1.0",
+        "cordova-plugin-splashscreen": "3.2.0",
+        "ionic-plugin-keyboard": "1.0.8"
+    }
+}

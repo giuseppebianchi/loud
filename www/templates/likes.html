@@ -1,0 +1,72 @@
+<header class="navigation-bar navigation-bar--transparent user-header">
+  <div class="navigation-bar__left">
+    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
+      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">LIKES</div>
+<div class="navigation-bar__right">
+<!--     <span class="toolbar-button--quiet navigation-bar__line-height userOption" style="line-height: 45px;">•••</span> -->
+</div>
+</header>
+
+<div class="cover-user-view cover-likes-view cover-user-view-background" style="background-image:url(img/likes.jpg); background-position: center bottom;"></div>
+<div id="user-scrolling-view-likes" class="user-scrolling-view">
+<div class="user-content-view">
+	
+	
+<div class="cover-user-view cover-likes-view">
+  <div class="overlay-cover-user-view">
+    <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
+    
+     <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">Likes</h4></div>
+     <div class="tab-bar tab-bar--top tab-bar--top-border">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks">
+              <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter total_likes}}</span>
+              <span class="tab-name">LIKES</span>
+            </button>
+          </label>
+          
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--
+          	<button id="follow" class="tab-bar__button tab-bar--top-border__button center following">
+              <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
+            </button>
+-->			<input type="checkbox" name="top-tab-bar-b">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+            <span class="counter">SORT</span>
+              <span class="tab-name">BY ARTIST</span>
+            </button>
+          </label>
+
+          
+      </div>
+
+
+  </div>
+</div>
+<div class="list-back">
+<p class="playlist-description" style="text-align: center">Hear the tracks and playlists you've liked</p>
+<!-- <h4 class="name" style="color: #777;padding: 0 15px;font-weight: 400;font-size: 14px;margin: 15px 0 10px;">{{track_count}} Tracks, {{playlist_count}} Playlists</h4> -->
+
+<p class="user-page-title morePlaylist-title">Liked Playlists <span>{{playlist_count}}</span></p>
+<div class="UserCarousel"><div class="cssload-loader">
+  <div class="cssload-ball"></div>
+  </div></div>
+<p class="user-page-title">Liked Tracks <span>{{track_count}}</span></p>
+<div class="tracklist"></div>
+
+<div class="cssload-loader tracks-loader">
+  <div class="cssload-ball"></div>
+  </div>
+  
+</div>
+</div>
+</div>

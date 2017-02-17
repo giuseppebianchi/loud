@@ -1,0 +1,74 @@
+<header class="navigation-bar navigation-bar--transparent library-header">
+  <div class="navigation-bar__left">
+    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">LIBRARY</div>
+<div class="navigation-bar__right">
+<span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-search" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span>
+</div>
+</header>
+<!-- <div id="library-header"><span class="select-library-button">Tracks <i class="fa fa-angle-down"></i></span></div> -->
+
+<div class="cover-user-view library-cover cover-user-view-background" style="background-image: url(img/turn.jpg);"></div>
+<div id="user-scrolling-view-library" class="user-scrolling-view">
+<div class="user-content-view">
+	
+<div class="cover-user-view library-cover">
+  <div class="overlay-cover-user-view overlay-cover-library-view">
+	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">Library</h4></div>
+	  	<div class="tab-bar tab-bar--top tab-bar--top-border" style="-webkit-transform: translateY(15px); transform: translateY(15px);">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+
+            <button class="tab-bar__button tab-bar--top-border__button center library-button {{#compare view 'tracks'}}{{else}}hidden{{/compare}}" data-action="play">
+            <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+              
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center" id="library-select" data-library="{{view}}">
+              <span class="tab-name">
+              {{#compare view "tracks"}}
+              	<span id="title-library-cat">TRACKS </span> <i class="fa fa-angle-down"></i>
+              {{else}}
+              	{{#compare view "artists"}}
+              		<span id="title-library-cat">ARTISTS </span><i class="fa fa-angle-down"></i>
+              	{{else}}
+              		<span id="title-library-cat">ALBUMS </span><i class="fa fa-angle-down"></i>
+              	{{/compare}}
+              {{/compare}}
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center library-button {{#compare view 'tracks'}}{{else}}hidden{{/compare}}" data-action="shuffle">
+              <span class="tab-name"><i class="fa fa-random"></i></span>
+            </button>
+          </label>
+		</div>
+
+  </div>
+</div>
+
+<div class="list-back" style="padding-bottom: 70px;">
+
+<p class="user-page-title" style="padding-top: 20px;"> </p>
+<!--
+<div class="UserCarousel">
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+	</div>
+</div>	
+-->
+
+
+<div class="bullet-section" style="margin: 0">
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+  	</div>
+</div>
+
+ 
+</div>
+</div>
+</div>

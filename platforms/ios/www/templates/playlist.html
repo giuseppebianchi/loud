@@ -1,0 +1,93 @@
+<header class="navigation-bar navigation-bar--transparent playlist-header">
+  <div class="navigation-bar__left">
+    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
+      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">{{attributes.title}}</div>
+  
+<div class="navigation-bar__right">
+    <span class="toolbar-button--quiet navigation-bar__line-height playlistOption" style="line-height: 45px;">•••</span>
+</div>
+</header>
+{{#if image}}
+<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString image 't500x500'}}">
+{{else}}
+	{{#if attributes.artwork_url}}
+	<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString attributes.artwork_url 't500x500'}}">
+	{{else}}
+	<div class="cover-playlist-view b-lazy cover-user-view-background" data-src="{{subString attributes.tracks.0.artwork_url 't500x500'}}">
+	{{/if}}
+{{/if}}
+</div>
+<div id="playlist-scrolling-view-{{attributes.id}}" class="playlist-scrolling-view">
+<div class="playlist-content-view">	
+	
+<div class="cover-playlist-view">
+  <div class="overlay-cover-playlist-view">
+    <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
+  {{#with attributes}}   
+     <div class="overlay-cover-playlist-view-details">
+      
+       <h4 class="name">{{title}}</h4>
+        <span>Playlist by <strong>{{user.username}}</strong></span></br>
+<!--         <span>{{getMinutes duration}}</span> -->
+        
+     </div>
+
+     <div class="tab-bar tab-bar--top tab-bar--top-border">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+	      {{#if tracks.length}}
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks" trackid="{{tracks.0.id}}">
+            <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{else}}
+          	<button class="tab-bar__button tab-bar--top-border__button center">
+          	<span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{/if}}
+          </label>
+          {{/with}} 
+          <label class="tab-bar__item tab-bar--top-border__item">
+          {{#if favorited}}
+            <button class="tab-bar__button tab-bar--top-border__button center like-playlist active-button" data-code="{{attributes.id}}">
+            {{else}}
+            <button class="tab-bar__button tab-bar--top-border__button center like-playlist" data-code="{{attributes.id}}">
+          {{/if}}
+              <span class="tab-name"><i class="fa fa-heart"></i></span>
+            </button>
+          </label>
+          {{#with attributes}}  
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter track_count}}</span>
+              <span class="tab-name">TRACKS</span>
+            </button>
+          </label>
+          
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--
+          	<button id="follow" class="tab-bar__button tab-bar--top-border__button center following">
+              <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
+            </button>
+-->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">{{getMinutes duration}}</span>
+            </button>
+          </label>
+
+          
+      </div>
+
+
+  </div>
+</div>
+<div class="list-back">
+<p class="playlist-description">{{description}}</p>
+{{/with}}
+<div class="tracklist"></div>
+
+</div>
+</div>
+</div>

@@ -1,0 +1,116 @@
+{
+  "artists": [
+    {
+      "name": "Led Zeppelin",
+      "albums":[
+        {
+          "title_album": "name1",
+          "tracks": [
+            {
+            "name": "Black Dog"
+            },
+            {
+            "name": "Whole Lotta Love"
+            }
+          ]
+        },
+        {
+          "title_album": "name2",
+          "tracks": [
+            {
+            "name": "Kashmir"
+            },
+            {
+            "name": "Rock n Roll"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "The Beatles",
+      "albums":[
+        {
+          "title_album": "name3",
+          "tracks": [
+            {
+            "title": "Sweet Child of Mine"
+            },
+            {
+            "title": "Paradise City"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rolling Stones",
+      "albums":[
+        {
+          "title_album": "name4",
+          "tracks": [
+          	{
+            "title": "Medusa"
+            },
+          	{
+            "title": "Fail Better"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+
+
+/* RESULT 
+
+[
+	{
+	  "title_album": "name1",
+	  "tracks": [
+	    {
+	    "name": "Black Dog"
+	    },
+	    {
+	    "name": "Whole Lotta Love"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name2",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name3",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	},
+	{
+	  "title_album": "name4",
+	  "tracks": [
+	    {
+	    "name": "Kashmir"
+	    },
+	    {
+	    "name": "Rock n Roll"
+	    }
+	  ]
+	}
+]*/

@@ -1,0 +1,83 @@
+{{#each this}}
+  <div class="item-single-track">
+    {{#compare type "track-repost"}}
+      <span class="repost"><i class="fa fa-retweet"></i></span>
+      {{#with origin}}
+        <li class="list__item list-track play-track" scTrackId="{{id}}">
+          <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+            <div class="cover-track-overlay">
+              <div class="list-track-details">
+                {{#with user}}
+                <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+                {{/with}}
+                <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      {{/with}}
+    {{else}}
+		{{#compare type "track"}}
+		    {{#with origin}}
+		    <li class="list__item list-track play-track" scTrackId="{{id}}">
+		      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+		        <div class="cover-track-overlay">
+		          <div class="list-track-details">
+		            {{#with user}}
+		            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+		            {{/with}}
+		            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+		          </div>
+		        </div>
+		      </div>
+		    </li>
+		    {{/with}}
+		{{else}}
+		  	{{#compare type "playlist"}}
+			    {{#with origin}}
+			    <li class="list__item list-track playlist-type" playlistid="{{id}}">
+			      	{{#if artwork_url}}
+			      		<div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+					{{else}}
+					  	<div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+					{{/if}}
+			        <div class="cover-track-overlay">
+			          <div class="list-track-details">
+			            {{#with user}}
+			            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+			            {{/with}}
+			            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+			          </div>
+			        </div>
+			      </div>
+			      <p class="detail-playlist-type"><span class="n-playlist">{{track_count}}</span> Tracks<span class="d-playlist">{{getMinutes duration}}</span></p>
+			    </li>
+			    {{/with}}
+			{{else}}
+				{{#compare type "playlist-repost"}}
+				<span class="repost"><i class="fa fa-retweet"></i></span>
+				    {{#with origin}}
+				    <li class="list__item list-track playlist-type" playlistid="{{id}}">
+				      {{#if artwork_url}}
+					      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+						{{else}}
+						  <div class="cover-track b-lazy" data-src="{{subString user.avatar_url 't300x300'}}">
+						{{/if}}
+				        <div class="cover-track-overlay">
+				          <div class="list-track-details">
+				            {{#with user}}
+				            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+				            {{/with}}
+				            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+				          </div>
+				        </div>
+				      </div>
+				      <p class="detail-playlist-type"><span class="n-playlist">{{track_count}}</span> Tracks<span class="d-playlist">{{getMinutes duration}}</span></p>
+				    </li>
+				    {{/with}}
+				{{/compare}}
+			{{/compare}}
+		{{/compare}}
+    {{/compare}}
+  </div>
+{{/each}}

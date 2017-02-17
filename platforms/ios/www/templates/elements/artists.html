@@ -1,0 +1,13 @@
+{{#each this.models}}
+  {{#with attributes}}
+  <div class="library-item library-artist" username="{{key}}">
+  	<div class="library-image">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{getData value 0}}">
+	</div>
+    <div class="library-name">
+	    <p class="title-track-library">{{key}}</p>
+	    <p class="artist-track-library">{{getData value "length"}} Tracks</p>
+	</div>
+  </div>
+  {{/with}}
+{{/each}}

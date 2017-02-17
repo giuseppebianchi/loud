@@ -1,0 +1,115 @@
+<header class="navigation-bar navigation-bar--transparent profile-header">
+  <div class="navigation-bar__left">
+    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">PROFILE</div>
+<div class="navigation-bar__right">
+<!-- <span class="toolbar-button--quiet navigation-bar__line-height" id="user-option"><i class="ion-gear-a"></i></span> -->
+</div>
+</header>
+
+<div class="cover-user-view cover-user-view-background b-lazy" data-src="{{subString avatar_url 't500x500'}}"></div>
+<div id="user-scrolling-view-{{id}}" class="user-scrolling-view">
+<div class="user-content-view">
+	
+	
+<div class="cover-user-view">
+  <div class="overlay-cover-user-view">
+    <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
+    
+     <div class="overlay-cover-user-view-details">
+      
+       <h4 class="name">{{username}}</h4>
+       {{#if city}}
+        	<span>{{city}}</span> <span>{{country}}</span></br>
+        	{{else}}
+        		{{#if country}}
+        			<span>{{country}}</span></br>
+        		{{/if}}
+        {{/if}}
+        
+     </div>
+
+     <div class="tab-bar tab-bar--top tab-bar--top-border">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+		 <input type="checkbox" name="top-tab-bar-b">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--             <input type="checkbox" name="top-tab-bar-b" checked="checked"> -->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter followers_count}}</span>
+              <span class="tab-name">FOLLOWERS</span>
+            </button>
+          </label>
+          
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--
+          	<button id="follow" class="tab-bar__button tab-bar--top-border__button center following">
+              <span class="tab-name" data-code="{{id}}">FOLLOWING</span>
+            </button>
+-->
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="counter">{{kFormatter public_favorites_count}}</span>
+              <span class="tab-name">LIKES</span>
+            </button>
+          </label>
+
+          
+      </div>
+
+
+  </div>
+</div>
+<div class="list-back" style="padding-bottom: 70px;">
+<p class="playlist-description">{{description}}</p>
+<p class="user-page-title morePlaylist-title">Playlists <span style="color: #777">{{playlist_count}}</span></p>
+<div class="UserCarousel"><div class="cssload-loader">
+  <div class="cssload-ball"></div>
+  </div></div>
+{{#cond track_count 3}}
+	<p class="user-page-title moreTrack-button">Tracks <span style="color: #777">{{track_count}}</span></p>
+	<div class="tracklist">
+	  <div class="cssload-loader tracks-loader">
+	  	<div class="cssload-ball"></div>
+	  </div>
+	</div>
+	<div class="bullet-item more-button more-user-track"><h4>Show All</h4></div>
+{{else}}
+	<p class="user-page-title">Tracks <span style="color: #777">{{track_count}}</span></p>
+	<div class="tracklist">
+	  <div class="cssload-loader tracks-loader">
+	  	<div class="cssload-ball"></div>
+	  </div>
+	</div>
+{{/cond}}
+
+<div class="item-single-track" style="margin: 40px 0">
+	<li class="list__item list-track" scTrackId="{{id}}" style="padding: 0">
+      <div class="cover-track" style="background-image: url(img/likes_profile.jpg); height: 100px; background-position: center 100%;">
+        <div class="cover-track-overlay"  style="background: rgba(255, 255, 255, 0.05);">
+            <h3 id="like-button" style="color: #fff">LIKES</h3>
+        </div>
+      </div>
+</li>
+</div>
+
+<p class="user-page-title {{#cond followings_count 5}}following-button{{/cond}}">FOLLOWING <span style="color: #777">{{followings_count}}</span></p>
+<div class="bullet-section">
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+  	</div>
+</div>
+<br>
+<br>
+<button id="settings-button" class="button">Settings</button>
+
+<!-- <h4 style=" font-weight: 200;color: white; background: #E71D36; text-align: center; margin: 0; position: relative; padding: 15px; text-transform: uppercase; font-size: 18px;">Setting</h4> -->
+
+</div>
+</div>
+</div>

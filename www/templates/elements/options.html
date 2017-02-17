@@ -1,0 +1,206 @@
+
+	{{#compare kind "playlist"}}
+		<div class="library-item option-item">
+		  	<div class="library-image">
+			  	{{#if artwork_url}}
+			  	<img src="{{artwork_url}}">
+			  	{{else}}
+			  	<img src="{{tracks.0.artwork_url}}">
+			  	{{/if}}
+			</div>
+		    <div class="library-name" style="width: 67%;">
+<!-- 			    <p class="artist-track-library soundcloudArtist">{{user.username}}</p> -->
+			    <p class="title-track-library">{{title}}</p>
+			    <p class="artist-track-library">{{track_count}} Tracks</p>
+			</div>
+		</div>
+	<div class="bullet-section">
+		<!-- if kind = "playlist" -->
+		<div id="vanish-box-1" class="vanish-box">
+		  <div class="bullet-item option-item" id="add-to-your-playlists">
+		    <div class="bullet-name"><h4><i class="ion-plus"></i> Add playlist to your Collection</h4></div>
+		  </div>
+		<div id="vanish-box-2" class="vanish-box">
+	{{else}}
+		{{#compare kind "track"}}
+			<div class="library-item option-item">
+		  	<div class="library-image">
+			  	{{#if artwork_url}}
+			  	<img src="{{artwork_url}}">
+			  	{{else}}
+			  	<img src="img/blue.png">
+			  	{{/if}}
+			</div>
+		    <div class="library-name">
+			    <p class="artist-track-library soundcloudArtist">{{user.username}}</p>
+			    <p class="title-track-library">{{title}}</p>
+			</div>
+			</div>
+	<div class="bullet-section">
+				<!-- if kind = "track" -->
+			  <div class="bullet-item option-item" id="add-track-to-library-form">
+			    <div class="bullet-name"><h4><i class="ion-plus"></i> Add to Library</h4></div>
+			  </div>
+			  <div id="vanish-box-0" class="vanish-box">
+			  <div class="bullet-item option-item" id="add-track-to-podcast">
+			    <div class="bullet-name"><h4><i class="ion-plus"></i> Add to Podcast</h4></div>
+			  </div>
+			<div id="vanish-box-1" class="vanish-box">
+			  <div class="bullet-item option-item" id="add-track-to-playlist">
+			    <div class="bullet-name"><h4><i class="ion-plus"></i> Add to Playlist</h4></div>
+			  </div>
+			<div id="vanish-box-2" class="vanish-box">
+			  <div class="bullet-item option-item" id="set-discover-track">
+			    <div class="bullet-name"><h4><i class="ion-radio-waves"></i> Set as Discover Track</h4></div>
+			  </div>
+		{{else}}
+		<div class="bullet-item option-item">
+		  	<div class="bullet-image">
+			  	<img src="{{avatar_url}}">
+			</div>
+		    <div class="bullet-name">
+			    <h4>{{username}}</h4>
+			</div>
+		</div>
+		<div class="bullet-section">
+		{{/compare}}
+	{{/compare}}
+	  <div class="bullet-item option-item" id="tweet">
+	    <div class="bullet-name"><h4><i class="ion-social-twitter" style="margin-right: 3px;"></i> Tweet</h4></div>
+	  </div>
+	  <div class="bullet-item option-item" style="margin-bottom: 110px;" id="copy-link">
+	    <div class="bullet-name"><h4><i class="ion-ios-upload-outline" style="font-size: 20px;"></i> Copy Link</h4></div>
+	  </div>
+	 </div> <!-- vanish box 2 -->
+	</div> <!-- vanish box 1 -->
+	</div><!-- vanish box 0 -->
+  
+</div>
+<div id="cancel-option">
+	<span>Close</span>
+</div>
+
+{{#compare kind "track"}}
+<div id="add-to-playlist-form">
+	<div id="modal-form">
+		<div class="tab-bar tab-bar--top tab-bar--top-border" style="position: relative">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center" id="remove-vanish-first">
+              <span class="tab-name">Cancel</span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+<!--
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">FOLLOWERS</span>
+            </button>
+-->
+          </label>        
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center follow-button" id="new-playlist">
+              <i class="ion-plus"></i>
+            </button>
+          </label>
+		</div>
+	</div>
+	<div id="new-playlist-form">
+		{{#if artwork_url}}
+	  		<img src="{{artwork_url}}">
+	  	{{else}}
+	  		<img src="img/blue.png">
+	  	{{/if}}
+	  	<input type="text" maxlength="200" id="new-playlist-input" class="text-input--underbar loud-input" placeholder="" value="New LOUD Playlist">
+<!--
+	  	<label class="checkbox" style="font-size: 14px; text-align: center;margin: 20px auto 10px; width: 50%; display: block;color: rgba(255, 255, 255, 0.9); line-height: 20px">
+		  <input type="checkbox">
+		  <div class="checkbox__checkmark" style="margin: 0 10px 0 0;"></div>Private
+		</label>
+-->
+	  	<p style="color: #ff003c;font-size: 14px;display: block;margin-top: 35px;"><span id="create-playlist">Create</span></p>
+	  	<p id="remove-new-playlist-view"><span><i class="fa fa-angle-left"></i> or add to any of your playlists</span></p>
+	</div>
+	<div id="playlists-list">
+		{{#each myPlaylists}}
+		<div class="library-item option-item add-to-this" data-code="{{id}}">
+		  	<div class="library-image square">
+			  	{{#if artwork_url}}
+			  	<img src="{{artwork_url}}">
+			  	{{else}}
+			  	<img src="{{tracks.0.artwork_url}}">
+			  	{{/if}}
+			</div>
+		    <div class="library-name">
+			    <p class="title-track-library">{{title}}</p>
+			    <p class="artist-track-library soundcloudArtist">{{track_count}} Tracks</p>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+	<div id="playlists-list-overlay"></div>
+</div>
+<div id="add-to-library-form">
+		<div id="modal-form">
+				<div class="tab-bar tab-bar--top tab-bar--top-border" style="position: relative">
+			     <label class="tab-bar__item tab-bar--top-border__item">
+		            <button class="tab-bar__button tab-bar--top-border__button center" id="remove-vanish-second">
+		              <span class="tab-name">Cancel</span>
+		            </button>
+		          </label>
+		          <label class="tab-bar__item tab-bar--top-border__item"></label>        
+		          <label class="tab-bar__item tab-bar--top-border__item">
+		          	<button class="tab-bar__button tab-bar--top-border__button center" id="add-track-to-library">
+		              <span class="tab-name" style="color: #ff003c;font-size: 14px;"><i class="ion-plus"></i> Add</span>
+		            </button>
+		           </label>
+				</div>
+			</div>
+			<div id="new-playlist-all-form">
+				{{#if artwork_url}}
+			  		<img src="{{artwork_url}}">
+			  	{{else}}
+			  		{{#if tracks.0.artwork_url}}
+			  		<img src="{{tracks.0.artwork_url}}">
+			  		{{else}}
+			  		<img src="img/blue.png">
+			  		{{/if}}
+			  	{{/if}}
+			  	<form id="new-track-form">
+				  	<input type="text" maxlength="200" name="title-track" id="new-playlist-input" class="text-input--underbar loud-input" placeholder="Insert a Title" value="{{title}}">
+				  	<input type="text" maxlength="200" name="name-track" id="new-playlist-input" class="text-input--underbar loud-input" placeholder="Insert an Artist" value="{{LastArtist}}">
+				  	<input type="text" maxlength="200" name="title-album" id="new-playlist-input" class="text-input--underbar loud-input" placeholder="Insert an Album" value="{{LastAlbum}}">
+				  	<button type="submit" style="display: none"></button>
+			  	</form>
+		</div>
+</div>
+{{else}}
+	{{#compare kind "playlist"}}
+		<div id="add-to-playlist-form">
+			<div id="modal-form">
+				<div class="tab-bar tab-bar--top tab-bar--top-border" style="position: relative">
+			     <label class="tab-bar__item tab-bar--top-border__item">
+		            <button class="tab-bar__button tab-bar--top-border__button center" id="remove-vanish-first">
+		              <span class="tab-name">Cancel</span>
+		            </button>
+		          </label>
+		          <label class="tab-bar__item tab-bar--top-border__item"></label>        
+		          <label class="tab-bar__item tab-bar--top-border__item"></label>
+				</div>
+			</div>
+			<div id="new-playlist-all-form">
+				{{#if artwork_url}}
+			  		<img src="{{artwork_url}}">
+			  	{{else}}
+			  		{{#if tracks.0.artwork_url}}
+			  		<img src="{{tracks.0.artwork_url}}">
+			  		{{else}}
+			  		<img src="img/blue.png">
+			  		{{/if}}
+			  	{{/if}}
+			  	<input type="text" id="new-playlist-input" class="text-input--underbar" placeholder="" value="New LOUD Playlist">
+			  	<p style="color: #ff003c;font-size: 14px;display: block;margin-top: 35px;"><span id="create-playlist-from-playlist">Create</span></p>
+			</div>
+		</div>
+		
+	
+	{{/compare}}
+{{/compare}}

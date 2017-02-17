@@ -1,0 +1,17 @@
+{{#if this.length}}
+
+{{#each this.models}}
+	{{#if attributes.artwork_url}}
+		<div class="carousel-item soundcloudPlaylist" playlistid="{{attributes.id}}" artwork_playlist="{{subString attributes.artwork_url 't300x300' }}"><div class="carousel-item-image" style="background-image: url({{attributes.artwork_url}})"></div><p class="carousel-item-title">{{attributes.title}}</p></div>
+	{{else}}
+		<div class="carousel-item soundcloudPlaylist" playlistid="{{attributes.id}}" artwork_playlist="{{subString attributes.tracks.0.artwork_url 't300x300' }}" ><div class="carousel-item-image" style="background-image: url( {{ attributes.tracks.0.artwork_url }} )"></div><p class="carousel-item-title">{{attributes.title}}</p></div>
+	{{/if}}
+{{/each}}
+
+{{#cond this.total 5}}
+<div class="carousel-item morePlaylists"><div class="carousel-item-image"></div><p class="carousel-item-title">&nbsp;</p></div>
+{{/cond}}
+
+{{else}}
+<div class="carousel-empty-box"></div>	
+{{/if}}

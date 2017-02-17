@@ -1,0 +1,11 @@
+{{#each attributes.tracks}}
+  <div class="library-item play-track" scTrackId="{{id}}">
+  	<div class="library-image">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{artwork_url}}">
+	</div>
+    <div class="library-name">
+	    <p class="artist-track-library soundcloudArtist" scuserid="{{user.id}}">{{user.username}}</p>
+	    <p class="title-track-library">{{title}}</p>
+	</div>
+  </div>
+{{/each}}

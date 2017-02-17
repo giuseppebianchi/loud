@@ -1,0 +1,68 @@
+<header class="navigation-bar navigation-bar--transparent library-header">
+  <div class="navigation-bar__left">
+    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">
+    DISCOVER
+  </div>
+<div class="navigation-bar__right">
+<!--     <span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-plus" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span> -->
+  </div>
+</header>
+<div class="cover-user-view discover-cover cover-user-view-background" style="background-image: url(img/login3.jpg)"></div>
+<div id="discover-scrolling-view" class="scrolling-view">
+<div class="content-scrolling-view">
+<div class="cover-user-view discover-cover">
+  <div class="overlay-cover-user-view overlay-cover-library-view">
+	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">DISCOVER</h4></div>
+  </div>
+</div>
+<div class="list-back">
+<div id="selected-discover-track">
+		  
+			  <div id="selected-discover-track-img" class="b-lazy" data-src="{{selected_track.artwork_url}}"></div>
+			  <div id="selected-discover-track-title">
+				  {{#if selected_track}}
+				  	<h5 scUserId="{{id}}" class="soundcloudArtist">{{selected_track.user.username}}</h5>
+				  	<h5>{{selected_track.title}}</h5>
+				  {{else}}
+				  	<h5 class="info-text">Set a track to discover many more sounds you could like</h5>
+				  {{/if}}
+			  </div>
+		  
+		  	
+		  
+	  </div>
+{{#if selected_track}}
+
+<p class="playlist-description" style="text-align: center;">Discover many more sounds related to this track</p>
+<ul class="list" style="padding: 10px 0">
+<!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
+  {{#each this.models}}
+  <div class="item-single-track">
+		    {{#with attributes}}
+		    <li class="list__item list-track play-track" scTrackId="{{id}}">
+		      <div class="cover-track b-lazy" data-src="{{subString artwork_url 't300x300'}}">
+		        <div class="cover-track-overlay">
+		          <div class="list-track-details">
+		            {{#with user}}
+		            <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+		            {{/with}}
+		            <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+		          </div>
+		        </div>
+		      </div>
+		    </li>
+		    {{/with}}
+  </div>
+{{/each}}
+</ul>
+<div class="cssload-loader">
+  <div class="cssload-ball"></div>
+</div>
+{{/if}}
+</div>
+</div>
+</div>

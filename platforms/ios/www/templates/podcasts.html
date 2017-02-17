@@ -1,0 +1,68 @@
+<header class="navigation-bar navigation-bar--transparent library-header">
+  <div class="navigation-bar__left">
+    <span id="menu-button" class="toolbar-button--quiet navigation-bar__line-height">
+      <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">PODCASTS</div>
+<div class="navigation-bar__right">
+<span class="toolbar-button--quiet navigation-bar__line-height"><i class="fa fa-search" style="font-size:20px; vertical-align: 0px; margin-right: 5px;"></i></span>
+</div>
+</header>
+<!-- <div id="library-header"><span class="select-library-button">Tracks <i class="fa fa-angle-down"></i></span></div> -->
+
+<div class="cover-user-view library-cover cover-user-view-background" style="background-image: url(img/podcast.jpg);background-position: center bottom;"></div>
+<div id="user-scrolling-view-library" class="user-scrolling-view">
+<div class="user-content-view">
+	
+<div class="cover-user-view library-cover">
+  <div class="overlay-cover-user-view overlay-cover-library-view">
+	  <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view">Podcasts</h4></div>
+	  	<div class="tab-bar tab-bar--top tab-bar--top-border" style="-webkit-transform: translateY(15px); transform: translateY(15px);">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+	      {{#if tracks.length}}
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks" trackid="{{tracks.0.id}}">
+            <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{else}}
+          	<button class="tab-bar__button tab-bar--top-border__button center">
+          	<span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          {{/if}}
+              
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name"><span id="library-select">TRACKS </span><i class="fa fa-angle-down"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">LOUD</span>
+            </button>
+          </label>
+		</div>
+
+  </div>
+</div>
+<div class="list-back">
+
+<p class="user-page-title" style="padding-top: 20px;">Recent Added</p>
+<div class="UserCarousel">
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+	</div>
+</div>	
+
+
+<p class="user-page-title morePlaylist-title">A</p>
+<div class="bullet-section" style="margin: 0">
+	<div class="cssload-loader">
+		<div class="cssload-ball"></div>
+  	</div>
+</div>
+
+ 
+</div>
+</div>
+</div>

@@ -1,0 +1,43 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "loudapp",
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "nl.kingsquare.cordova.background-audio": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "com.rd11.remote-controls": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "com.verso.cordova.clipboard": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.bianchii.loud"
+        }
+    },
+    "dependent_plugins": {}
+}

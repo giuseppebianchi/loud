@@ -1,0 +1,47 @@
+
+	<div class="swiper-slide" sctrackid="{{id}}">
+	<!--<div class="coverTrackPlayer swiper-lazy" style="background-image: url({{subString artwork_url 't500x500'}})"></div>-->
+	<div class="coverTrackPlayer swiper-lazy" data-background="{{subString artwork_url 't500x500'}}"></div>
+	<div class="detailTrackPlayer">
+	<!-- 	    			<div class="separator"></div> -->
+			<div class="detail-overlay">
+				{{#if loud_title}}
+				<p class="soundcloud-library-track"><span style="color: #ff003c" scuserid="{{user.id}}" class="">{{user.username}}</span> - {{title}}</p>
+				<h6 data-swiper-parallax="-50"><span class="soundcloudArtist">{{loud_artist}}</span></h6>
+				<h6 data-swiper-parallax="-100">{{loud_title}}</h6>
+				<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
+				    {{loud_album}}
+				</span>
+				{{else}}
+				<h6 data-swiper-parallax="-50"><span scuserid="{{user.id}}" class="soundcloudArtist">{{user.username}}</span></h6>
+				<h6 data-swiper-parallax="-100">{{title}}</h6>
+				<span class="toolbar-button--quiet navigation-bar__line-height" style="padding-left: 15px">
+				    <i class="fa fa-play"></i>{{kFormatter playback_count}}
+				</span>
+				<span class="toolbar-button--quiet navigation-bar__line-height">
+				    <i class="fa fa-heart"></i>{{kFormatter favoritings_count}}
+				</span>
+				{{/if}}
+				
+			</div>
+			
+			<div class="contentPlayer">
+				<div class="detail-overlay-bottom">
+	    			<div class="bottom-bar__line-height" style="text-align:center">
+					  	<div class="bottom-player">
+					    	<div class="currentTimeTrack">00:00</div>
+							<input type="range" class="progressBarPlayer range scrubbing" min="0" max="{{duration}}" value="0">
+							<div class="totalDuration">{{getMinutes duration}}</div>
+							
+	    				</div>
+					  	
+					  	
+					</div>
+	
+				</div>
+			</div>
+			
+	</div>
+	
+	</div>	
+

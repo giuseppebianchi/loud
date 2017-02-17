@@ -1,0 +1,37 @@
+<!-- THERE ARE MORE TYPE OF ACTIVITIES SUCH AS COMMENTS, I DON'T CARE COMMENTS -->
+<div class="item-sigle-track">
+    {{#compare type "track-repost"}}
+      <span class="repost"><i class="fa fa-retweet"></i></span>
+      {{#with origin}}
+        <li class="list__item list-track" scTrackId="{{id}}">
+          <div class="cover-track b-lazy" data-src="{{subString artwork_url}}">
+            <div class="cover-track-overlay">
+              <div class="list-track-details">
+                {{#with user}}
+                <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+                {{/with}}
+                <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+              </div>
+            </div>
+          </div>
+        </li>
+      {{/with}}
+    {{else}}
+      {{#compare type "track"}}
+        {{#with origin}}
+        <li class="list__item list-track" scTrackId="{{id}}">
+          <div class="cover-track b-lazy" data-src="{{subString artwork_url}}">
+            <div class="cover-track-overlay">
+              <div class="list-track-details">
+                {{#with user}}
+                <h4 class="title-list-track"><span scUserId="{{id}}" class="soundcloudArtist">{{username}}</span></h4>
+                {{/with}}
+                <h4 class="title-list-track"><strong>{{title}}</strong></h4>
+              </div>
+            </div>
+          </div>
+        </li>
+        {{/with}}
+      {{/compare}}
+    {{/compare}}
+  </div>

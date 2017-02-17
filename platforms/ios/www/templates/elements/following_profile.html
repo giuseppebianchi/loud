@@ -1,0 +1,21 @@
+
+{{#if this.length}}
+
+{{#each this.models}}
+  {{#with attributes}}
+  <div class="bullet-item following-item" scuserid="{{id}}">
+  	<div class="bullet-image">
+	  	<img class="b-lazy" src="img/white.png" data-src="{{avatar_url}}">
+	</div>
+    <div class="bullet-name"><h4>{{username}}</h4></div>
+  </div>
+  {{/with}}
+{{/each}}
+
+{{#cond this.total 5}}
+<div class="bullet-item more-button following-button"><h4>View All</h4></div>
+{{/cond}}
+
+{{else}}
+	<h6 style="font-weight: 200;color: #ff003c;text-align: center; margin: 0; position: relative">No Following</h6>
+{{/if}}

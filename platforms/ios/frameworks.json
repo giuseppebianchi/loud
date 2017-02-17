@@ -1,0 +1,13 @@
+{
+    "libsqlite3.dylib": 1,
+    "libstdc++.dylib": 1,
+    "libicucore.dylib": 1,
+    "libz.dylib": 1,
+    "Security.framework": 1,
+    "CFNetwork.framework": 1,
+    "SystemConfiguration.framework": 1,
+    "JavaScriptCore.framework": 1,
+    "MediaPlayer.framework": 2,
+    "Social.framework": 1,
+    "MessageUI.framework": 1
+}

@@ -1,0 +1,80 @@
+<header class="navigation-bar navigation-bar--transparent user-header">
+  <div class="navigation-bar__left">
+    <span class="toolbar-button--quiet navigation-bar__line-height back-button">
+      <i class="fa fa-angle-left" style="font-size:32px; vertical-align:-6px;"></i>
+    </span>
+  </div>
+  <div class="navigation-bar__center">{{id}}</div>
+<div class="navigation-bar__right">
+  <span class="toolbar-button--quiet navigation-bar__line-height userOption" style="line-height: 45px;">•••</span>
+</div>
+</header>
+
+<div class="cover-user-view cover-likes-view cover-user-view-background" style="background-image:url({{subString this.models.0.attributes.value.0.content.artwork_url 't500x500'}});"></div>
+<div id="user-scrolling-view-likes" class="user-scrolling-view">
+<div class="user-content-view">
+	
+	
+<div class="cover-user-view cover-likes-view">
+  <div class="overlay-cover-user-view">
+    <!--  <div style="position: absolute;right: 10px;bottom: 65px;color: white;font-size: 14px;"></div> -->
+    
+     <div class="overlay-cover-user-view-details overlay-title-view"><h4 class="title-view" style="font-size: 18px">{{id}}</h4></div>
+     <div class="tab-bar tab-bar--top tab-bar--top-border">
+	     <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center play-all-tracks">
+              <span class="tab-name"><i class="fa fa-play"></i></span>
+            </button>
+          </label>
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+            <span class="tab-name"><i class="fa fa-random"></i></span>              
+            </button>
+          </label>
+          
+          <label class="tab-bar__item tab-bar--top-border__item">
+            <button class="tab-bar__button tab-bar--top-border__button center">
+              <span class="tab-name">LOUD</span>
+            </button>
+          </label>
+
+          
+      </div>
+
+
+  </div>
+</div>
+<div class="list-back" style="padding-bottom: 70px">
+<div class="tracklist">
+  {{#each this.models}}
+  <div class="item-single-track">
+        <li class="list__item list-track play-track">
+          <div class="cover-track b-lazy" data-src="{{subString attributes.value.0.content.artwork_url 't300x300'}}">
+            <div class="cover-track-overlay">
+              <div class="list-track-details">
+                <h4 class="title-list-track"><strong>{{getData attributes.key 1}}</strong></h4>
+                <h4 class="title-list-track" style="font-size: 12px"><span>{{getData attributes.value "length"}} Tracks<span style="
+    float: right;
+">•••</span></span></h4>
+              </div>
+            </div>
+          </div>
+        </li>
+  </div>
+  	<div class="library-list-square">
+  	{{#each attributes.value}}
+  		<div class="library-item play-track library-album-item" idloud="{{id}}" sctrack="{{content.id}}">
+	  	<div class="library-image square">
+		  	<img class="b-lazy" src="img/white.png" data-src="{{content.artwork_url}}">
+		</div>
+	    <div class="library-name">
+		    <p class="title-track-library">{{title}}</p>
+		</div>
+	  </div>
+  	{{/each}}
+  	</div>
+  {{/each}}
+</div>
+</div>
+</div>
+</div>
