@@ -1,5 +1,5 @@
 # Loud
-#### iOS app to classify, manage and listen to your favorite music on Soundcloud. [Loud Webpage](http://mynameisbianchi.herokuapp.com/projects/loud/)
+iOS app to classify, manage and listen to your favourite music on Soundcloud. [Loud Webpage](http://mynameisbianchi.herokuapp.com/projects/loud/)
 
 ![Loud Cover](http://mynameisbianchi.herokuapp.com/projects/loud/LOUD_cover.jpg)
 
@@ -12,7 +12,7 @@ Take a look to the video here below to see how LOUD works.
 # LOUD is the best way to use Soundcloud
 SoundCloud is the most famous platform to share music. All tracks are available for free and you can have a better experience with them by using a less social context service. LOUD is focused more on music context, offering new features to organize your SoundCloud music like a real music library, in an easy and beautiful way.
 
-Listening to single tracks and long tracks together can be annoying, so LOUD allows you to manage your favorite podcast in a specific library, dividing them by Radio Stations. In your profile, Likes are orginized and divided by Users, and you can show your Followings, ordering them even by name.
+Listening to single tracks and long tracks together can be annoying, so LOUD allows you to manage your favourite podcast in a specific library, dividing them by Radio Stations. In your profile, Likes are orginized and divided by Users, and you can show your Followings, ordering them even by name.
 
 >- **LIBRARY**: Keep all your track together also dived by Artist or Album
 >- **PODCAST**: Manage your long tracks, such as Live Recordings, by Radio Station
@@ -26,7 +26,7 @@ LOUD offers a free music streaming service using all uploaded music on SoundClou
 
 ## LIBRARY
 #### No more playlists to organize your music
-Library keeps all your favorite music together, organizing tracks by artist and album. Find tracks on SoundCloud, set artist and album and put them into your library. Quickly browse your whole collection, listening to a specific album or a single artist.
+Library keeps all your favourite music together, organizing tracks by artist and album. Find tracks on SoundCloud, set artist and album and put them into your library. Quickly browse your whole collection, listening to a specific album or a single artist.
 ![Loud Library](http://mynameisbianchi.herokuapp.com/projects/loud/loud_library.jpg)
 
 It's like iTunes or Apple Music, but, using SoundCloud's music, everything is free.
