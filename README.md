@@ -46,7 +46,7 @@ A beautiful gestures-based player is waiting for you. No button but you can do e
 #### Your tracks, playlists, likes and followings
 LOUD offers a profile view to see your tracks and playlists, likes and following. The features about LOUD's profile is that you can classify your likes by uploader, browsing them in an easier way, and show your followings, which can be even ordered by name.
 
-![Loud Profile](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_profile.jpg?raw=true)
+![Loud Profile](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_profile.png?raw=true)
 
 ## DISCOVER
 #### New music recommendations based on what you are listening to
@@ -57,7 +57,7 @@ Set a playing song as Discover Track to see its related songs. Results will be s
 Stream shows every new uploaded track and repost by your followings.
 
 Search new music. Discover songs. Grown your Library.
-![Loud Stream](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_stream.jpg?raw=true)
+![Loud Stream](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_stream.png?raw=true)
 
 # Development
 #### Apache Cordova App
