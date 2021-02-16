@@ -1,7 +1,7 @@
 # Loud
 iOS app to classify, manage and listen to your favourite music on Soundcloud. [Loud Webpage](http://mynameisbianchi.herokuapp.com/projects/loud/)
 
-![Loud Cover](http://mynameisbianchi.herokuapp.com/projects/loud/LOUD_cover.jpg)
+![Loud Cover](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/LOUD_cover.jpg?raw=true)
 
 # Demo
 Take a look to the video here below to see how LOUD works.
@@ -27,7 +27,7 @@ LOUD offers a free music streaming service using all uploaded music on SoundClou
 ## LIBRARY
 #### No more playlists to organize your music
 Library keeps all your favourite music together, organizing tracks by artist and album. Find tracks on SoundCloud, set artist and album and put them into your library. Quickly browse your whole collection, listening to a specific album or a single artist.
-![Loud Library](http://mynameisbianchi.herokuapp.com/projects/loud/loud_library.jpg)
+![Loud Library](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_library.jpg?raw=true)
 
 It's like iTunes or Apple Music, but, using SoundCloud's music, everything is free.
 
@@ -40,13 +40,13 @@ While adding a track into Library, LOUD is going to recognize track's duration s
 ## PLAYER
 #### Enough with all those boring and small buttons
 A beautiful gestures-based player is waiting for you. No button but you can do everything with gestures. Swipe left to skip song and swipe right to come back. Double tap to pause and play song. Swipe up or down to hide player.
-![Loud Player](http://mynameisbianchi.herokuapp.com/projects/loud/loud_player.jpg)
+![Loud Player](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_player.jpg?raw=true)
 
 ## PROFILE
 #### Your tracks, playlists, likes and followings
 LOUD offers a profile view to see your tracks and playlists, likes and following. The features about LOUD's profile is that you can classify your likes by uploader, browsing them in an easier way, and show your followings, which can be even ordered by name.
 
-![Loud Profile](http://mynameisbianchi.herokuapp.com/projects/loud/loud_profile.png)
+![Loud Profile](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_profile.jpg?raw=true)
 
 ## DISCOVER
 #### New music recommendations based on what you are listening to
@@ -57,7 +57,7 @@ Set a playing song as Discover Track to see its related songs. Results will be s
 Stream shows every new uploaded track and repost by your followings.
 
 Search new music. Discover songs. Grown your Library.
-![Loud Stream](http://mynameisbianchi.herokuapp.com/projects/loud/loud_stream.png)
+![Loud Stream](https://github.com/giuseppebianchi/loud/blob/master/resources/screenshots/loud_stream.jpg?raw=true)
 
 # Development
 #### Apache Cordova App
